@@ -1,8 +1,18 @@
-import { SignupStage1 } from "./signupPincodeForm"
+import { SignupDetailsForm } from "./components/signupDetailsForm";
+import { SignupPincodeForm } from "./components/signupPincodeForm"
+import { useSignupDetailsState } from "./data/signupState";
 
 export const SignupPage = () => {
-  return <>
-    <h1>Signup Page</h1>
-    <SignupStage1 />
-  </>
+
+  const {setSignupDetails, signupDetails} = useSignupDetailsState()
+
+  return (
+    <div style={{ textAlign: "center" }}>
+      <h1>Lets Start</h1>
+      <div>
+        {signupDetails.isSent ? <SignupDetailsForm /> : <SignupPincodeForm />}
+      </div>
+    </div>
+  );
+
 }
