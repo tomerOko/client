@@ -1,17 +1,16 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import useFetch from './hooks/useFetch';
-import useSocket from './hooks/useSocket';
-import CommonComponent from './components/common/commonComponent';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { LandingPage } from './flows/land/landing';
+import { SignupPage } from './flows/signup/signupPage';
 
 const App = () => {
 
-
   return (
     <Router>
-      <Route path="/" Component={Home} />
-      <CommonComponent />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/signup" element={<SignupPage/>} />
+        <Route path="/login" element={<div>Login</div>} />
+      </Routes>
     </Router>
   );
 };

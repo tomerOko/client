@@ -21,14 +21,3 @@ export const useUserGeneralDetails = create<UserGeneralDetailsState>((set) => ({
     setUserGeneralDetails: (userGeneralDetails) => set({userGeneralDetails}),
 }))
 
-const example: FC = () => {
-    const {userGeneralDetails, setUserGeneralDetails} = useUserGeneralDetails()
-
-    return 
-        <>
-        <p>{userGeneralDetails.email}</p>
-        </>
-
-    
-}
-
