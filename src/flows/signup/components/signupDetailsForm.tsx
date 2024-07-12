@@ -1,9 +1,8 @@
+import { Button, TextField } from '@mui/material';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { useSignupDetailsState } from '../data/signupState';
-import { useUserDetailsState } from '../../../common/data/userDetails';
 
 export const SignupDetailsForm:FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
@@ -11,8 +10,9 @@ export const SignupDetailsForm:FC = () => {
   const navigate = useNavigate();
 
 
-  const onSubmit = async (data: any) => {
+  const onSubmit =async(data: any) => {
     console.log(data);
+    console.log('hallow')
     setSignupDetails({
       ...signupDetails,
       firstName: data.firstName,
@@ -45,7 +45,7 @@ export const SignupDetailsForm:FC = () => {
             margin="normal"
           />
           <TextField
-            {...register("email", { required: true })}
+            {...register("email", { required: false })}
             label="Email"
             fullWidth
             disabled
@@ -64,7 +64,7 @@ export const SignupDetailsForm:FC = () => {
           </div>
 
           <Button type="submit" variant="contained" color="primary" fullWidth>
-            send pincode
+            Sgin Up
           </Button>
         </form>
       </div>

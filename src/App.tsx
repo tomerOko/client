@@ -1,6 +1,7 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import { LandingPage } from './flows/land/landing';
-import { SignupPage } from './flows/signup/signupPage';
+import { SignupPage } from './flows/signup/page/signupPage';
+import { SigninPage } from './flows/signin/page/signinPage';
 
 const App = () => {
 
@@ -9,7 +10,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<SignupPage/>} />
-        <Route path="/login" element={<div>Login</div>} />
+        <Route path="/signin" element={<SigninPage/>} />
       </Routes>
     </Router>
   );
