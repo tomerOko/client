@@ -1,5 +1,4 @@
-import { useUserDetailsState } from "../../../common/data/userDetails";
-import { SignupDetailsForm } from "../components/signupDetailsForm";
+import { SigninForm } from "../components/signinForm";
 
 
 export const SigninPage = () => {
@@ -8,7 +7,7 @@ export const SigninPage = () => {
     <div style={{ textAlign: "center" }}>
       <h1>Welcome Back</h1>
       <div>
-        <SignupDetailsForm />
+        <SigninForm />
       </div>
     </div>
   );

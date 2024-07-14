@@ -1,13 +1,12 @@
+import { Button, TextField } from '@mui/material';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { useUserDetailsState } from '../../../common/data/userDetails';
 import { useSigninDetailsState } from '../data/signinState';
 
-export const SignupDetailsForm:FC = () => {
+export const SigninForm:FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const {setSigninDetails, signinDetails} = useSigninDetailsState()
+  const {setSigninDetails} = useSigninDetailsState()
   const navigate = useNavigate();
 
 
@@ -18,12 +17,12 @@ export const SignupDetailsForm:FC = () => {
       password: data.password
     })
     await new Promise(resolve => setTimeout(resolve, 500));
-    navigate('/Home')
+    navigate('/search')
   };
 
     return (
       <div style={{ maxWidth: '400px', margin: '0 auto' }}>
-        <h3>Let's make sure it is</h3>
+        <h3>Let's make sure it is you</h3>
         <form onSubmit={handleSubmit(onSubmit)}>
         
           <TextField
