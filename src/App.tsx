@@ -6,6 +6,7 @@ import { SearchPage } from './flows/search/page/searchPage';
 import { TopicPage } from './flows/topic/page/topicPage';
 import TopBar from './common/components/topBar';
 import UserDetailsPage from './flows/userDetails/page/userDetails';
+import PaymentMethods from './flows/addPaymentDetails/page/paymentMethodsPage';
 
 const App = () => {
 
@@ -20,6 +21,7 @@ const App = () => {
         <Route path="/search" element={<SearchPage/>} />
         <Route path="/topic" element={<TopicPage/>} />
         <Route path="/user-details" element={<UserDetailsPage/>} />
+        <Route path="/payment-methods" element={<PaymentMethods/>} />
       </Routes>
     </Router>
     </>
