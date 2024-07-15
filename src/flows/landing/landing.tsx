@@ -10,7 +10,7 @@ return (
         <Button variant="contained" color="primary" href="/signup" style={{ marginRight: '10px' }}>
             Sign Up
         </Button>
-        <Button variant="contained" color="primary" href="/login">
+        <Button variant="contained" color="primary" href="/signin">
             Log In
         </Button>
     </div>

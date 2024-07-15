@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 
 export interface TopicSummery {
-    name: string;
+    topicName: string;
+    teacherName: string;
+    teacherEmail: string;
     description: string;
     hourlyRate: number;
     profilePictureUrl: string;
