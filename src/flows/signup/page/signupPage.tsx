@@ -1,10 +1,10 @@
 import { SignupDetailsForm } from "../components/signupDetailsForm";
 import { SignupPincodeForm } from "../components/signupPincodeForm"
-import { useSignupDetailsState } from "../data/signupState";
+import { useSignupState } from "../data/signupState";
 
 export const SignupPage = () => {
 
-  const {signupDetails} = useSignupDetailsState()
+  const {signupDetails} = useSignupState()
 
   return (
     <div style={{ textAlign: "center" }}>

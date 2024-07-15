@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { Button, TextField } from '@mui/material';
 import { useNavigate } from 'react-router';
-import { useSignupDetailsState } from '../data/signupState';
+import { useSignupState } from '../data/signupState';
 
 export const SignupPincodeForm:FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const {setSignupDetails, signupDetails} = useSignupDetailsState()
+  const {setSignupDetails, signupDetails} = useSignupState()
 
 
   const onSubmit = async (data: any) => {

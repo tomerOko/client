@@ -24,9 +24,9 @@ export const currentTopicMock: CurrentTopic["data"]= {
       }
     ]
   },
-  availability: [
-    { fromTime: 9, toTime: 12, day: 0 },
-    { fromTime: 13, toTime: 16, day: 0 },
+  availability:  [
+      { dateOfStart: new Date('2024-07-15T08:00:00').getTime(), dateOfEnd: new Date('2024-07-15T10:30:00').getTime() },
+      { dateOfStart: new Date('2024-07-16T14:00:00').getTime(), dateOfEnd: new Date('2024-07-16T15:00:00').getTime() },
   ]
 }
   

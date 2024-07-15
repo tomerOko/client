@@ -1,12 +1,16 @@
 import { create } from 'zustand'
 
 
-interface UserDetails{
-    email: string
-    firstName: string
-    lastName: string
-    isTeacher: boolean
-} 
+
+interface UserDetails {
+    email: string;
+    password: string;
+    phoneNumber: string;
+    firstName: string;
+    lastName: string;
+    country: string;
+    language: string;
+}
 
 interface UserDetailsState {
     userDetails: UserDetails
@@ -16,9 +20,12 @@ interface UserDetailsState {
 export const useUserDetailsState = create<UserDetailsState>((set) => ({
     userDetails: {
         email: '',
+        password: '',
+        phoneNumber: '',
         firstName: '',
         lastName: '',
-        isTeacher: false
+        country: '',
+        language: ''
     },
     setUserDetails: (userDetails: UserDetails) => set({userDetails}),
 }))

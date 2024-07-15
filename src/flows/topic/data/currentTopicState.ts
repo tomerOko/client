@@ -1,5 +1,9 @@
 import { create } from 'zustand'
 
+interface AvailabilityBlock {
+    dateOfStart: number;
+    dateOfEnd: number;
+}  
 export interface CurrentTopic{
     identifier: {
         teacherEmail: string,
@@ -23,11 +27,7 @@ export interface CurrentTopic{
                 comment: string
             }[]
         },
-        availability: {
-            fromTime: number,
-            toTime: number,
-            day: number
-        }[]
+        availability:AvailabilityBlock[]
     }
 }
 

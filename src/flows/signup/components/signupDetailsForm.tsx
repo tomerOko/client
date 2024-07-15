@@ -2,11 +2,11 @@ import { Button, TextField } from '@mui/material';
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
-import { useSignupDetailsState } from '../data/signupState';
+import { useSignupState } from '../data/signupState';
 
 export const SignupDetailsForm:FC = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const {setSignupDetails, signupDetails} = useSignupDetailsState()
+  const {setSignupDetails, signupDetails} = useSignupState()
   const navigate = useNavigate();
 
 

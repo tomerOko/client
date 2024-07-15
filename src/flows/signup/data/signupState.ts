@@ -9,14 +9,13 @@ interface SignupDetails{
     password: string
     firstName: string
     lastName: string
-
 } 
-interface SignupDetailsState {
+interface SignupState {
     signupDetails: SignupDetails
     setSignupDetails: (signupDetails: SignupDetails) => void
 }
 
-export const useSignupDetailsState = create<SignupDetailsState>((set) => ({
+export const useSignupState = create<SignupState>((set) => ({
     signupDetails: {
         isSent: false,
         sentAt: 0,
