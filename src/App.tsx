@@ -7,6 +7,9 @@ import { TopicPage } from './flows/topic/page/topicPage';
 import TopBar from './common/components/topBar';
 import UserDetailsPage from './flows/userDetails/page/userDetails';
 import PaymentMethods from './flows/addPaymentDetails/page/paymentMethodsPage';
+import { ReviewingPage } from './flows/reviewing/page/reviewing';
+import { CallsHistoryPage } from './flows/callsHistory/page/callsHistory';
+import { ChatPage } from './flows/chat/chat';
 
 const App = () => {
 
@@ -22,6 +25,11 @@ const App = () => {
         <Route path="/topic" element={<TopicPage/>} />
         <Route path="/user-details" element={<UserDetailsPage/>} />
         <Route path="/payment-methods" element={<PaymentMethods/>} />
+        <Route path="/reviewing" element={<ReviewingPage />} />
+
+        <Route path="/calls-history" element={<CallsHistoryPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        
       </Routes>
     </Router>
     </>

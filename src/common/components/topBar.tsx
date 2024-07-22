@@ -20,14 +20,16 @@ const TopBar: React.FC = () => {
         return 'Chat';
       case '/user-details':
         return 'User Details';
-      case '/order-history':
-        return 'Order History';
+      case '/calls-history':
+        return 'Calls History';
       case '/payment-methods':
         return 'Payment Methods';
       case '/logout':
         return 'Logout';
+      case '/reviewing':
+        return 'Review & Rating';
       default:
-        return 'User Details';
+        return '';
     }
   };
 
@@ -77,8 +79,8 @@ const TopBar: React.FC = () => {
           <MenuItem component={Link} to="/user-details" onClick={handleClose}>
             User Details
           </MenuItem>
-          <MenuItem component={Link} to="/order-history" onClick={handleClose}>
-            Order History
+          <MenuItem component={Link} to="/calls-history" onClick={handleClose}>
+            Calls History
           </MenuItem>
           <MenuItem component={Link} to="/payment-methods" onClick={handleClose}>
             Payment Methods
