@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import io from 'socket.io-client';
+import { useEffect, useRef } from "react";
+import io from "socket.io-client";
 
-const useSocket = (url: string) => {
+export const useSocket = (url: string) => {
   const socketRef = useRef<any>(null);
 
   useEffect(() => {
@@ -16,5 +16,3 @@ const useSocket = (url: string) => {
 
   return socketRef.current;
 };
-
-export default useSocket;

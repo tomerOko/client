@@ -4,7 +4,7 @@ import { SignupPage } from "./flows/signup/page/signupPage";
 import { SigninPage } from "./flows/signin/page/signinPage";
 import { SearchPage } from "./flows/search/page/searchPage";
 import { TopicPage } from "./flows/topic/page/topicPage";
-import TopBar from "./common/components/topBar";
+import { TopBar } from "./common/components/topBar";
 import UserDetailsPage from "./flows/userDetails/page/userDetails";
 import PaymentMethods from "./flows/addPaymentDetails/page/paymentMethodsPage";
 import { ReviewingPage } from "./flows/reviewing/page/reviewing";
@@ -13,6 +13,9 @@ import { ChatPage } from "./flows/chat/chat";
 import { ThemeProvider } from "@mui/material";
 import { mainTheme } from "./common/theme/theme";
 import NextMeetings from "./flows/nextMeetings/page/nextMeetingsPage";
+import { BecomeTeacherPage } from "./flows/becomeTeacher/page/becomeTeacherPage";
+import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
+import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
 
 const App = () => {
   return (
@@ -32,6 +35,13 @@ const App = () => {
             <Route path="/calls-history" element={<CallsHistoryPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/next-meetings" element={<NextMeetings />} />
+            {/* teacher routes */}
+            <Route path="/manage-topics" element={<ManageTopicsPage />} />
+            <Route
+              path="/manage-bank-accounts"
+              element={<ManageBankAccountsPage />}
+            />
+            <Route path="/become-teacher" element={<BecomeTeacherPage />} />
           </Routes>
         </Router>
       </ThemeProvider>

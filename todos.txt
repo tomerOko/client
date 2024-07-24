@@ -1,5 +1,21 @@
 לסדר את הלוח שנה
 // 2. wrap the table in a scrollable container (only for width,)
 // 3. use 3 media queries to make the table responsive 
-לסדר מעל הלוח שנה שיהיה רק ״התקשר עכשיו״ וקישור לצ׳אט
 סידורי סטייל בדף של הטופיק
+//לוח שנה: טופיק, שיחות הבאות של מורה, שיחות הבאות של תלמיד, שיחות קודמות של מורה, שיחות הבאות של תלמיד
+//דף שיחות הבאות של תלמיד: לפרק ולהשתמש שוב בשביל: שיחות קודמות של תלמיד, שיחות הבאות של מורה, שיחות קודמות של מורה
+// דפים חדשים: , ניהול זמני פעילות,
+
+
+
+this is a topic object for example: {
+    extendedDescription: "This topic covers advanced calculus concepts.",
+    hourlyRate: 50,
+    minimalMinutes: 30
+  },
+
+  i need 3 files:
+
+  1. list of mock topics (a js file exporting one array)
+  2. a react form to add/update a topic (using typescript, materialui and react-hook-form)
+  2. a react page to manage my topics that have an 'add new topic' button at the top, and the a list of cards that each one is a topic, at the button of each card there is an'edit' and a 'delete' buttons (using typescript, materialui and react-hook-form)
