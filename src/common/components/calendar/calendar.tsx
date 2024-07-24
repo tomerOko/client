@@ -1,11 +1,15 @@
-import { Box, Table, TableBody, TableCell, TableHead, TableRow, Button } from '@mui/material';
-import React from 'react';
-import { useCurrentTopicState } from '../data/currentTopicState';
-import './calendar.css';
-
-
-
-
+import {
+  Box,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Button,
+} from "@mui/material";
+import React from "react";
+import { useCurrentTopicState } from "../../../flows/topic/data/currentTopicState";
+import "./calendar.css";
 
 const ScheduleTable: React.FC = () => {
   const { currentTopic } = useCurrentTopicState();
@@ -30,10 +34,10 @@ const ScheduleTable: React.FC = () => {
     const left = startDay * slotWidth;
     const height = (endSlot - startSlot) * (slotHeight / 6);
     return {
-      position: 'absolute' as 'absolute',
-      backgroundColor: 'blue',
+      position: "absolute" as "absolute",
+      backgroundColor: "blue",
       opacity: 0.7,
-      borderRadius: '4px',
+      borderRadius: "4px",
       top: `${top}px`,
       left: `${left}px`,
       height: `${height}px`,
@@ -42,34 +46,37 @@ const ScheduleTable: React.FC = () => {
   };
 
   const tableStyles = {
-    position: 'relative' as 'relative'
+    position: "relative" as "relative",
   };
 
   const cellStyles = {
     height: 40,
-    border: '1px solid rgba(224, 224, 224, 1)'
+    border: "1px solid rgba(224, 224, 224, 1)",
   };
 
   const containerStyles = {
-    overflowX: 'auto' as 'auto',
-    whiteSpace: 'nowrap' as 'nowrap',
+    overflowX: "auto" as "auto",
+    whiteSpace: "nowrap" as "nowrap",
   };
 
   const buttonContainerStyles = {
-    marginBottom: '10px',
-    display: 'flex',
-    justifyContent: 'space-between',
+    marginBottom: "10px",
+    display: "flex",
+    gap: "10px",
   };
 
   return (
     <Box>
       <Box style={buttonContainerStyles}>
-        <Button variant="contained" color="primary">Try Call Now</Button>
-        <Button variant="contained" color="primary">Call Me When You're Ready</Button>
-        <Button variant="contained" color="primary">Suggest Time</Button>
+        <Button variant="contained" color="primary">
+          Try Call Now
+        </Button>
+        <Button variant="contained" color="primary">
+          chat
+        </Button>
       </Box>
-      <Box style={containerStyles} className='calendarContainer'>
-        <Box style={tableStyles} className='calendarTable'>
+      <Box style={containerStyles} className="calendarContainer">
+        <Box style={tableStyles} className="calendarTable">
           {currentTopic.data.availability.map((block, index) => {
             const startDate = new Date(block.dateOfStart);
             const endDate = new Date(block.dateOfEnd);
@@ -79,8 +86,18 @@ const ScheduleTable: React.FC = () => {
           <Table>
             <TableHead>
               <TableRow>
-                {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
-                  <TableCell key={day} style={cellStyles}>{day}</TableCell>
+                {[
+                  "Sunday",
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday",
+                ].map((day) => (
+                  <TableCell key={day} style={cellStyles}>
+                    {day}
+                  </TableCell>
                 ))}
               </TableRow>
             </TableHead>
@@ -96,14 +113,11 @@ const ScheduleTable: React.FC = () => {
           </Table>
         </Box>
       </Box>
-
     </Box>
   );
 };
 
 export default ScheduleTable;
 
-
-// 1. add 3 buttons above the table 'try call now', 'call me when you ready', 'suggest time'
 // 2. wrap the table in a scrollable container (only for width,)
-// 3. use 3 media queries to make the table responsive 
+// 3. use 3 media queries to make the table responsive

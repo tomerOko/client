@@ -1,0 +1,5 @@
+לסדר את הלוח שנה
+// 2. wrap the table in a scrollable container (only for width,)
+// 3. use 3 media queries to make the table responsive 
+לסדר מעל הלוח שנה שיהיה רק ״התקשר עכשיו״ וקישור לצ׳אט
+סידורי סטייל בדף של הטופיק

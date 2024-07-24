@@ -1,35 +1,43 @@
-import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, Menu, MenuItem } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
-import HomeIcon from '@mui/icons-material/Home';
-import ChatIcon from '@mui/icons-material/Chat';
-import { Link, useLocation } from 'react-router-dom';
-
+import React from "react";
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  MenuItem,
+} from "@mui/material";
+import SettingsIcon from "@mui/icons-material/Settings";
+import HomeIcon from "@mui/icons-material/Home";
+import ChatIcon from "@mui/icons-material/Chat";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { Link, useLocation } from "react-router-dom";
 
 const TopBar: React.FC = () => {
-
   const location = useLocation();
 
   const getPageTitle = (pathname: string) => {
     switch (pathname) {
-      case '/settings':
-        return 'Settings';
-      case '/search':
-        return 'Search';
-      case '/chat':
-        return 'Chat';
-      case '/user-details':
-        return 'User Details';
-      case '/calls-history':
-        return 'Calls History';
-      case '/payment-methods':
-        return 'Payment Methods';
-      case '/logout':
-        return 'Logout';
-      case '/reviewing':
-        return 'Review & Rating';
+      case "/settings":
+        return "Settings";
+      case "/search":
+        return "Search";
+      case "/chat":
+        return "Chat";
+      case "/user-details":
+        return "User Details";
+      case "/calls-history":
+        return "Calls History";
+      case "/payment-methods":
+        return "Payment Methods";
+      case "/logout":
+        return "Logout";
+      case "/reviewing":
+        return "Review & Rating";
+      case "/next-meetings":
+        return "Next Meetings";
       default:
-        return '';
+        return "";
     }
   };
 
@@ -54,6 +62,9 @@ const TopBar: React.FC = () => {
         <IconButton color="inherit" component={Link} to="/search">
           <HomeIcon />
         </IconButton>
+        <IconButton color="inherit" component={Link} to="/next-meetings">
+          <CalendarMonthIcon />
+        </IconButton>
         <IconButton color="inherit" component={Link} to="/chat">
           <ChatIcon />
         </IconButton>
@@ -64,13 +75,13 @@ const TopBar: React.FC = () => {
           id="menu-appbar"
           anchorEl={anchorEl}
           anchorOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+            vertical: "top",
+            horizontal: "right",
           }}
           keepMounted
           transformOrigin={{
-            vertical: 'top',
-            horizontal: 'right',
+            vertical: "top",
+            horizontal: "right",
           }}
           open={open}
           onClose={handleClose}
@@ -82,13 +93,21 @@ const TopBar: React.FC = () => {
           <MenuItem component={Link} to="/calls-history" onClick={handleClose}>
             Calls History
           </MenuItem>
-          <MenuItem component={Link} to="/payment-methods" onClick={handleClose}>
+          <MenuItem
+            component={Link}
+            to="/payment-methods"
+            onClick={handleClose}
+          >
             Payment Methods
           </MenuItem>
-          <MenuItem component={Link} to="/" onClick={()=>{
-            handleClose(); 
-            alert('loged out');
-            }}>
+          <MenuItem
+            component={Link}
+            to="/"
+            onClick={() => {
+              handleClose();
+              alert("loged out");
+            }}
+          >
             Logout
           </MenuItem>
         </Menu>

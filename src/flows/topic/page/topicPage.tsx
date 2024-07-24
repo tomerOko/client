@@ -1,17 +1,21 @@
-
-import { Box, Grid, List, ListItem, ListItemText, Paper, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  Paper,
+  Typography,
+} from "@mui/material";
 import { useCurrentTopicState } from "../data/currentTopicState";
-import ScheduleTable from "../components/calendar";
-
-
+import ScheduleTable from "../../../common/components/calendar/calendar";
 
 export const TopicPage: React.FC = () => {
+  const { currentTopic } = useCurrentTopicState();
 
-  const {currentTopic} = useCurrentTopicState()
+  const { teacher, topic, ratings } = currentTopic.data;
 
-  const { teacher, topic, ratings } = currentTopic.data
-
-  console.log(currentTopic.data)
+  console.log(currentTopic.data);
 
   return (
     <Box p={3}>
@@ -20,7 +24,7 @@ export const TopicPage: React.FC = () => {
         <Typography variant="h4">{`${teacher.firstName} ${teacher.lastName}`}</Typography>
         <Typography variant="subtitle1">{teacher.description}</Typography>
       </Paper>
-      
+
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Typography variant="h5">Topic Details</Typography>
         <Typography variant="body1">{topic.extendedDescription}</Typography>
@@ -34,7 +38,10 @@ export const TopicPage: React.FC = () => {
         <List>
           {ratings.examples.map((example, index) => (
             <ListItem key={index}>
-              <ListItemText primary={`Rating: ${example.rating}`} secondary={example.comment} />
+              <ListItemText
+                primary={`Rating: ${example.rating}`}
+                secondary={example.comment}
+              />
             </ListItem>
           ))}
         </List>
@@ -47,4 +54,3 @@ export const TopicPage: React.FC = () => {
     </Box>
   );
 };
-
