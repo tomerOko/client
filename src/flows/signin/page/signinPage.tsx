@@ -1,5 +1,4 @@
 import { SigninForm } from "../components/signinForm";
-import { DemoApp } from "../../../common/components/fullCalendar/demo-app";
 
 export const SigninPage = () => {
   return (
@@ -7,7 +6,6 @@ export const SigninPage = () => {
       <h1>Welcome Back</h1>
       <div>
         <SigninForm />
-        <DemoApp />
       </div>
     </div>
   );

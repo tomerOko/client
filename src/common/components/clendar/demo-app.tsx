@@ -18,7 +18,9 @@ interface DemoAppState {
   currentEvents: EventApi[];
 }
 
-export const DemoApp: FC = () => {
+export const Calendar: FC<{ showSideBar?: boolean }> = ({
+  showSideBar = false,
+}) => {
   const [weekendsVisible, setWeekendsVisible] = useState(true);
   const [currentEvents, setCurrentEvents] = useState([]);
 
@@ -64,6 +66,7 @@ export const DemoApp: FC = () => {
         weekendsVisible={weekendsVisible}
         handleWeekendsToggle={handleWeekendsToggle}
         currentEvents={currentEvents}
+        show={showSideBar}
       />
       <div className="demo-app-main">
         <FullCalendar
@@ -106,6 +109,10 @@ const renderEventContent = (eventInfo: EventContentArg) => {
 
 const Sidebar = (data: any) => {
   const { weekendsVisible, handleWeekendsToggle, currentEvents } = data;
+  if (!data.show) {
+    return null;
+  }
+
   return (
     <div className="demo-app-sidebar">
       <div className="demo-app-sidebar-section">

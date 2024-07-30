@@ -16,6 +16,7 @@ import NextMeetings from "./flows/nextMeetings/page/nextMeetingsPage";
 import { BecomeTeacherPage } from "./flows/becomeTeacher/page/becomeTeacherPage";
 import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
 import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
+import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
 
 const App = () => {
   return (
@@ -40,6 +41,11 @@ const App = () => {
             <Route
               path="/manage-bank-accounts"
               element={<ManageBankAccountsPage />}
+            />
+            {/* /edit-availability */}
+            <Route
+              path="/edit-availability"
+              element={<EditAvailabilityPage />}
             />
             <Route path="/become-teacher" element={<BecomeTeacherPage />} />
           </Routes>

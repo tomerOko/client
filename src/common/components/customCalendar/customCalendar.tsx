@@ -11,7 +11,7 @@ import React from "react";
 import { useCurrentTopicState } from "../../../flows/topic/data/currentTopicState";
 import "./calendar.css";
 
-const ScheduleTable: React.FC = () => {
+const CustomCalendar: React.FC = () => {
   const { currentTopic } = useCurrentTopicState();
 
   const getDayOfWeek = (date: Date): number => {
@@ -117,7 +117,7 @@ const ScheduleTable: React.FC = () => {
   );
 };
 
-export default ScheduleTable;
+export default CustomCalendar;
 
 // 2. wrap the table in a scrollable container (only for width,)
 // 3. use 3 media queries to make the table responsive

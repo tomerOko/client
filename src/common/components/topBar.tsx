@@ -66,6 +66,11 @@ export const TopBar: React.FC = () => {
     setAnchor2El(null);
   };
 
+  const showTopBar = location.pathname !== "/";
+  if (!showTopBar) {
+    return null;
+  }
+
   return (
     <AppBar position="sticky">
       <Toolbar>
@@ -146,7 +151,11 @@ export const TopBar: React.FC = () => {
           <MenuItem component={Link} to="/manage-topics" onClick={handle2Close}>
             Topics
           </MenuItem>
-          <MenuItem component={Link} to="/" onClick={handle2Close}>
+          <MenuItem
+            component={Link}
+            to="/edit-availability"
+            onClick={handle2Close}
+          >
             Availabilities
           </MenuItem>
           <MenuItem component={Link} to="/" onClick={handle2Close}>

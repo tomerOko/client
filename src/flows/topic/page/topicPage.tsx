@@ -1,28 +1,36 @@
 import {
   Box,
-  Grid,
+  Button,
   List,
   ListItem,
   ListItemText,
   Paper,
   Typography,
 } from "@mui/material";
+import { Calendar } from "../../../common/components/clendar/demo-app";
 import { useCurrentTopicState } from "../data/currentTopicState";
-import ScheduleTable from "../../../common/components/calendar/calendar";
 
 export const TopicPage: React.FC = () => {
   const { currentTopic } = useCurrentTopicState();
 
   const { teacher, topic, ratings } = currentTopic.data;
 
-  console.log(currentTopic.data);
+  const buttonContainerStyles = {
+    marginBottom: "10px",
+    display: "flex",
+    gap: "10px",
+  };
 
   return (
     <Box p={3}>
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Typography variant="h5">Teacher Details</Typography>
-        <Typography variant="h4">{`${teacher.firstName} ${teacher.lastName}`}</Typography>
-        <Typography variant="subtitle1">{teacher.description}</Typography>
+        <Typography variant="body1">
+          name: {`${teacher.firstName} ${teacher.lastName}`}
+        </Typography>
+        <Typography variant="subtitle1">
+          about the theacher: {teacher.description}
+        </Typography>
       </Paper>
 
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
@@ -49,7 +57,16 @@ export const TopicPage: React.FC = () => {
 
       <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
         <Typography variant="h5">Availability</Typography>
-        <ScheduleTable />
+
+        <Box style={buttonContainerStyles}>
+          <Button variant="contained" color="primary">
+            Try Call Now
+          </Button>
+          <Button variant="contained" color="primary">
+            chat
+          </Button>
+        </Box>
+        <Calendar />
       </Paper>
     </Box>
   );
