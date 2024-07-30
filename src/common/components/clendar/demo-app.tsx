@@ -12,6 +12,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import { INITIAL_EVENTS, createEventId } from "./event-utils";
 import "./index.css";
+import { J } from "@fullcalendar/core/internal-common";
 
 interface DemoAppState {
   weekendsVisible: boolean;
@@ -46,14 +47,7 @@ export const Calendar: FC<{ showSideBar?: boolean }> = ({
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    if (
-      false
-      // confir(
-      //   `Are you sure you want to delete the event '${clickInfo.event.title}'`
-      // )
-    ) {
-      clickInfo.event.remove();
-    }
+    alert(`new meeting at ${clickInfo.event.start}`);
   };
 
   const handleEvents = (events: any) => {
@@ -76,7 +70,7 @@ export const Calendar: FC<{ showSideBar?: boolean }> = ({
             center: "title",
             right: "dayGridMonth,timeGridWeek,timeGridDay",
           }}
-          initialView="dayGridMonth"
+          initialView="timeGridWeek"
           editable={true}
           selectable={true}
           selectMirror={true}

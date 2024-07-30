@@ -9,8 +9,10 @@ import {
 } from "@mui/material";
 import { Calendar } from "../../../common/components/clendar/demo-app";
 import { useCurrentTopicState } from "../data/currentTopicState";
+import { useNavigate } from "react-router-dom";
 
 export const TopicPage: React.FC = () => {
+  const navigate = useNavigate();
   const { currentTopic } = useCurrentTopicState();
 
   const { teacher, topic, ratings } = currentTopic.data;
@@ -59,10 +61,18 @@ export const TopicPage: React.FC = () => {
         <Typography variant="h5">Availability</Typography>
 
         <Box style={buttonContainerStyles}>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/mock-call")}
+          >
             Try Call Now
           </Button>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/chat")}
+          >
             chat
           </Button>
         </Box>

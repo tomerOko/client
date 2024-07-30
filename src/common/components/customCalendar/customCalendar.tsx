@@ -10,8 +10,10 @@ import {
 import React from "react";
 import { useCurrentTopicState } from "../../../flows/topic/data/currentTopicState";
 import "./calendar.css";
+import { useNavigate } from "react-router-dom";
 
 const CustomCalendar: React.FC = () => {
+  const navigate = useNavigate();
   const { currentTopic } = useCurrentTopicState();
 
   const getDayOfWeek = (date: Date): number => {
@@ -67,14 +69,6 @@ const CustomCalendar: React.FC = () => {
 
   return (
     <Box>
-      <Box style={buttonContainerStyles}>
-        <Button variant="contained" color="primary">
-          Try Call Now
-        </Button>
-        <Button variant="contained" color="primary">
-          chat
-        </Button>
-      </Box>
       <Box style={containerStyles} className="calendarContainer">
         <Box style={tableStyles} className="calendarTable">
           {currentTopic.data.availability.map((block, index) => {
