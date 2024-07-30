@@ -1,21 +1,24 @@
-import React from "react";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ChatIcon from "@mui/icons-material/Chat";
+import HomeIcon from "@mui/icons-material/Home";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import SettingsIcon from "@mui/icons-material/Settings";
 import {
   AppBar,
-  Toolbar,
+  Badge,
   IconButton,
-  Typography,
   Menu,
   MenuItem,
+  Toolbar,
+  Typography,
 } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
-import HomeIcon from "@mui/icons-material/Home";
-import ChatIcon from "@mui/icons-material/Chat";
-import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 export const TopBar: React.FC = () => {
   const location = useLocation();
+  // const { notifications } = useNotificationsState(); // smame for chat
 
   const getPageTitle = (pathname: string) => {
     switch (pathname) {
@@ -84,7 +87,15 @@ export const TopBar: React.FC = () => {
           <CalendarMonthIcon />
         </IconButton>
         <IconButton color="inherit" component={Link} to="/chat">
-          <ChatIcon />
+          <Badge badgeContent={7} color="error">
+            <ChatIcon />
+          </Badge>
+        </IconButton>
+        {/* notifications */}
+        <IconButton color="inherit" component={Link} to="/notifications">
+          <Badge badgeContent={4} color="error">
+            <NotificationsIcon />
+          </Badge>
         </IconButton>
         <IconButton color="inherit" onClick={handleClick}>
           <SettingsIcon />

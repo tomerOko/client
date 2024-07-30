@@ -30,7 +30,7 @@ export const PostCallModal: React.FC = () => {
           Call Duration: {call.duration} seconds
         </Typography>
         <Typography variant="body1">
-          Call Price: ${(call.duration / 3600) * 100}
+          Call Price: ${Math.floor((call.duration / 3600) * 100)}
         </Typography>
         <Box display="flex" gap={2}>
           <Button
@@ -38,7 +38,7 @@ export const PostCallModal: React.FC = () => {
             color="primary"
             onClick={() => navigate("/")}
           >
-            Go Back
+            Home
           </Button>
           <Button
             variant="contained"
