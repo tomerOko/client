@@ -2,9 +2,12 @@ import React from "react";
 import { Card, CardContent, Typography, Button, Grid } from "@mui/material";
 import { Meeting } from "../data/nextMeetingsState";
 import ChatIcon from "@mui/icons-material/Chat";
+import VideoCallIcon from "@mui/icons-material/VideoCall";
 import CancelIcon from "@mui/icons-material/Cancel";
+import { useNavigate } from "react-router-dom";
 
 export const MeetingCard: React.FC<{ meeting: Meeting }> = ({ meeting }) => {
+  const navigate = useNavigate();
   const { consultant, topic, date } = meeting;
   const meetingDate = new Date(date).toLocaleString();
 
@@ -52,6 +55,15 @@ export const MeetingCard: React.FC<{ meeting: Meeting }> = ({ meeting }) => {
             <div style={{ marginTop: "16px" }}>
               <Button variant="contained" startIcon={<ChatIcon />}>
                 Chat
+              </Button>
+              <Button
+                variant="contained"
+                startIcon={<VideoCallIcon />}
+                onClick={() => {
+                  navigate("/mock-call");
+                }}
+              >
+                Go to meeting
               </Button>
               <Button
                 variant="outlined"

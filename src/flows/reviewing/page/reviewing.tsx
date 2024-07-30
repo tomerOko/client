@@ -1,12 +1,28 @@
-import React from 'react';
-import { Box, Typography, TextField, Button, Rating, Grid, Paper } from '@mui/material';
+import React from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Rating,
+  Grid,
+  Paper,
+} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export const ReviewingPage = () => {
+  const navigate = useNavigate();
   const [generalRating, setGeneralRating] = React.useState<number | null>(0);
-  const [communicationRating, setCommunicationRating] = React.useState<number | null>(0);
-  const [helpfulnessRating, setHelpfulnessRating] = React.useState<number | null>(0);
-  const [consultantTimeRating, setConsultantTimeRating] = React.useState<number | null>(0);
-  const [comment, setComment] = React.useState('');
+  const [communicationRating, setCommunicationRating] = React.useState<
+    number | null
+  >(0);
+  const [helpfulnessRating, setHelpfulnessRating] = React.useState<
+    number | null
+  >(0);
+  const [consultantTimeRating, setConsultantTimeRating] = React.useState<
+    number | null
+  >(0);
+  const [comment, setComment] = React.useState("");
 
   const handleSubmit = () => {
     // Handle the submit logic here
@@ -17,6 +33,7 @@ export const ReviewingPage = () => {
       consultantTimeRating,
       comment,
     });
+    navigate("/search");
   };
 
   return (
@@ -24,10 +41,8 @@ export const ReviewingPage = () => {
       <Typography variant="h4" gutterBottom>
         Review & Rating
       </Typography>
-      
-      <Typography variant="h6">
-        General Rating
-      </Typography>
+
+      <Typography variant="h6">General Rating</Typography>
       <Rating
         name="general-rating"
         value={generalRating}
@@ -42,9 +57,7 @@ export const ReviewingPage = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6} md={4}>
-          <Typography>
-            Communication Skills
-          </Typography>
+          <Typography>Communication Skills</Typography>
           <Rating
             name="communication-rating"
             value={communicationRating}
@@ -54,9 +67,7 @@ export const ReviewingPage = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <Typography>
-            Helpfulness of Consulting
-          </Typography>
+          <Typography>Helpfulness of Consulting</Typography>
           <Rating
             name="helpfulness-rating"
             value={helpfulnessRating}
@@ -66,9 +77,7 @@ export const ReviewingPage = () => {
           />
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
-          <Typography>
-            Consultant Took Too Long
-          </Typography>
+          <Typography>Consultant Took Too Long</Typography>
           <Rating
             name="consultant-time-rating"
             value={consultantTimeRating}
@@ -82,7 +91,7 @@ export const ReviewingPage = () => {
       <Typography variant="h6" sx={{ marginTop: 2 }}>
         Comment Section
       </Typography>
-      <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2 }}>
+      <Box sx={{ display: "flex", alignItems: "center", marginBottom: 2 }}>
         <TextField
           fullWidth
           multiline
@@ -91,20 +100,16 @@ export const ReviewingPage = () => {
           value={comment}
           onChange={(e) => setComment(e.target.value)}
         />
-        <Button
-          variant="contained"
-          color="primary"
-          sx={{ marginLeft: 1, height: 'fit-content' }}
-          onClick={() => console.log(comment)}
-        >
-          Submit
-        </Button>
       </Box>
 
-      <Button variant="contained" color="secondary" fullWidth onClick={handleSubmit}>
+      <Button
+        variant="contained"
+        color="secondary"
+        fullWidth
+        onClick={handleSubmit}
+      >
         Submit Review
       </Button>
     </Paper>
   );
 };
-
