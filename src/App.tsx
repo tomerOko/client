@@ -17,6 +17,7 @@ import { BecomeTeacherPage } from "./flows/becomeTeacher/page/becomeTeacherPage"
 import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
 import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
 import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
+import { EarningsPage } from "./flows/earnings/page/earningsPage";
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
               element={<EditAvailabilityPage />}
             />
             <Route path="/become-teacher" element={<BecomeTeacherPage />} />
+            <Route path="/earnings" element={<EarningsPage />} />
           </Routes>
         </Router>
       </ThemeProvider>

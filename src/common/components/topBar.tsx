@@ -158,7 +158,7 @@ export const TopBar: React.FC = () => {
           >
             Availabilities
           </MenuItem>
-          <MenuItem component={Link} to="/" onClick={handle2Close}>
+          <MenuItem component={Link} to="/earnings" onClick={handle2Close}>
             Earnings
           </MenuItem>
           <MenuItem
