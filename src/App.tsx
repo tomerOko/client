@@ -18,6 +18,7 @@ import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
 import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
 import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
 import { EarningsPage } from "./flows/earnings/page/earningsPage";
+import { MockVideoCallPage } from "./flows/meet/page/mockMeet";
 
 const App = () => {
   return (
@@ -35,15 +36,14 @@ const App = () => {
             <Route path="/payment-methods" element={<PaymentMethods />} />
             <Route path="/reviewing" element={<ReviewingPage />} />
             <Route path="/calls-history" element={<CallsHistoryPage />} />
+            <Route path="/mock-call" element={<MockVideoCallPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/next-meetings" element={<NextMeetings />} />
-            {/* teacher routes */}
             <Route path="/manage-topics" element={<ManageTopicsPage />} />
             <Route
               path="/manage-bank-accounts"
               element={<ManageBankAccountsPage />}
             />
-            {/* /edit-availability */}
             <Route
               path="/edit-availability"
               element={<EditAvailabilityPage />}
