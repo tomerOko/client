@@ -47,3 +47,5 @@ export const apiStoreHookFactory = <T extends EndpointName>(key: T) => {
   }));
   return useApiStore;
 };
+
+export const hallow = 5;

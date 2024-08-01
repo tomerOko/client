@@ -2,7 +2,7 @@
 import axios from "axios";
 import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
-import { apiStoreHookFactory } from "../hooks/useApiStore";
+import { apiStoreHookFactory } from "./useApiStore";
 
 const baseURL = process.env.REACT_APP_API_URL || "http://localhost:3000";
 

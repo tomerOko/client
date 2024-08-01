@@ -1,7 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { fetchHookFactory } from "../../../common/api/apiService";
+import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { useSignupState } from "../data/signupState";
 
 const useFetchPincode = fetchHookFactory("SEND_PINCODE");
