@@ -1,10 +1,10 @@
-import { FC, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
 import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router";
+import { FC } from "react";
+import { useForm } from "react-hook-form";
+import { fetchHookFactory } from "../../../common/api/apiService";
 import { useSignupState } from "../data/signupState";
-import { fetchFactory } from "../../../common/api/apiService";
-import { apiStoreHookFactory } from "../../../common/hooks/useApiStore";
+
+const useFetchPincode = fetchHookFactory("SEND_PINCODE");
 
 export const SignupPincodeForm: FC = () => {
   const {
@@ -15,8 +15,7 @@ export const SignupPincodeForm: FC = () => {
 
   const { setSignupDetails, signupDetails } = useSignupState();
 
-  const fetchUser = fetchFactory("SEND_PINCODE");
-  const { error, loading } = apiStoreHookFactory("SEND_PINCODE")();
+  const { fetch: fetchUser, loading, error } = useFetchPincode();
 
   const onSubmit = async (data: any) => {
     const { email } = data;

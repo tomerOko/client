@@ -23,8 +23,8 @@ interface ApiState<T extends EndpointName> {
 }
 
 export const apiStoreHookFactory = <T extends EndpointName>(key: T) => {
-  //gets the key only for the type
   const useApiStore = create<ApiState<T>>((set, get) => ({
+    // create from "zustand"; returns an hook function
     loading: false,
     error: null,
     cache: {},
