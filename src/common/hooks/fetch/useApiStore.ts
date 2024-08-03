@@ -1,5 +1,5 @@
 import { pathMap } from "events-tomeroko3";
-import create from "zustand";
+import { create } from "zustand";
 import z from "zod";
 
 type EndpointName = keyof typeof pathMap;

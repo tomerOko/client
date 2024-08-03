@@ -19,13 +19,9 @@ export const SignupPincodeForm: FC = () => {
 
   const onSubmit = async (data: any) => {
     const { email } = data;
-
     await fetchUser({
-      body: {
-        email,
-      },
+      email,
     });
-
     setSignupDetails({
       isSent: true,
       sentAt: Date.now(),
