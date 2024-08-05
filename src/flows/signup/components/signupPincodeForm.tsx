@@ -15,11 +15,11 @@ export const SignupPincodeForm: FC = () => {
 
   const { setSignupDetails, signupDetails } = useSignupState();
 
-  const { fetch: fetchUser, loading, error } = useFetchPincode();
+  const { fetch: fetchPincode, loading, error } = useFetchPincode();
 
   const onSubmit = async (data: any) => {
     const { email } = data;
-    await fetchUser({
+    await fetchPincode({
       email,
     });
     setSignupDetails({

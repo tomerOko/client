@@ -1,10 +1,9 @@
 import { SignupDetailsForm } from "../components/signupDetailsForm";
-import { SignupPincodeForm } from "../components/signupPincodeForm"
+import { SignupPincodeForm } from "../components/signupPincodeForm";
 import { useSignupState } from "../data/signupState";
 
 export const SignupPage = () => {
-
-  const {signupDetails} = useSignupState()
+  const { signupDetails } = useSignupState();
 
   return (
     <div style={{ textAlign: "center" }}>
@@ -14,5 +13,4 @@ export const SignupPage = () => {
       </div>
     </div>
   );
-
-}
+};

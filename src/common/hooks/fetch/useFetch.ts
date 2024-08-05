@@ -4,7 +4,7 @@ import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
 import { apiStoreHookFactory } from "./useApiStore";
 
-const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4001";
+const baseURL = process.env.REACT_APP_API_URL || "http://localhost";
 
 const apiClient = axios.create({
   baseURL,
@@ -35,15 +35,18 @@ export const fetchHookFactory = <T extends EndpointName>(endpointName: T) => {
         if (cachedData) {
           return cachedData;
         }
+        console.log("fetching", endpointName, payload);
         const response = await apiClient[endpoint.method](
-          `${endpoint.service}/${endpoint.path}`,
+          `${endpoint.service}${endpoint.path}`,
           payload
         );
+        console.log("fetched", endpointName, response);
         const validatedResponse = endpoint.responseValidation.parse(response); // Validate response data
         setCache(cacheKey, validatedResponse);
         setLoading(false);
         return validatedResponse;
       } catch (error) {
+        console.error("error at fething", endpointName, error);
         setLoading(false);
         setError(error);
         return null;
