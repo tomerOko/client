@@ -15,37 +15,40 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useAuthStore } from "../data/authenticatedToken";
+
+const getPageTitle = (pathname: string) => {
+  switch (pathname) {
+    case "/settings":
+      return "Settings";
+    case "/search":
+      return "Search";
+    case "/chat":
+      return "Chat";
+    case "/user-details":
+      return "User Details";
+    case "/calls-history":
+      return "Calls History";
+    case "/payment-methods":
+      return "Payment Methods";
+    case "/logout":
+      return "Logout";
+    case "/reviewing":
+      return "Review & Rating";
+    case "/next-meetings":
+      return "Next Meetings";
+    case "/become-teacher":
+      return "Become Teacher";
+    default:
+      return "";
+  }
+};
 
 export const TopBar: React.FC = () => {
   const location = useLocation();
   // const { notifications } = useNotificationsState(); // smame for chat
 
-  const getPageTitle = (pathname: string) => {
-    switch (pathname) {
-      case "/settings":
-        return "Settings";
-      case "/search":
-        return "Search";
-      case "/chat":
-        return "Chat";
-      case "/user-details":
-        return "User Details";
-      case "/calls-history":
-        return "Calls History";
-      case "/payment-methods":
-        return "Payment Methods";
-      case "/logout":
-        return "Logout";
-      case "/reviewing":
-        return "Review & Rating";
-      case "/next-meetings":
-        return "Next Meetings";
-      case "/become-teacher":
-        return "Become Teacher";
-      default:
-        return "";
-    }
-  };
+  const { clearToken } = useAuthStore();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchor2El, setAnchor2El] = React.useState<null | HTMLElement>(null);
@@ -182,6 +185,7 @@ export const TopBar: React.FC = () => {
             to="/"
             onClick={() => {
               handleClose();
+              clearToken();
               alert("loged out");
             }}
           >

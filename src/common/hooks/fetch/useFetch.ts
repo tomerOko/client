@@ -4,6 +4,7 @@ import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
 import { apiStoreHookFactory } from "./useApiStore";
 import { formatZodError } from "../../utils/formatZodError";
+import { useAuthStore } from "../../data/authenticatedToken";
 
 const baseURL = process.env.REACT_APP_API_URL || "http://localhost";
 
@@ -11,6 +12,17 @@ const apiClient = axios.create({
   baseURL,
   headers: { "Content-Type": "application/json" },
 });
+
+apiClient.interceptors.request.use(
+  (config) => {
+    const { token } = useAuthStore.getState();
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 type Endpoints = typeof pathMap;
 

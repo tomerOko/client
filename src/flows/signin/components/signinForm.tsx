@@ -1,9 +1,9 @@
 import { Button, TextField } from "@mui/material";
 import { FC } from "react";
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useSigninDetailsState } from "../data/signinState";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
+import { useAuthStore } from "../../../common/data/authenticatedToken";
 
 const useFetchSignin = fetchHookFactory("LOGIN");
 
@@ -13,7 +13,8 @@ export const SigninForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { setSigninDetails } = useSigninDetailsState();
+  const { setToken } = useAuthStore();
+
   const navigate = useNavigate();
   const { fetch: fetchLogin, error, loading } = useFetchSignin();
 
@@ -24,11 +25,8 @@ export const SigninForm: FC = () => {
       methodSecret: data.password,
     });
 
-    setSigninDetails({
-      email: data.email,
-      password: data.password,
-    });
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    setToken(result?.token || null);
+
     navigate("/search");
   };
 
