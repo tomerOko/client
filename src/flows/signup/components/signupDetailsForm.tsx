@@ -18,7 +18,6 @@ export const SignupDetailsForm: FC = () => {
   const { fetch: fetchSignup, loading, error } = useFetchSignup();
 
   const onSubmit = async (data: any) => {
-    console.log(data);
     try {
       const result = await fetchSignup({
         email: signupDetails.email,

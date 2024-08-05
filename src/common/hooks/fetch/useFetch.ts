@@ -3,6 +3,7 @@ import axios from "axios";
 import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
 import { apiStoreHookFactory } from "./useApiStore";
+import { formatZodError } from "../../utils/formatZodError";
 
 const baseURL = process.env.REACT_APP_API_URL || "http://localhost";
 
@@ -35,17 +36,21 @@ export const fetchHookFactory = <T extends EndpointName>(endpointName: T) => {
         if (cachedData) {
           return cachedData;
         }
-        console.log("fetching", endpointName, payload);
         const response = await apiClient[endpoint.method](
           `${endpoint.service}${endpoint.path}`,
           payload
         );
-        console.log("fetched", endpointName, response);
-        const validatedResponse = endpoint.responseValidation.parse(response); // Validate response data
+        const validatedResponse = endpoint.responseValidation.parse(
+          response.data
+        );
         setCache(cacheKey, validatedResponse);
         setLoading(false);
         return validatedResponse;
-      } catch (error) {
+      } catch (error: any) {
+        const isZodError = error.issues !== undefined;
+        if (isZodError) {
+          error = formatZodError(error);
+        }
         console.error("error at fething", endpointName, error);
         setLoading(false);
         setError(error);

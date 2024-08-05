@@ -97,49 +97,7 @@ export const TopBar: React.FC = () => {
             <NotificationsIcon />
           </Badge>
         </IconButton>
-        <IconButton color="inherit" onClick={handleClick}>
-          <SettingsIcon />
-        </IconButton>
-        <Menu
-          id="menu-appbar"
-          anchorEl={anchorEl}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          keepMounted
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "right",
-          }}
-          open={open}
-          onClose={handleClose}
-          style={{ marginTop: 40 }}
-        >
-          <MenuItem component={Link} to="/user-details" onClick={handleClose}>
-            User Details
-          </MenuItem>
-          <MenuItem component={Link} to="/calls-history" onClick={handleClose}>
-            Calls History
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/payment-methods"
-            onClick={handleClose}
-          >
-            Payment Methods
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/"
-            onClick={() => {
-              handleClose();
-              alert("loged out");
-            }}
-          >
-            Logout
-          </MenuItem>
-        </Menu>
+
         <IconButton color="inherit" onClick={handle2Click}>
           <LocalLibraryIcon />
         </IconButton>
@@ -185,6 +143,49 @@ export const TopBar: React.FC = () => {
             onClick={handle2Close}
           >
             Become Teacher
+          </MenuItem>
+        </Menu>
+        <IconButton color="inherit" onClick={handleClick}>
+          <SettingsIcon />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={open}
+          onClose={handleClose}
+          style={{ marginTop: 40 }}
+        >
+          <MenuItem component={Link} to="/user-details" onClick={handleClose}>
+            User Details
+          </MenuItem>
+          <MenuItem component={Link} to="/calls-history" onClick={handleClose}>
+            Calls History
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/payment-methods"
+            onClick={handleClose}
+          >
+            Payment Methods
+          </MenuItem>
+          <MenuItem
+            component={Link}
+            to="/"
+            onClick={() => {
+              handleClose();
+              alert("loged out");
+            }}
+          >
+            Logout
           </MenuItem>
         </Menu>
       </Toolbar>

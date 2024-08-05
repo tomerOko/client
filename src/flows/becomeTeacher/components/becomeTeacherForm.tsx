@@ -8,49 +8,21 @@ import {
   MenuItem,
   Checkbox,
   FormControlLabel,
+  Autocomplete,
 } from "@mui/material";
 import * as z from "zod";
+import {
+  languages,
+  genders,
+  countries,
+  teacherValidationProps,
+} from "events-tomeroko3";
 
 // Define enums for genders, languages, and countries
-enum Gender {
-  Male = "male",
-  Female = "female",
-  Other = "other",
-}
-
-enum Language {
-  English = "english",
-  Spanish = "spanish",
-  French = "french",
-}
-
-enum Country {
-  USA = "USA",
-  Canada = "Canada",
-  Mexico = "Mexico",
-}
 
 // Define Zod schema
-const schema = z.object({
-  email: z.string().email(),
-  age: z.number().min(0),
-  gender: z
-    .string()
-    .refine((value) => value in Gender)
-    .transform((value) => value as Gender),
-  languages: z.array(
-    z
-      .string()
-      .refine((value) => value in Language)
-      .transform((value) => value as Language)
-  ),
-  country: z
-    .string()
-    .refine((value) => value in Country)
-    .transform((value) => value as Country),
-  profilePictureUrl: z.string().url(),
-  aboutMe: z.string(),
-});
+const schema = z.object(teacherValidationProps);
+const languageOptions = Object.values(languages);
 
 // Define form data type based on the Zod schema
 type FormData = z.infer<typeof schema>;
@@ -64,9 +36,7 @@ export const BecomeTeacherForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-  };
+  const onSubmit = (data: FormData) => {};
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -117,7 +87,7 @@ export const BecomeTeacherForm: React.FC = () => {
             fullWidth
             margin="normal"
           >
-            {Object.values(Gender).map((gender) => (
+            {Object.values(genders).map((gender) => (
               <MenuItem key={gender} value={gender}>
                 {gender}
               </MenuItem>
@@ -130,31 +100,27 @@ export const BecomeTeacherForm: React.FC = () => {
         control={control}
         defaultValue={[]}
         render={({ field }) => (
-          <div>
-            {Object.values(Language).map((language) => (
-              <FormControlLabel
-                key={language}
-                control={
-                  <Checkbox
-                    {...field}
-                    value={language}
-                    checked={field.value.includes(language)}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        field.onChange([...field.value, language]);
-                      } else {
-                        field.onChange(
-                          field.value.filter((val) => val !== language)
-                        );
-                      }
-                    }}
-                  />
-                }
-                label={language}
+          <Autocomplete
+            multiple
+            options={languageOptions}
+            getOptionLabel={(option) => option}
+            renderOption={(props, option, { selected }) => (
+              <li {...props}>
+                <Checkbox style={{ marginRight: 8 }} checked={selected} />
+                {option}
+              </li>
+            )}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Languages"
+                placeholder="Select languages"
               />
-            ))}
-            {errors.languages && <p>{errors.languages.message}</p>}
-          </div>
+            )}
+            value={field.value}
+            onChange={(_, data) => field.onChange(data)}
+          />
         )}
       />
       <Controller
@@ -171,7 +137,7 @@ export const BecomeTeacherForm: React.FC = () => {
             fullWidth
             margin="normal"
           >
-            {Object.values(Country).map((country) => (
+            {Object.values(countries).map((country) => (
               <MenuItem key={country} value={country}>
                 {country}
               </MenuItem>
