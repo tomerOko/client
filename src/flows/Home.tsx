@@ -31,7 +31,6 @@ const Home: React.FC = () => {
   } = useForm();
 
   const onSubmit = (data: any) => {
-    console.log("Form Data:", data);
     // if (socket) {
     //   socket.emit('message', data.message);
     // }

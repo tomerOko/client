@@ -26,7 +26,6 @@ export const SignupDetailsForm: FC = () => {
         lastName: data.lastName,
         password: data.password,
       });
-      console.log(result);
     } catch (error) {
       console.log(error);
     }

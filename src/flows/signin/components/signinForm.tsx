@@ -3,7 +3,7 @@ import { FC } from "react";
 import { set, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
-import { useAuthStore } from "../../../common/data/authenticatedToken";
+import { useAuthStore } from "../../../common/data/authStore";
 
 const useFetchSignin = fetchHookFactory("LOGIN");
 
@@ -13,10 +13,10 @@ export const SigninForm: FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { setToken } = useAuthStore();
+  const { set } = useAuthStore();
 
   const navigate = useNavigate();
-  const { fetch: fetchLogin, error, loading } = useFetchSignin();
+  const { fetch: fetchLogin } = useFetchSignin();
 
   const onSubmit = async (data: any) => {
     const result = await fetchLogin({
@@ -25,7 +25,11 @@ export const SigninForm: FC = () => {
       methodSecret: data.password,
     });
 
-    setToken(result?.token || null);
+    if (!result) {
+      // Handle error
+      return;
+    }
+    set({ token: result.token, user: result.user });
 
     navigate("/search");
   };

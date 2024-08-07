@@ -26,13 +26,7 @@ export const ReviewingPage = () => {
 
   const handleSubmit = () => {
     // Handle the submit logic here
-    console.log({
-      generalRating,
-      communicationRating,
-      helpfulnessRating,
-      consultantTimeRating,
-      comment,
-    });
+
     navigate("/search");
   };
 

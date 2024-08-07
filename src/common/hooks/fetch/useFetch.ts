@@ -4,7 +4,7 @@ import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
 import { apiStoreHookFactory } from "./useApiStore";
 import { formatZodError } from "../../utils/formatZodError";
-import { useAuthStore } from "../../data/authenticatedToken";
+import { useAuthStore } from "../../data/authStore";
 
 const baseURL = process.env.REACT_APP_API_URL || "http://localhost";
 
@@ -15,8 +15,10 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const { token } = useAuthStore.getState();
+    const authState = useAuthStore.getState() || {};
+    const token = authState?.data?.token;
     if (token) {
+      console.log("token", token);
       config.headers.Authorization = token;
     }
     return config;

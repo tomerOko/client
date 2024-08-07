@@ -1,5 +1,5 @@
 // src/components/UserForm.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -12,20 +12,39 @@ import {
 } from "@mui/material";
 import * as z from "zod";
 import {
-  languages,
+  languages as allLanguages,
   genders,
   countries,
   teacherValidationProps,
 } from "events-tomeroko3";
-
-// Define enums for genders, languages, and countries
+import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
+import { useAuthStore } from "../../../common/data/authStore";
+import { all } from "axios";
 
 // Define Zod schema
-const schema = z.object(teacherValidationProps);
-const languageOptions = Object.values(languages);
+const {
+  aboutMe,
+  age,
+  country,
+  gender,
+  languages,
+  lastName,
+  profilePictureUrl,
+} = teacherValidationProps;
+const schema = z.object({
+  aboutMe,
+  age: z.string(),
+  country,
+  gender,
+  languages,
+  profilePictureUrl,
+});
+const languageOptions = Object.values(allLanguages);
 
 // Define form data type based on the Zod schema
 type FormData = z.infer<typeof schema>;
+
+const useFetchBecomeTeacher = fetchHookFactory("BECOME_TEACHER");
 
 export const BecomeTeacherForm: React.FC = () => {
   const {
@@ -36,36 +55,36 @@ export const BecomeTeacherForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const onSubmit = (data: FormData) => {};
+  const { fetch: fetchBecomeTeacher } = useFetchBecomeTeacher();
+  const { ID, email, firstName, lastName } = useAuthStore()?.data?.user || {};
+
+  const onSubmit = async (data: FormData) => {
+    await fetchBecomeTeacher({
+      aboutMe: data.aboutMe,
+      age: Number(data.age),
+      country: data.country,
+      gender: data.gender,
+      languages: data.languages,
+      profilePictureUrl: data.profilePictureUrl,
+      userID: ID as string,
+      email: email as string,
+      firstName: firstName as string,
+      lastName: lastName as string,
+    });
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Controller
-        name="email"
-        control={control}
-        defaultValue=""
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Email"
-            variant="outlined"
-            error={!!errors.email}
-            helperText={errors.email?.message}
-            fullWidth
-            margin="normal"
-          />
-        )}
-      />
-      <Controller
         name="age"
         control={control}
-        defaultValue={0}
+        defaultValue={"0"}
         render={({ field }) => (
           <TextField
             {...field}
             label="Age"
             variant="outlined"
-            type="number"
+            type="string"
             error={!!errors.age}
             helperText={errors.age?.message}
             fullWidth

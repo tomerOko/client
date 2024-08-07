@@ -15,7 +15,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useAuthStore } from "../data/authenticatedToken";
+import { useAuthStore } from "../data/authStore";
 
 const getPageTitle = (pathname: string) => {
   switch (pathname) {
@@ -48,7 +48,7 @@ export const TopBar: React.FC = () => {
   const location = useLocation();
   // const { notifications } = useNotificationsState(); // smame for chat
 
-  const { clearToken } = useAuthStore();
+  const { clear } = useAuthStore();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchor2El, setAnchor2El] = React.useState<null | HTMLElement>(null);
@@ -185,7 +185,7 @@ export const TopBar: React.FC = () => {
             to="/"
             onClick={() => {
               handleClose();
-              clearToken();
+              clear();
               alert("loged out");
             }}
           >

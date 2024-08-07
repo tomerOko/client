@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
-import { TextField, Button, Container, Grid, Box, Typography, MenuItem } from '@mui/material';
-import { useUserDetailsState } from '../data/userDetailsState';
-
-
+import React, { useState } from "react";
+import {
+  TextField,
+  Button,
+  Container,
+  Grid,
+  Box,
+  Typography,
+  MenuItem,
+} from "@mui/material";
+import { useUserDetailsState } from "../data/userDetailsState";
 
 const UserDetailsPage: React.FC = () => {
-
-  const { setUserDetails, userDetails} = useUserDetailsState()
-
+  const { setUserDetails, userDetails } = useUserDetailsState();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -89,7 +93,7 @@ const UserDetailsPage: React.FC = () => {
               onChange={handleChange}
               variant="outlined"
             >
-              {['USA', 'Canada', 'UK'].map((country) => (
+              {["USA", "Canada", "UK"].map((country) => (
                 <MenuItem key={country} value={country}>
                   {country}
                 </MenuItem>
@@ -106,7 +110,7 @@ const UserDetailsPage: React.FC = () => {
               onChange={handleChange}
               variant="outlined"
             >
-              {['English', 'French', 'Spanish'].map((language) => (
+              {["English", "French", "Spanish"].map((language) => (
                 <MenuItem key={language} value={language}>
                   {language}
                 </MenuItem>
