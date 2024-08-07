@@ -36,11 +36,9 @@ export const SignupPincodeForm: FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto" }}>
-      <h3>Enter your email to receive a pincode</h3>
+    <div style={{ maxWidth: "400px" }}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="email">Email:</label>
-        <div style={{ margin: "1rem 0" }}>
+        <div style={{ margin: "1rem 0", width: "300px" }}>
           <TextField
             type="email"
             id="email"
@@ -48,14 +46,24 @@ export const SignupPincodeForm: FC = () => {
             variant="outlined"
             size="small"
             fullWidth
+            placeholder="Email"
+            InputLabelProps={{
+              shrink: false,
+            }}
           />
           {errors.email && (
             <span style={{ color: "red" }}>This field is required</span>
           )}
         </div>
 
-        <Button type="submit" variant="contained" color="primary" fullWidth>
-          send pincode
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+          style={{ width: "300px" }}
+        >
+          send me a pincode
         </Button>
       </form>
     </div>

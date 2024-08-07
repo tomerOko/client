@@ -72,7 +72,9 @@ export const TopBar: React.FC = () => {
     setAnchor2El(null);
   };
 
-  const showTopBar = location.pathname !== "/";
+  const pagesWithoutTopBar = ["/", "/signup", "/signin"];
+
+  const showTopBar = !pagesWithoutTopBar.includes(location.pathname);
   if (!showTopBar) {
     return null;
   }
