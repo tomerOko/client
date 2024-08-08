@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import logo from "../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
+import { ActionButtonBase } from "../styledComponents";
+import { useMemo } from "react";
 
 const TopBarContainer = styled.div`
   display: flex;
@@ -36,61 +38,58 @@ const ActionButtonsContainer = styled.div`
   justify-content: end;
 `;
 
-const ActionButtonBase = styled.button`
-  width: 100px;
-  height: 50px;
-  margin: 5px;
-  border: none;
-  border-radius: 12px;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 17px;
-  line-height: 21px;
-  text-align: center;
-`;
-
 const SignUpButton = styled(ActionButtonBase)`
   color: #121417;
   background-color: #f0f2f5;
 `;
 
-const SignInButton = styled(ActionButtonBase)`
-  color: #ffffff;
-  background-color: #1a80e6;
-`;
+const SignInButton = styled(ActionButtonBase)``;
 
-const NotLoggedInTopBarButtons = () => {
+const NotLoggedInTopBarButtons = ({ showSignup = true, showSingin = true }) => {
   const navigete = useNavigate();
-  return (
-    <ActionButtonsContainer id="action-buttons-container">
-      <SignUpButton
-        id="sign-up-button"
-        onClick={() => {
-          navigete("/signup");
-        }}
-      >
-        Sign Up
-      </SignUpButton>
-      <SignInButton
+
+  const SigninButton = useMemo(() => {
+    if (!showSingin) return;
+    const ButtonStyle = showSignup ? SignInButton : SignUpButton;
+    return (
+      <ButtonStyle
         id="sign-in-button"
         onClick={() => {
           navigete("/signin");
         }}
       >
         Sign In
-      </SignInButton>
+      </ButtonStyle>
+    );
+  }, [showSignup]);
+
+  return (
+    <ActionButtonsContainer id="action-buttons-container">
+      {showSignup && (
+        <SignUpButton
+          id="sign-up-button"
+          onClick={() => {
+            navigete("/signup");
+          }}
+        >
+          Sign Up
+        </SignUpButton>
+      )}
+      {SigninButton}
     </ActionButtonsContainer>
   );
 };
 
-export const NotLoggedInTopBar = ({ showButtons = true }) => {
+export const NotLoggedInTopBar = ({ showSignup = true, showSingin = true }) => {
   return (
     <TopBarContainer id="top-bar-container">
       <LogoContainer id="logo-container">
         <Logo id="logo" />
       </LogoContainer>
-      {showButtons && <NotLoggedInTopBarButtons />}
+      <NotLoggedInTopBarButtons
+        showSignup={showSignup}
+        showSingin={showSingin}
+      />
     </TopBarContainer>
   );
 };

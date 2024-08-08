@@ -36,3 +36,22 @@ export const BackgroundImageContainerBase = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+export const ActionButtonBase = styled.button`
+  width: 100px;
+  height: 50px;
+  border: none;
+  border-radius: 12px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 21px;
+  text-align: center;
+  color: #ffffff;
+  background-color: #1a80e6;
+`;
+
+export const FormButton = styled(ActionButtonBase)`
+  width: 100px;
+`;

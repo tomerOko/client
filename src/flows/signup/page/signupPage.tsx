@@ -10,6 +10,8 @@ import { SignupDetailsForm } from "../components/signupDetailsForm";
 import { SignupPincodeForm } from "../components/signupPincodeForm";
 import { useSignupState } from "../data/signupState";
 import signupImage from "../assets/test.png";
+import { useMemo } from "react";
+import { SigninForm } from "../components/signinForm";
 
 const TopBackgroundContainer = styled(BackgroundImageContainerBase)`
   background-image: url(${signupImage});
@@ -22,7 +24,6 @@ const TopBackgroundContainer = styled(BackgroundImageContainerBase)`
 const BottomBackgroundContainer = styled(BackgroundImageContainerBase)`
   height: 35vh;
   justify-content: left;
-  margin-top: 30px;
   width: 80%;
 `;
 
@@ -37,32 +38,41 @@ const SignupText = styled.div`
   color: black;
 `;
 
-const SignuipContentContainer = styled(ContentContainer)`
+const SignupContentContainer = styled(ContentContainer)`
   gap: 0px;
 `;
 
-export const SignupPage = () => {
+export const SignupPage = ({ isSignUp = true }) => {
   const { signupDetails } = useSignupState();
+
+  const formToShow = useMemo(() => {
+    if (!isSignUp) {
+      return <SigninForm />;
+    }
+    if (signupDetails.isSent) {
+      return <SignupDetailsForm />;
+    } else {
+      return <SignupPincodeForm />;
+    }
+  }, [signupDetails.isSent, isSignUp]);
+
+  const textToShow = useMemo(() => {
+    if (!isSignUp) {
+      return "Welcome back!";
+    } else {
+      return "Join our community";
+    }
+  }, [isSignUp]);
 
   return (
     <Page id="page-container">
       <MainColumn id="main-column">
-        <NotLoggedInTopBar showButtons={false} />
-        <SignuipContentContainer id="content-container">
+        <NotLoggedInTopBar showSignup={!isSignUp} showSingin={isSignUp} />
+        <SignupContentContainer id="content-container">
           <TopBackgroundContainer />
-          <SignupText>
-            {signupDetails.isSent
-              ? "Enter the code we sent you"
-              : "join our community"}
-          </SignupText>
-          <BottomBackgroundContainer>
-            {signupDetails.isSent ? (
-              <SignupDetailsForm />
-            ) : (
-              <SignupPincodeForm />
-            )}
-          </BottomBackgroundContainer>
-        </SignuipContentContainer>
+          <SignupText>{textToShow}</SignupText>
+          <BottomBackgroundContainer>{formToShow}</BottomBackgroundContainer>
+        </SignupContentContainer>
       </MainColumn>
     </Page>
   );

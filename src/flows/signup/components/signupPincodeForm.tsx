@@ -3,6 +3,7 @@ import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { useSignupState } from "../data/signupState";
+import { FormButton } from "../../../common/styledComponents";
 
 const useFetchPincode = fetchHookFactory("SEND_PINCODE");
 
@@ -36,36 +37,37 @@ export const SignupPincodeForm: FC = () => {
   if (error) return <div>Error: {error}</div>;
 
   return (
-    <div style={{ maxWidth: "400px" }}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div style={{ margin: "1rem 0", width: "300px" }}>
-          <TextField
-            type="email"
-            id="email"
-            {...register("email", { required: true })}
-            variant="outlined"
-            size="small"
-            fullWidth
-            placeholder="Email"
-            InputLabelProps={{
-              shrink: false,
-            }}
-          />
-          {errors.email && (
-            <span style={{ color: "red" }}>This field is required</span>
-          )}
-        </div>
-
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      style={{
+        width: "400px",
+        display: "flex",
+        flexDirection: "column",
+        gap: "15px",
+        marginTop: "10px",
+      }}
+    >
+      <div style={{ margin: "1rem 0", width: "300px" }}>
+        <TextField
+          type="email"
+          id="email"
+          {...register("email", { required: true })}
+          variant="outlined"
           fullWidth
-          style={{ width: "300px" }}
-        >
-          send me a pincode
-        </Button>
-      </form>
-    </div>
+          style={{ height: "50px" }}
+          placeholder="Email"
+          InputLabelProps={{
+            shrink: false,
+          }}
+        />
+        {errors.email && (
+          <span style={{ color: "red" }}>This field is required</span>
+        )}
+      </div>
+
+      <FormButton type="submit" color="primary" style={{ width: "200px" }}>
+        send me a pincode
+      </FormButton>
+    </form>
   );
 };
