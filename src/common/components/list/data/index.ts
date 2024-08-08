@@ -10,12 +10,12 @@ export interface ListElementState<
 
 export interface ListProps<DataForSubButton extends Record<string, any>> {
   data: Array<ListElementState<DataForSubButton>>;
-  ShownActionButtons?: React.FC<{ data: DataForSubButton }>;
+  ActionButtons?: React.FC<{ data: DataForSubButton }>;
   ElementExtension?: React.FC<{ data: DataForSubButton }>;
 }
 
 export interface ListElementPops<DataForSubButton extends Record<string, any>> {
   data: ListElementState<DataForSubButton>;
-  ShownActionButtons?: React.FC<{ data: DataForSubButton }>;
+  ActionButtons?: React.FC<{ data: DataForSubButton }>;
   ElementExtension?: React.FC<{ data: DataForSubButton }>;
 }

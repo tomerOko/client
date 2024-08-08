@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { ListElementState } from "../../../common/components/list/data";
 
 export interface Notification {
   id: string;
@@ -23,3 +24,20 @@ export const useNotificationsState = create<NotificationsState>((set) => ({
   },
   setNotifications: (notifications: Notifications) => set({ notifications }),
 }));
+
+export const convertNotificationToListDetails = (
+  meetings: Notifications
+): ListElementState<Notification>[] => {
+  const data = meetings.data.map((notification) => {
+    const { id, message, read, title, date } = notification;
+    const result = {
+      description: date,
+      header: title,
+      secondHeader: message,
+      imageUrl: undefined,
+      additionalData: notification,
+    };
+    return result;
+  });
+  return data;
+};

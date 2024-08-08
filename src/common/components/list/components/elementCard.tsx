@@ -1,10 +1,10 @@
 import DropDownIcon from "@mui/icons-material/ArrowDropDownCircle";
 import DropUpIcon from "@mui/icons-material/ArrowDropUpOutlined";
 
-import { Card, CardContent, Grid, Pagination, Typography } from "@mui/material";
-import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { ListElementPops, ListElementState } from "../data";
+import { Card, CardContent, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { ListElementPops } from "../data";
 
 const ShownContent = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const ShownDetails = styled.div`
 export const ElementCard = <T extends Record<string, any>>({
   ElementExtension,
   data,
-  ShownActionButtons,
+  ActionButtons,
 }: ListElementPops<T>): React.ReactElement => {
   const { imageUrl, header, secondHeader, description } = data;
 
@@ -49,8 +49,8 @@ export const ElementCard = <T extends Record<string, any>>({
               )}
             </div>
           </ShownDetails>
-          {!!ShownActionButtons ? (
-            <ShownActionButtons data={data.additionalData} />
+          {!!ActionButtons ? (
+            <ActionButtons data={data.additionalData} />
           ) : (
             <button onClick={handleExpandClick} style={{ color: "#1a80e6" }}>
               {expanded ? (

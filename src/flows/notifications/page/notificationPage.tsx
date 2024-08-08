@@ -1,10 +1,14 @@
 // NotificationsPage.tsx
 
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 
-import { NotificationCard } from "../components/notificationCard";
-import { useNotificationsState } from "../data/notificationState";
 import { Container, Typography } from "@mui/material";
+import List from "../../../common/components/list";
+import { NotificationActionButtons } from "../components/notificationActionButtons";
+import {
+  convertNotificationToListDetails,
+  useNotificationsState,
+} from "../data/notificationState";
 import { mockNotifications } from "../mock/mockNotifications";
 
 const containerStyle = {
@@ -19,19 +23,21 @@ const headerStyle = {
 export const NotificationsPage: React.FC = () => {
   const { notifications, setNotifications } = useNotificationsState();
 
-  // Set notifications on initial render
   useEffect(() => {
     setNotifications({ data: mockNotifications });
   }, [setNotifications]);
+
+  const listData = useMemo(() => {
+    const result = convertNotificationToListDetails(notifications);
+    return result;
+  }, [notifications, convertNotificationToListDetails]);
 
   return (
     <Container style={containerStyle}>
       <Typography variant="h4" style={headerStyle}>
         Notifications
       </Typography>
-      {notifications.data.map((notification) => (
-        <NotificationCard key={notification.id} notification={notification} />
-      ))}
+      <List data={listData} ActionButtons={NotificationActionButtons} />
     </Container>
   );
 };

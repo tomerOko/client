@@ -21,7 +21,7 @@ const ListMainContent = styled.div`
 export const List = <T extends Record<string, any>>({
   ElementExtension,
   data,
-  ShownActionButtons,
+  ActionButtons,
 }: ListProps<T>): React.ReactElement => {
   const [page, setPage] = useState(1);
   const elementsPerPage = 5;
@@ -44,7 +44,7 @@ export const List = <T extends Record<string, any>>({
               <ElementCard
                 data={data}
                 ElementExtension={ElementExtension}
-                ShownActionButtons={ShownActionButtons}
+                ActionButtons={ActionButtons}
               />
             </Grid>
           ))}
