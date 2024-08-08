@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { ListElementState } from "../../../common/components/list/data";
 
 interface Consultant {
   ID: number;
@@ -44,3 +45,20 @@ export const useNextMeetingsState = create<NextMeetingsState>((set) => ({
   },
   setNextMeetings: (nextMeetings: NextMeetings) => set({ nextMeetings }),
 }));
+
+export const convertMeetingToListDetails = (
+  meetings: NextMeetings
+): ListElementState<Meeting>[] => {
+  const data = meetings.data.map((meeting) => {
+    const { topic, consultant, date } = meeting;
+    const result = {
+      description: topic.description,
+      header: topic.name,
+      secondHeader: `${consultant.name}: ${date}`,
+      imageUrl: consultant.imageUrl,
+      additionalData: meeting,
+    };
+    return result;
+  });
+  return data;
+};

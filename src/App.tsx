@@ -12,13 +12,13 @@ import { LandingPage } from "./flows/landing/landing";
 import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
 import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
 import { MockVideoCallPage } from "./flows/meet/page/mockMeet";
-import NextMeetings from "./flows/nextMeetings/page/nextMeetingsPage";
 import { NotificationsPage } from "./flows/notifications/page/notificationPage";
 import { ReviewingPage } from "./flows/reviewing/page/reviewing";
 import { SearchPage } from "./flows/search/page/searchPage";
 import { SignupPage } from "./flows/signup/page/signupPage";
 import { TopicPage } from "./flows/topic/page/topicPage";
 import UserDetailsPage from "./flows/userDetails/page/userDetails";
+import { NextMeetings } from "./flows/nextMeetings/page/nextMeetingsPage";
 
 const App = () => {
   return (

@@ -8,7 +8,7 @@ export const mockNextMeetings: NextMeetings["data"] = [
       ID: 1,
       name: "John Doe",
       email: "jhonDoe@gmail.com",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://randomuser.me/api/portraits/women/79.jpg",
     },
     topic: {
       ID: 1,
@@ -33,7 +33,7 @@ export const mockNextMeetings: NextMeetings["data"] = [
       ID: 2,
       name: "Alice Smith",
       email: "alice.smith@gmail.com",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://randomuser.me/api/portraits/women/30.jpg",
     },
     topic: {
       ID: 2,
@@ -58,7 +58,7 @@ export const mockNextMeetings: NextMeetings["data"] = [
       ID: 3,
       name: "Emily Brown",
       email: "emily.brown@gmail.com",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://randomuser.me/api/portraits/men/79.jpg",
     },
     topic: {
       ID: 3,
@@ -88,7 +88,7 @@ export const mockNextMeetings: NextMeetings["data"] = [
       ID: 4,
       name: "David Johnson",
       email: "david.johnson@gmail.com",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://randomuser.me/api/portraits/women/89.jpg",
     },
     topic: {
       ID: 4,
@@ -137,7 +137,7 @@ export const mockNextMeetings: NextMeetings["data"] = [
       ID: 6,
       name: "Ethan Davis",
       email: "ethan.davis@gmail.com",
-      imageUrl: "https://via.placeholder.com/150",
+      imageUrl: "https://randomuser.me/api/portraits/men/9.jpg",
     },
     topic: {
       ID: 6,
