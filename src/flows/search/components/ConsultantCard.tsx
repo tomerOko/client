@@ -8,7 +8,8 @@ import {
   CardMedia,
   Rating,
 } from "@mui/material";
-import { Consultant } from "./types";
+import { Consultant } from "../types";
+import { Description } from "@mui/icons-material";
 
 export const ConsultantCard: React.FC<Consultant> = ({
   profilePictureUrl,
@@ -17,6 +18,7 @@ export const ConsultantCard: React.FC<Consultant> = ({
   hourlyRate,
   averageRating,
   numberOfRatings,
+  description,
 }) => {
   return (
     <Card
@@ -52,11 +54,28 @@ export const ConsultantCard: React.FC<Consultant> = ({
         />
       </CardMedia>
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {name}
+        <Typography
+          gutterBottom
+          variant="h5"
+          component="div"
+          sx={{
+            height: "3.6em",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: "vertical",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: "-10px",
+          }}
+        >
+          {name} | {topic}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {topic}
+          {description.length > 100
+            ? `${description.slice(0, 100)}...`
+            : description}{" "}
         </Typography>
         <Typography variant="body1" color="text.primary">
           <Rating

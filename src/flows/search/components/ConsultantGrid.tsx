@@ -2,7 +2,7 @@
 import React from "react";
 import { Grid } from "@mui/material";
 import { ConsultantCard } from "./ConsultantCard";
-import { Consultant } from "./types";
+import { Consultant } from "../types";
 
 interface ConsultantGridProps {
   consultants: Consultant[];
@@ -14,8 +14,9 @@ export const ConsultantGrid: React.FC<ConsultantGridProps> = ({
   return (
     <Grid container spacing={2}>
       {consultants.map((consultant, index) => (
-        <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+        <Grid item xs={4} key={index}>
           <ConsultantCard
+            description={consultant.description}
             profilePictureUrl={consultant.profilePictureUrl}
             name={consultant.name}
             topic={consultant.topic}

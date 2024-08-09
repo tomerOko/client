@@ -1,7 +1,6 @@
 import { Button, TextField } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { useSearchState } from "../data/searchResultsState";
 import { useSearchResultsState } from "../data/serchState";
 import { mockSearchResults } from "../mock/results";
@@ -32,7 +31,7 @@ export const SearchForm: FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+    <div>
       <h3>Find the right person with the right knowledge </h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextField
