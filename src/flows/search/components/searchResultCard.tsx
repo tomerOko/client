@@ -25,7 +25,7 @@ export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
 
   const {
     description,
-    teacher: { profilePictureUrl, name: teacherName, email: teacherEmail },
+    teacher: { profilePictureUrl, firstName, lastName, email: teacherEmail },
     name,
     hourlyRate,
     averageRating,
@@ -47,6 +47,7 @@ export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
           transform: "scale(1.05)",
         },
       }}
+      onClick={handleClick}
     >
       <CardMedia
         id="card-media"
@@ -89,7 +90,7 @@ export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
           }}
           style={{ fontSize: "18px", height: "70px" }}
         >
-          {name} | {teacherName}
+          {name} | {firstName} {lastName}
         </Typography>
         <Typography
           id="card-description"

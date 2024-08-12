@@ -1,67 +1,62 @@
-import { create } from 'zustand'
+import { create } from "zustand";
 
-interface AvailabilityBlock {
-    dateOfStart: number;
-    dateOfEnd: number;
-}  
-export interface CurrentTopic{
-    identifier: {
-        teacherEmail: string,
-        topicName: string
-    },
-    data: {
-        teacher: {
-            firstName: string,
-            lastName: string,
-            description: string,
-        }
-        topic: {
-            extendedDescription: string,
-            hourlyRate: number,
-            minimalMinutes: number,
-        },
-        ratings: {
-            averageRating: number,
-            examples: {
-                rating: number,
-                comment: string
-            }[]
-        },
-        availability:AvailabilityBlock[]
-    }
+export interface TopicAvailabilityBlock {
+  dateOfStart: number;
+  dateOfEnd: number;
 }
 
-interface CurrentTopicState {
-    currentTopic: CurrentTopic
-    setCurrentTopic: (currentTopic: CurrentTopic) => void
+export interface TopicRatings {
+  averageRating: number;
+  examples: {
+    rating: number;
+    comment: string;
+  }[];
+}
+
+export interface TopicMetaData {
+  ID: string;
+  name: string;
+  extendedDescription: string;
+  hourlyRate?: number;
+  minimalMinutes?: number;
+  teacher: {
+    ID: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    description: string;
+  };
+}
+
+export interface CurrentTopicState {
+  availability: TopicAvailabilityBlock[];
+  setAvailability: (availability: TopicAvailabilityBlock[]) => void;
+  ratings: TopicRatings;
+  setRatings: (ratings: TopicRatings) => void;
+  metaData: TopicMetaData;
+  setMetaData: (metaData: TopicMetaData) => void;
 }
 
 export const useCurrentTopicState = create<CurrentTopicState>((set) => ({
-    currentTopic: {
-        identifier: {
-            teacherEmail: "",
-            topicName: ""
-            },
-            data: {
-                teacher: {
-                firstName: "",
-                lastName: "",
-                description: "",
-                },
-                topic: {
-                extendedDescription: "",
-                hourlyRate: 0,
-                minimalMinutes: 0,
-                },
-                ratings: {
-                averageRating: 0,
-                examples: [],
-                },
-                availability: [],
-        },
+  availability: [],
+  setAvailability: (availability: TopicAvailabilityBlock[]) =>
+    set({ availability }),
+  ratings: {
+    averageRating: 0,
+    examples: [],
+  },
+  setRatings: (ratings: TopicRatings) => set({ ratings }),
+  metaData: {
+    ID: "",
+    name: "",
+    extendedDescription: "",
+    teacher: {
+      ID: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+      description: "",
     },
-        
-    setCurrentTopic: (currentTopic: CurrentTopic) => set({currentTopic}),
-}))
-
-
+  },
+  setMetaData: (metaData: TopicMetaData) => set({ metaData }),
+}));

@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 const CustomCalendar: React.FC = () => {
   const navigate = useNavigate();
-  const { currentTopic } = useCurrentTopicState();
+  const { availability, metaData, ratings } = useCurrentTopicState();
 
   const getDayOfWeek = (date: Date): number => {
     return date.getDay();
@@ -71,7 +71,7 @@ const CustomCalendar: React.FC = () => {
     <Box>
       <Box style={containerStyles} className="calendarContainer">
         <Box style={tableStyles} className="calendarTable">
-          {currentTopic.data.availability.map((block, index) => {
+          {availability.map((block, index) => {
             const startDate = new Date(block.dateOfStart);
             const endDate = new Date(block.dateOfEnd);
             const style = getBlockStyle(startDate, endDate);

@@ -10,74 +10,69 @@ import {
 import { Calendar } from "../../../common/components/clendar/demo-app";
 import { useCurrentTopicState } from "../data/currentTopicState";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useSearchState } from "../../search/data/serchState";
+import { mockTopicAvalabilities, mockTopicRatings } from "../mock/mockTopic";
+import { TopicPageComponents } from "../components/styledComponents";
+
+const {
+  MainColumn,
+  AvailabilityContainer,
+  Lander,
+  MetaDataContainer,
+  RatingContainer,
+} = TopicPageComponents;
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
-  const { currentTopic } = useCurrentTopicState();
+  const {
+    setMetaData,
+    availability,
+    metaData,
+    ratings,
+    setAvailability,
+    setRatings,
+  } = useCurrentTopicState();
+  const { chosenTopic } = useSearchState();
 
-  const { teacher, topic, ratings } = currentTopic.data;
+  /* LOAD FROM CLICKED CARD STATE */
+  useEffect(() => {
+    if (!chosenTopic) {
+      navigate("/search");
+      return;
+    }
+    const { ID, averageRating, description, hourlyRate, name, teacher } =
+      chosenTopic;
+    setMetaData({
+      extendedDescription: description,
+      hourlyRate,
+      ID,
+      name,
+      teacher,
+    });
+    setRatings({
+      averageRating,
+      examples: [],
+    });
+  }, [chosenTopic, navigate, setMetaData, setRatings]);
 
-  const buttonContainerStyles = {
-    marginBottom: "10px",
-    display: "flex",
-    gap: "10px",
-  };
+  /* FETCH */
+  useEffect(() => {
+    // fetch availability, ratings and all of the topic details
+    console.log("fetching availability");
+    setAvailability(mockTopicAvalabilities);
+    setRatings(mockTopicRatings);
+  }, [setAvailability, setRatings]);
 
   return (
-    <Box p={3}>
-      <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h5">Teacher Details</Typography>
-        <Typography variant="body1">
-          name: {`${teacher.firstName} ${teacher.lastName}`}
-        </Typography>
-        <Typography variant="subtitle1">
-          about the theacher: {teacher.description}
-        </Typography>
-      </Paper>
-
-      <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h5">Topic Details</Typography>
-        <Typography variant="body1">{topic.extendedDescription}</Typography>
-        <Typography variant="body1">{`Hourly Rate: $${topic.hourlyRate}`}</Typography>
-        <Typography variant="body1">{`Minimum Minutes: ${topic.minimalMinutes}`}</Typography>
-      </Paper>
-
-      <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h5">Ratings</Typography>
-        <Typography variant="body1">{`Average Rating: ${ratings.averageRating}`}</Typography>
-        <List>
-          {ratings.examples.map((example, index) => (
-            <ListItem key={index}>
-              <ListItemText
-                primary={`Rating: ${example.rating}`}
-                secondary={example.comment}
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Paper>
-
-      <Paper elevation={3} sx={{ padding: 2, marginBottom: 2 }}>
-        <Typography variant="h5">Availability</Typography>
-
-        <Box style={buttonContainerStyles}>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/mock-call")}
-          >
-            Try Call Now
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/chat")}
-          >
-            chat
-          </Button>
-        </Box>
-        <Calendar />
-      </Paper>
-    </Box>
+    <Lander>
+      <MainColumn>
+        <MetaDataContainer></MetaDataContainer>
+        <RatingContainer></RatingContainer>
+        <AvailabilityContainer>
+          <Calendar />
+        </AvailabilityContainer>
+      </MainColumn>
+    </Lander>
   );
 };

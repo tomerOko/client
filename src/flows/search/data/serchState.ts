@@ -2,8 +2,12 @@ import { create } from "zustand";
 
 export interface TopicSummery {
   name: string;
+  ID: string;
   teacher: {
-    name: string;
+    ID: string;
+    description: string;
+    firstName: string;
+    lastName: string;
     email: string;
     profilePictureUrl: string;
   };
