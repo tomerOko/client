@@ -80,10 +80,10 @@ export const TopBar: React.FC = () => {
   }
 
   return (
-    <AppBar position="sticky">
-      <Toolbar>
+    <AppBar position="absolute">
+      <Toolbar variant="dense">
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {getPageTitle(location.pathname)}
+          {/* {getPageTitle(location.pathname)} */}
         </Typography>
         <IconButton color="inherit" component={Link} to="/search">
           <HomeIcon />

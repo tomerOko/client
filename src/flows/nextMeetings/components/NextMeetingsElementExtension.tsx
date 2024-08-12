@@ -15,7 +15,7 @@ export const NextMeetingsElementExtension: FC<{ data: Meeting }> = ({
   return (
     <div style={{ marginTop: "16px" }}>
       <Typography variant="body2">
-        Additional clients:{" "}
+        Additional clients:
         {data.additionalClients.map((client) => client.name).join(", ")}
       </Typography>
       <Typography variant="body2">
