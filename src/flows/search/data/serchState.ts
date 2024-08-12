@@ -13,6 +13,7 @@ export interface TopicSummery {
   };
   description: string;
   hourlyRate: number;
+  minimalMinutes: number;
   averageRating: number;
   numberOfRatings: number;
 }

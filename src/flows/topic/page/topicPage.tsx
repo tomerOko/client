@@ -5,15 +5,18 @@ import {
   ListItem,
   ListItemText,
   Paper,
+  Slider,
   Typography,
 } from "@mui/material";
 import { Calendar } from "../../../common/components/clendar/demo-app";
 import { useCurrentTopicState } from "../data/currentTopicState";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSearchState } from "../../search/data/serchState";
 import { mockTopicAvalabilities, mockTopicRatings } from "../mock/mockTopic";
 import { TopicPageComponents } from "../components/styledComponents";
+import { SpaceBar } from "@mui/icons-material";
+import RatingsComponent from "../components/x/b";
 
 const {
   MainColumn,
@@ -21,7 +24,27 @@ const {
   Lander,
   MetaDataContainer,
   RatingContainer,
+  TeacherImage,
+  TeacherName,
+  DescriptionText,
+  TopicHeader,
+  HardDetailsContainer,
+  HourlyRate,
+  MinimumMinutes,
 } = TopicPageComponents;
+
+interface RatingOption {
+  rating: number;
+  count: number;
+}
+
+const initialRatingOptions: RatingOption[] = [
+  { rating: 1, count: 0 },
+  { rating: 2, count: 0 },
+  { rating: 3, count: 0 },
+  { rating: 4, count: 0 },
+  { rating: 5, count: 0 },
+];
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
@@ -41,18 +64,26 @@ export const TopicPage: React.FC = () => {
       navigate("/search");
       return;
     }
-    const { ID, averageRating, description, hourlyRate, name, teacher } =
-      chosenTopic;
+    const {
+      ID,
+      averageRating,
+      description,
+      hourlyRate,
+      name,
+      teacher,
+      minimalMinutes,
+    } = chosenTopic;
     setMetaData({
       extendedDescription: description,
       hourlyRate,
       ID,
       name,
       teacher,
+      minimalMinutes,
     });
     setRatings({
       averageRating,
-      examples: [],
+      data: [],
     });
   }, [chosenTopic, navigate, setMetaData, setRatings]);
 
@@ -64,11 +95,94 @@ export const TopicPage: React.FC = () => {
     setRatings(mockTopicRatings);
   }, [setAvailability, setRatings]);
 
+  const [expanded, setExpanded] = useState(false);
+  const [ratingOptions, setRatingOptions] = useState(initialRatingOptions);
+
+  const handleExpand = () => {
+    setExpanded(!expanded);
+  };
+
   return (
     <Lander>
       <MainColumn>
-        <MetaDataContainer></MetaDataContainer>
-        <RatingContainer></RatingContainer>
+        <MetaDataContainer>
+          <TeacherImage src={metaData.teacher.profilePictureUrl} />
+          <div>
+            <TeacherName>
+              {metaData.teacher.firstName} {metaData.teacher.lastName}
+            </TeacherName>
+            <DescriptionText>
+              <u>about me</u>: <></>
+              {metaData.teacher.description}
+            </DescriptionText>
+          </div>
+          <div>
+            <TopicHeader>Topic: {metaData.name}</TopicHeader>
+            <DescriptionText>{metaData.extendedDescription}</DescriptionText>
+          </div>
+          <div>
+            <HardDetailsContainer>
+              <HourlyRate>
+                <DescriptionText>Hourly Rate:</DescriptionText>
+                <DescriptionText style={{ color: "black" }}>
+                  ${metaData.hourlyRate}
+                </DescriptionText>
+              </HourlyRate>
+              <MinimumMinutes>
+                <DescriptionText>Minimum Minutes:</DescriptionText>
+                <DescriptionText style={{ color: "black" }}>
+                  {metaData.minimalMinutes}
+                </DescriptionText>
+              </MinimumMinutes>
+            </HardDetailsContainer>
+          </div>
+        </MetaDataContainer>
+        <RatingContainer>
+          <RatingsComponent />
+
+          {/* <>
+            <div>
+              <Typography variant="h6">
+                Average Rating: {ratings.averageRating}
+              </Typography>
+              <Slider
+                value={ratings.averageRating}
+                min={1}
+                max={5}
+                step={0.1}
+                disabled
+              />
+            </div>
+            <div>
+              {ratingOptions.map((option) => (
+                <div key={option.rating}>
+                  <Typography variant="body1">{option.rating}</Typography>
+                  <Slider
+                    value={option.count}
+                    min={0}
+                    max={ratings.data.length}
+                    step={1}
+                    disabled
+                  />
+                </div>
+              ))}
+            </div>
+            <Button onClick={handleExpand}>
+              {expanded ? "Collapse Ratings" : "Expand Ratings"}
+            </Button>
+            {expanded && (
+              <div>
+                <List>
+                  {ratings.data.map((rating, index) => (
+                    <ListItem key={index}>
+                      <ListItemText primary={`Rating: ${rating}`} />
+                    </ListItem>
+                  ))}
+                </List>
+              </div>
+            )}
+          </> */}
+        </RatingContainer>
         <AvailabilityContainer>
           <Calendar />
         </AvailabilityContainer>

@@ -11,24 +11,54 @@ const MainColumn = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   height: 100%;
   max-height: 100%;
-  width: 1200px;
+  width: 1280px;
   overflow-y: scroll;
   margin: 0 auto;
 `;
 
 const MetaDataContainer = styled.div`
+  width: 928px;
+  margin-top: 4vh;
   display: flex;
   flex-direction: column;
-  height: 400px;
-  border: 1px solid black;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 16px;
+  flex: none;
+  order: 0;
+`;
+
+const TopicHeader = styled.div`
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+  color: #1c170d;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+`;
+
+const TeacherImage = styled.img`
+  width: 128px;
+  height: 128px;
+  min-height: 128px;
+  border-radius: 12px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
 `;
 
 const RatingContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 928px;
+
   height: 400px;
   border: 1px solid black;
 `;
@@ -40,10 +70,77 @@ const AvailabilityContainer = styled.div`
   border: 1px solid black;
 `;
 
+const TeacherName = styled.div`
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 28px;
+  color: #1c170d;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+`;
+
+const DescriptionText = styled.div`
+  font-family: sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #a1824a;
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 0;
+`;
+
+const HourlyRate = styled.div`
+  padding: 20px 0px;
+  height: 83px;
+  border-top: 2px solid #e6e8eb;
+  flex: 1;
+`;
+
+const MinimumMinutes = styled.div`
+  padding: 20px 0px;
+  height: 83px;
+  border-top: 2px solid #e6e8eb;
+  flex: 6;
+`;
+
+const HardDetailsContainer = styled.div`
+  /* Depth 5, Frame 0 */
+
+  /* Auto layout */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 0px;
+  gap: 24px;
+
+  width: 928px;
+  height: 83px;
+
+  /* Inside auto layout */
+  flex: none;
+  order: 0;
+  align-self: stretch;
+  flex-grow: 1;
+`;
+
 export const TopicPageComponents = {
   Lander,
   MainColumn,
   MetaDataContainer,
+  TopicHeader,
   RatingContainer,
   AvailabilityContainer,
+  TeacherImage,
+  TeacherName,
+  DescriptionText,
+  HardDetailsContainer,
+  HourlyRate,
+  MinimumMinutes,
 };

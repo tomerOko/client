@@ -16,10 +16,10 @@ import { NotificationsPage } from "./flows/notifications/page/notificationPage";
 import { ReviewingPage } from "./flows/reviewing/page/reviewing";
 import { SearchPage } from "./flows/search/page/searchPage";
 import { SignupPage } from "./flows/signup/page/signupPage";
-import { TopicPageComponents } from "./flows/topic/page/topicPage";
 import UserDetailsPage from "./flows/userDetails/page/userDetails";
 import { NextMeetings } from "./flows/nextMeetings/page/nextMeetingsPage";
 import { HomePage } from "./flows/home/homePage";
+import { TopicPage } from "./flows/topic/page/topicPage";
 
 const App = () => {
   return (
@@ -33,7 +33,7 @@ const App = () => {
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SignupPage isSignUp={false} />} />
             <Route path="/search" element={<SearchPage />} />
-            <Route path="/topic" element={<TopicPageComponents />} />
+            <Route path="/topic" element={<TopicPage />} />
             <Route path="/user-details" element={<UserDetailsPage />} />
             <Route path="/payment-methods" element={<PaymentMethods />} />
             <Route path="/reviewing" element={<ReviewingPage />} />
