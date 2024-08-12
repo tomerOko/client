@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-export const PostLoginLandingPage: React.FC = () => {
+export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   return (
     <Container maxWidth="lg">

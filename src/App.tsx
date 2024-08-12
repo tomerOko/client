@@ -19,7 +19,7 @@ import { SignupPage } from "./flows/signup/page/signupPage";
 import { TopicPage } from "./flows/topic/page/topicPage";
 import UserDetailsPage from "./flows/userDetails/page/userDetails";
 import { NextMeetings } from "./flows/nextMeetings/page/nextMeetingsPage";
-import { PostLoginLandingPage } from "./flows/LoggedLanding/x";
+import { HomePage } from "./flows/home/homePage";
 
 const App = () => {
   return (
@@ -29,7 +29,7 @@ const App = () => {
           <TopBar />
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/home" element={<PostLoginLandingPage />} />
+            <Route path="/home" element={<HomePage />} />
             <Route path="/signup" element={<SignupPage />} />
             <Route path="/signin" element={<SignupPage isSignUp={false} />} />
             <Route path="/search" element={<SearchPage />} />

@@ -8,12 +8,21 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
-import { TopicSummery } from "../data/serchState";
+import { TopicSummery, useSearchState } from "../data/serchState";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
   data,
 }) => {
+  const navigate = useNavigate();
+  const { setChosenTopic } = useSearchState();
+
+  const handleClick = () => {
+    setChosenTopic(data);
+    navigate("/topic");
+  };
+
   const {
     description,
     teacher: { profilePictureUrl, name: teacherName, email: teacherEmail },
@@ -22,6 +31,7 @@ export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
     averageRating,
     numberOfRatings,
   } = data;
+
   return (
     <Card
       id="card"
@@ -32,10 +42,10 @@ export const SearchResultCard: React.FC<{ data: TopicSummery }> = ({
         borderRadius: 2,
         boxShadow: 3,
         transition: "transform 0.2s",
+        position: "relative",
         "&:hover": {
           transform: "scale(1.05)",
         },
-        position: "relative",
       }}
     >
       <CardMedia

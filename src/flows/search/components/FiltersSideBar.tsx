@@ -56,7 +56,7 @@ export const FilterSideBar: React.FC = () => {
         control={control}
         defaultValue={[0, 100]}
         render={({ field }) => (
-          <div>
+          <div style={{ paddingLeft: "10px" }}>
             <label>Price Range</label>
             <Slider
               style={{ marginTop: 16 }}
