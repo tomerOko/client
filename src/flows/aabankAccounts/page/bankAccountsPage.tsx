@@ -1,13 +1,14 @@
 import React, { useEffect, useMemo, useState } from "react";
 import List from "../../../common/components/list";
 import {
-  convertMyTopicsToListDetails,
   BankAccount,
-  useMyTopicsState,
+  convertBankAccountsToListDetails,
+  useBankAccountsState,
 } from "../data/bankAccountsState";
-import { myTopicsMock } from "../mock/myTopicsMock";
-import MyTopicForm from "../components/myTopicForm";
+
 import { Box, Button, Modal } from "@mui/material";
+import BankAccountForm from "../components/bankAccountForm";
+import { bankAccountsMock } from "../mock/bankAccountsMock";
 
 const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
   const [showModal, setShowModal] = useState(false);
@@ -37,7 +38,7 @@ const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
               p: 4,
             }}
           >
-            <MyTopicForm onClose={handleCloseModal} />
+            <BankAccountForm onClose={handleCloseModal} />
           </Box>
         </Modal>
       )}
@@ -45,23 +46,23 @@ const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
   );
 };
 
-export const MyTopicsPage: React.FC = () => {
-  const { myTopics, setMyTopics } = useMyTopicsState();
+export const BankAccountsPage: React.FC = () => {
+  const { bankAccounts, setBankAccounts } = useBankAccountsState();
 
   useEffect(() => {
-    setMyTopics(myTopicsMock);
-  }, [setMyTopics]);
+    setBankAccounts(bankAccountsMock);
+  }, [setBankAccounts]);
 
   const listData = useMemo(() => {
-    const result = convertMyTopicsToListDetails(myTopics);
+    const result = convertBankAccountsToListDetails(bankAccounts);
     return result;
-  }, [myTopics, convertMyTopicsToListDetails]);
+  }, [bankAccounts, convertBankAccountsToListDetails]);
 
   return (
     <List
       data={listData}
-      header="My Topics"
-      NewElementForm={MyTopicForm}
+      header="Bank Accounts"
+      NewElementForm={BankAccountForm}
       ActionButtons={EditFormModalButton}
     />
   );

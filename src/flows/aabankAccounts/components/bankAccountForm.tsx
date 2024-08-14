@@ -1,31 +1,42 @@
+import { Box, Button, TextField } from "@mui/material";
 import React from "react";
-import { useForm, Controller } from "react-hook-form";
-import { TextField, Button, Box } from "@mui/material";
+import { Controller, useForm } from "react-hook-form";
+import { BankAccount } from "../data/bankAccountsState";
 
-interface BankAccountFormProps {
-  onSubmit: (data: BankAccountFormData) => void;
-  initialValues: BankAccountFormData | null | undefined;
+interface TopicFormProps {
+  onClose: () => void;
+  initialValues?: BankAccount;
 }
 
-interface BankAccountFormData {
-  accountHolderName: string;
-  bankName: string;
-  accountNumber: string;
-  routingNumber: string;
-}
-
-export const BankAccountForm: React.FC<BankAccountFormProps> = ({
-  onSubmit,
+export const BankAccountForm: React.FC<TopicFormProps> = ({
+  onClose,
   initialValues,
 }) => {
-  const { control, handleSubmit, reset } = useForm<BankAccountFormData>({
+  const { control, handleSubmit, reset } = useForm<BankAccount>({
     defaultValues: initialValues || {
-      accountHolderName: "",
-      bankName: "",
-      accountNumber: "",
-      routingNumber: "",
+      accountDetails: {
+        bankName: "",
+        bankCode: "",
+        number: "",
+        branchCode: "",
+      },
+      accountHolder: {
+        firstName: "",
+        lastName: "",
+      },
+      ID: "",
     },
   });
+
+  const onSubmit = (data: BankAccount) => {
+    onClose();
+    console.log(data);
+    //if (initialValues) {
+    //  updateMyTopic(data);
+    //} else {
+    //  addMyTopic(data);
+    //}
+  };
 
   React.useEffect(() => {
     if (initialValues) {
@@ -37,41 +48,83 @@ export const BankAccountForm: React.FC<BankAccountFormProps> = ({
     <form onSubmit={handleSubmit(onSubmit)}>
       <Box display="flex" flexDirection="column" gap={2}>
         <Controller
-          name="accountHolderName"
+          name="accountHolder.firstName"
           control={control}
           render={({ field }) => (
             <TextField
               {...field}
-              label="Account Holder Name"
+              label="First Name"
               variant="outlined"
+              fullWidth
             />
           )}
         />
         <Controller
-          name="bankName"
+          name="accountHolder.lastName"
           control={control}
           render={({ field }) => (
-            <TextField {...field} label="Bank Name" variant="outlined" />
+            <TextField
+              {...field}
+              label="Last Name"
+              variant="outlined"
+              fullWidth
+            />
           )}
         />
         <Controller
-          name="accountNumber"
+          name="accountDetails.bankName"
           control={control}
           render={({ field }) => (
-            <TextField {...field} label="Account Number" variant="outlined" />
+            <TextField
+              {...field}
+              label="Bank Name"
+              variant="outlined"
+              fullWidth
+            />
           )}
         />
         <Controller
-          name="routingNumber"
+          name="accountDetails.bankCode"
           control={control}
           render={({ field }) => (
-            <TextField {...field} label="Routing Number" variant="outlined" />
+            <TextField
+              {...field}
+              label="Bank Code"
+              variant="outlined"
+              fullWidth
+            />
           )}
         />
-        <Button type="submit" variant="contained" color="primary">
+        <Controller
+          name="accountDetails.branchCode"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Branch Code"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+        />
+        <Controller
+          name="accountDetails.number"
+          control={control}
+          render={({ field }) => (
+            <TextField
+              {...field}
+              label="Account Number"
+              variant="outlined"
+              fullWidth
+            />
+          )}
+        />
+        <Button type="submit" variant="contained">
           Submit
         </Button>
       </Box>
     </form>
   );
 };
+
+export default BankAccountForm;

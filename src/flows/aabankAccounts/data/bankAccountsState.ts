@@ -15,20 +15,20 @@ export interface BankAccount {
   };
 }
 
-interface MyTopicsState {
-  myTopics: Array<BankAccount>;
-  setMyTopics: (myTopics: Array<BankAccount>) => void;
+interface BankAccountsState {
+  bankAccounts: Array<BankAccount>;
+  setBankAccounts: (bankAccounts: Array<BankAccount>) => void;
 }
 
-export const useMyTopicsState = create<MyTopicsState>((set) => ({
-  myTopics: [],
-  setMyTopics: (myTopics) => set({ myTopics }),
+export const useBankAccountsState = create<BankAccountsState>((set) => ({
+  bankAccounts: [],
+  setBankAccounts: (bankAccounts) => set({ bankAccounts }),
 }));
 
-export const convertMyTopicsToListDetails = (
-  myTopics: Array<BankAccount>
+export const convertBankAccountsToListDetails = (
+  bankAccounts: Array<BankAccount>
 ): ListElementState<BankAccount>[] => {
-  const data = myTopics.map((bankAccount) => {
+  const data = bankAccounts.map((bankAccount) => {
     const { ID, accountDetails, accountHolder } = bankAccount;
     const {
       number: accountNumber,
