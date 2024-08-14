@@ -1,8 +1,8 @@
-import { Earnings } from "../data/earningsState";
+import { BankAccountInPayment, Payment } from "../data/earningsState";
 
-const availableBalance = 1500.75;
+const availableBalance: number = 1500.75;
 
-const payments: Earnings["payments"] = [
+const payments: Payment[] = [
   {
     id: "1",
     amount: 250.0,
@@ -45,13 +45,13 @@ const payments: Earnings["payments"] = [
   },
 ];
 
-const bankAccounts: Earnings["bankAccounts"] = [
+const bankAccounts: BankAccountInPayment[] = [
   { Id: "123456789", suffix: "6789", name: "Goldman Sachs" },
   { Id: "987654321", suffix: "4321", name: "JPMorgan Chase" },
   { Id: "456789123", suffix: "9123", name: "Wells Fargo Bank" },
 ];
 
-export const mockEarnings: Earnings = {
+export const mockEarnings = {
   availableBalance,
   payments,
   bankAccounts,

@@ -9,6 +9,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useUserDetailsState } from "../data/userDetailsState";
+import { countries, languages } from "events-tomeroko3";
 
 export const UserDetailsPage: React.FC = () => {
   const { setUserDetails, userDetails } = useUserDetailsState();
@@ -27,8 +28,8 @@ export const UserDetailsPage: React.FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h4" component="h1" gutterBottom>
+      <Box sx={{ mt: 10 }}>
+        <Typography variant="h4" component="h1" gutterBottom marginBottom={5}>
           User Details
         </Typography>
         <Grid container spacing={3}>
@@ -93,9 +94,9 @@ export const UserDetailsPage: React.FC = () => {
               onChange={handleChange}
               variant="outlined"
             >
-              {["USA", "Canada", "UK"].map((country) => (
+              {Object.values(countries).map((country) => (
                 <MenuItem key={country} value={country}>
-                  {country}
+                  {country.replace(/_/g, " ")}
                 </MenuItem>
               ))}
             </TextField>
@@ -110,7 +111,7 @@ export const UserDetailsPage: React.FC = () => {
               onChange={handleChange}
               variant="outlined"
             >
-              {["English", "French", "Spanish"].map((language) => (
+              {Object.values(languages).map((language) => (
                 <MenuItem key={language} value={language}>
                   {language}
                 </MenuItem>
@@ -118,7 +119,12 @@ export const UserDetailsPage: React.FC = () => {
             </TextField>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="primary" onClick={handleSubmit}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit}
+              style={{ marginTop: "10px" }}
+            >
               Save
             </Button>
           </Grid>

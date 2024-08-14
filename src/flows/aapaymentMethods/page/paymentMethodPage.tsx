@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useState } from "react";
 import List from "../../../common/components/list";
 import {
-  convertMyTopicsToListDetails,
-  MyTopic,
-  useMyTopicsState,
-} from "../data/myTopicState";
-import { myTopicsMock } from "../mock/myTopicsMock";
-import MyTopicForm from "../components/myTopicForm";
+  convertPaymentMethodToListDetails,
+  PaymentMethod,
+  usePaymentMethodState,
+} from "../data/paymentMethodState";
+import PaymentMethodForm from "../components/paymentMethodForm";
 import { Box, Button, Modal } from "@mui/material";
+import { paymentMethodsMock } from "../mock/myTopicsMock";
 
-const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
+const EditFormModalButton: React.FC<{ data: PaymentMethod }> = () => {
   const [showModal, setShowModal] = useState(false);
 
   const handleEditClick = () => {
@@ -37,7 +37,7 @@ const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
               p: 4,
             }}
           >
-            <MyTopicForm onClose={handleCloseModal} />
+            <PaymentMethodForm onClose={handleCloseModal} />
           </Box>
         </Modal>
       )}
@@ -45,23 +45,23 @@ const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
   );
 };
 
-export const MyTopicsPage: React.FC = () => {
-  const { myTopics, setMyTopics } = useMyTopicsState();
+export const PaymentMethodsPage: React.FC = () => {
+  const { paymentMethod, setPaymentMethod } = usePaymentMethodState();
 
   useEffect(() => {
-    setMyTopics(myTopicsMock);
-  }, [setMyTopics]);
+    setPaymentMethod(paymentMethodsMock);
+  }, [setPaymentMethod]);
 
   const listData = useMemo(() => {
-    const result = convertMyTopicsToListDetails(myTopics);
+    const result = convertPaymentMethodToListDetails(paymentMethod);
     return result;
-  }, [myTopics, convertMyTopicsToListDetails]);
+  }, [paymentMethod, convertPaymentMethodToListDetails]);
 
   return (
     <List
       data={listData}
       header="My Topics"
-      NewElementForm={MyTopicForm}
+      NewElementForm={PaymentMethodForm}
       ActionButtons={EditFormModalButton}
     />
   );

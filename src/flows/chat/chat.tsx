@@ -246,7 +246,7 @@ export const ChatPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", height: "100vh" }}>
+    <Box sx={{ display: "flex", height: "94vh", marginTop: "6vh" }}>
       <Box sx={{ width: "20%", borderRight: "1px solid #ccc" }}>
         <List>
           {mockConversations.map((conversation) => (

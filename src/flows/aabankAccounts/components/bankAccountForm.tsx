@@ -45,86 +45,86 @@ export const BankAccountForm: React.FC<TopicFormProps> = ({
   }, [initialValues, reset]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Box display="flex" flexDirection="column" gap={2}>
-        <Controller
-          name="accountHolder.firstName"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="First Name"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          name="accountHolder.lastName"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Last Name"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          name="accountDetails.bankName"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Bank Name"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          name="accountDetails.bankCode"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Bank Code"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          name="accountDetails.branchCode"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Branch Code"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Controller
-          name="accountDetails.number"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Account Number"
-              variant="outlined"
-              fullWidth
-            />
-          )}
-        />
-        <Button type="submit" variant="contained">
-          Submit
-        </Button>
-      </Box>
-    </form>
+    <>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box display="flex" flexDirection="column" gap={2}>
+          <Controller
+            name="accountHolder.firstName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="First Name"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Controller
+            name="accountHolder.lastName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Last Name"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Controller
+            name="accountDetails.bankName"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Bank Name"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Controller
+            name="accountDetails.bankCode"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Bank Code"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Controller
+            name="accountDetails.branchCode"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Branch Code"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Controller
+            name="accountDetails.number"
+            control={control}
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Account Number"
+                variant="outlined"
+                fullWidth
+              />
+            )}
+          />
+          <Button type="submit" variant="contained">
+            Submit
+          </Button>
+        </Box>
+      </form>
+    </>
   );
 };
-
-export default BankAccountForm;

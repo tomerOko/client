@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Box,
@@ -7,17 +7,18 @@ import {
   CardContent,
   Container,
   Typography,
-  List,
-  ListItem,
-  ListItemText,
   TextField,
   FormControl,
   InputLabel,
   Select,
   MenuItem,
 } from "@mui/material";
-import { useEarningsState } from "../data/earningsState";
+import {
+  convertPaymentsToListDetails,
+  useEarningsState,
+} from "../data/earningsState";
 import { mockEarnings } from "../mock/mockEarnings";
+import List from "../../../common/components/list";
 
 export const EarningsPage: React.FC = () => {
   const { register, handleSubmit, watch, reset } = useForm<{
@@ -25,12 +26,28 @@ export const EarningsPage: React.FC = () => {
     bankAccountId: string;
   }>();
   const [showBankAccounts, setShowBankAccounts] = useState(false);
-  const { earningsDetails, setEarningsDetails } = useEarningsState();
-  const { availableBalance, payments, bankAccounts } = earningsDetails;
+  const {
+    availableBalance,
+    bankAccounts,
+    payments,
+    setAvailableBalance,
+    setBankAccounts,
+    setPayments,
+  } = useEarningsState();
 
   useEffect(() => {
-    setEarningsDetails(mockEarnings);
-  }, [setEarningsDetails]);
+    // Mock fetching bank accounts
+    setBankAccounts(mockEarnings.bankAccounts);
+    // Mock fetching payments
+    setPayments(mockEarnings.payments);
+    // Mock fetching available balance
+    setAvailableBalance(mockEarnings.availableBalance);
+  }, [setAvailableBalance, setBankAccounts, setPayments]);
+
+  const listData = useMemo(() => {
+    const result = convertPaymentsToListDetails(payments);
+    return result;
+  }, [payments, convertPaymentsToListDetails]);
 
   const handleWithdraw = async (data: {
     withdrawAmount: number;
@@ -45,7 +62,7 @@ export const EarningsPage: React.FC = () => {
 
   return (
     <Container maxWidth="sm">
-      <Box mt={4}>
+      <Box mt={10}>
         <Typography variant="h4" gutterBottom>
           Payments Page
         </Typography>
@@ -96,24 +113,12 @@ export const EarningsPage: React.FC = () => {
             )}
           </CardContent>
         </Card>
-        <Box mt={4}>
-          <Typography variant="h5" gutterBottom>
-            Past Payments
-          </Typography>
-          <List>
-            {payments.map((payment) => (
-              <ListItem key={payment.id}>
-                <ListItemText
-                  primary={`Amount: $${payment.amount.toFixed(2)}`}
-                  secondary={`Date: ${new Date(
-                    payment.date
-                  ).toLocaleDateString()} |${
-                    payment.bankAccount.name
-                  } Bank Account: ****${payment.bankAccount.suffix}`}
-                />
-              </ListItem>
-            ))}
-          </List>
+        <Box>
+          <List
+            data={listData}
+            header="Past Payments"
+            ActionButtons={() => <div></div>}
+          />
         </Box>
       </Box>
     </Container>

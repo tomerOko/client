@@ -7,7 +7,7 @@ import {
 } from "../data/bankAccountsState";
 
 import { Box, Button, Modal } from "@mui/material";
-import BankAccountForm from "../components/bankAccountForm";
+import { BankAccountForm } from "../components/bankAccountForm";
 import { bankAccountsMock } from "../mock/bankAccountsMock";
 
 const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {

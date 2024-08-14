@@ -1,25 +1,23 @@
 // src/components/UserForm.tsx
-import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
-  TextField,
-  Button,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
   Autocomplete,
+  Button,
+  Checkbox,
+  MenuItem,
+  TextField,
 } from "@mui/material";
-import * as z from "zod";
 import {
   languages as allLanguages,
-  genders,
   countries,
+  genders,
   teacherValidationProps,
 } from "events-tomeroko3";
-import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
+import React from "react";
+import { Controller, useForm } from "react-hook-form";
+import * as z from "zod";
 import { useAuthStore } from "../../../common/data/authStore";
-import { all } from "axios";
+import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 
 // Define Zod schema
 const {
@@ -46,7 +44,7 @@ type FormData = z.infer<typeof schema>;
 
 const useFetchBecomeTeacher = fetchHookFactory("BECOME_TEACHER");
 
-export const BecomeTeacherForm: React.FC = () => {
+export const ConsoltantDetailsForm: React.FC = () => {
   const {
     control,
     handleSubmit,
@@ -198,7 +196,12 @@ export const BecomeTeacherForm: React.FC = () => {
           />
         )}
       />
-      <Button type="submit" variant="contained" color="primary">
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        style={{ marginTop: "20px" }}
+      >
         Submit
       </Button>
     </form>

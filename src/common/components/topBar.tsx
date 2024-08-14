@@ -135,11 +135,7 @@ export const TopBar: React.FC = () => {
           <MenuItem component={Link} to="/earnings" onClick={handle2Close}>
             Earnings
           </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/manage-bank-accounts"
-            onClick={handle2Close}
-          >
+          <MenuItem component={Link} to="/bank-accounts" onClick={handle2Close}>
             Bank Accounts
           </MenuItem>
           <MenuItem

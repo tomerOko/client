@@ -2,14 +2,11 @@ import { ThemeProvider } from "@mui/material";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import { TopBar } from "./common/components/topBar";
 import { mainTheme } from "./common/theme/theme";
-import PaymentMethods from "./flows/AA_credit/page/paymentMethodsPage";
-import { BecomeTeacherPage } from "./flows/becomeTeacher/page/becomeTeacherPage";
 import { CallsHistoryPage } from "./flows/callHistory/page/callsHistory";
 import { ChatPage } from "./flows/chat/chat";
 import { EarningsPage } from "./flows/earnings/page/earningsPage";
 import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
 import { LandingPage } from "./flows/landing/landing";
-import { ManageBankAccountsPage } from "./flows/AA_bank/page/manageBankAccountsPage";
 import { MockVideoCallPage } from "./flows/meet/page/mockMeet";
 import { NotificationsPage } from "./flows/notifications/page/notificationPage";
 import { ReviewingPage } from "./flows/reviewing/page/reviewing";
@@ -20,6 +17,9 @@ import { UpcomingMeetingsPage } from "./flows/UpcomingMeetingsPage/page/upcoming
 import { HomePage } from "./flows/home/homePage";
 import { TopicPage } from "./flows/topic/page/topicPage";
 import { MyTopicsPage } from "./flows/myTopics/page/myTopicsPage";
+import { BankAccountsPage } from "./flows/aabankAccounts/page/bankAccountsPage";
+import { PaymentMethodsPage } from "./flows/aapaymentMethods/page/paymentMethodPage";
+import { ConsoltantDetailsPage } from "./flows/consoltantDetails/page/consoltantDetailsPage";
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
             <Route path="/search" element={<SearchPage />} />
             <Route path="/topic" element={<TopicPage />} />
             <Route path="/user-details" element={<UserDetailsPage />} />
-            <Route path="/payment-methods" element={<PaymentMethods />} />
+            <Route path="/payment-methods" element={<PaymentMethodsPage />} />
             <Route path="/reviewing" element={<ReviewingPage />} />
             <Route path="/calls-history" element={<CallsHistoryPage />} />
             <Route path="/mock-call" element={<MockVideoCallPage />} />
@@ -45,17 +45,14 @@ const App = () => {
               element={<UpcomingMeetingsPage />}
             />
             <Route path="/my-topics" element={<MyTopicsPage />} />
-            <Route
-              path="/manage-bank-accounts"
-              element={<ManageBankAccountsPage />}
-            />
+            <Route path="/bank-accounts" element={<BankAccountsPage />} />
             <Route
               path="/edit-availability"
               element={<EditAvailabilityPage />}
             />
             <Route path="/notifications" element={<NotificationsPage />} />
 
-            <Route path="/become-teacher" element={<BecomeTeacherPage />} />
+            <Route path="/become-teacher" element={<ConsoltantDetailsPage />} />
             <Route path="/earnings" element={<EarningsPage />} />
           </Routes>
         </Router>
