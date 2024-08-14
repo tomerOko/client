@@ -9,7 +9,6 @@ import { ChatPage } from "./flows/chat/chat";
 import { EarningsPage } from "./flows/earnings/page/earningsPage";
 import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
 import { LandingPage } from "./flows/landing/landing";
-import { ManageTopicsPage } from "./flows/manageTopics/page/manageTopicsPage";
 import { ManageBankAccountsPage } from "./flows/manamgeBankAccounts/page/manageBankAccountsPage";
 import { MockVideoCallPage } from "./flows/meet/page/mockMeet";
 import { NotificationsPage } from "./flows/notifications/page/notificationPage";
@@ -20,7 +19,7 @@ import UserDetailsPage from "./flows/userDetails/page/userDetails";
 import { UpcomingMeetingsPage } from "./flows/UpcomingMeetingsPage/page/upcomingMeetingsPage";
 import { HomePage } from "./flows/home/homePage";
 import { TopicPage } from "./flows/topic/page/topicPage";
-import { ManageTopicsPage2 } from "./flows/manageTopics2/page/manageTopicsPage2";
+import { MyTopicsPage } from "./flows/myTopics/page/myTopicsPage";
 
 const App = () => {
   return (
@@ -45,8 +44,7 @@ const App = () => {
               path="/upcoming-meetings"
               element={<UpcomingMeetingsPage />}
             />
-            <Route path="/my-topics" element={<ManageTopicsPage />} />
-            <Route path="/my-topics2" element={<ManageTopicsPage2 />} />
+            <Route path="/my-topics" element={<MyTopicsPage />} />
             <Route
               path="/manage-bank-accounts"
               element={<ManageBankAccountsPage />}

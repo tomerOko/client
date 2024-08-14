@@ -5,9 +5,9 @@ import {
   MyTopic,
   useMyTopicsState,
 } from "../data/myTopicState";
-import { myTopicsMock } from "../mock/managedTopicsMock";
+import { myTopicsMock } from "../mock/myTopicsMock";
 import MyTopicForm from "../components/myTopicForm";
-import { Button, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 
 const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
   const [showModal, setShowModal] = useState(false);
@@ -25,14 +25,27 @@ const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
       <Button onClick={handleEditClick}>Edit</Button>
       {showModal && (
         <Modal open={showModal} onClose={handleCloseModal} component="div">
-          <MyTopicForm onClose={handleCloseModal} />
+          <Box
+            sx={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              width: 600,
+              bgcolor: "background.paper",
+              boxShadow: 24,
+              p: 4,
+            }}
+          >
+            <MyTopicForm onClose={handleCloseModal} />
+          </Box>
         </Modal>
       )}
     </>
   );
 };
 
-export const ManageTopicsPage2: React.FC = () => {
+export const MyTopicsPage: React.FC = () => {
   const { myTopics, setMyTopics } = useMyTopicsState();
 
   useEffect(() => {

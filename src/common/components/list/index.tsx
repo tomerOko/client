@@ -1,16 +1,24 @@
 import styled from "@emotion/styled";
-import { Grid, Modal, Pagination, Typography } from "@mui/material";
-import React, { useState } from "react";
+import AddIcon from "@mui/icons-material/AddCircle";
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  Pagination,
+  Typography,
+} from "@mui/material";
+import React, { useCallback, useMemo, useState } from "react";
 import { MainColumn, Page } from "../../styledComponents";
 import { ElementCard } from "./components/elementCard";
 import { ListProps } from "./data";
-import AddIcon from "@mui/icons-material/Add";
 
 const ListMainColumn = styled(MainColumn)`
   max-width: 900px;
-  padding-top: 8vh;
+  padding-top: 7vh;
   max-height: 94vh;
   gap: 40px;
+  position: relative;
 `;
 
 const ListMainContent = styled.div`
@@ -18,6 +26,17 @@ const ListMainContent = styled.div`
   flex-direction: column;
   gap: 30px;
 `;
+
+const FormBoxStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 600,
+  bgcolor: "background.paper",
+  boxShadow: 24,
+  p: 4,
+};
 
 export const List = <T extends Record<string, any>>({
   ElementExtension,
@@ -40,13 +59,33 @@ export const List = <T extends Record<string, any>>({
 
   const [openModal, setOpenModal] = useState(false);
 
-  const handleOpenModal = () => {
+  const handleOpenModal = useCallback(() => {
     setOpenModal(true);
-  };
+  }, [setOpenModal]);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = useCallback(() => {
     setOpenModal(false);
-  };
+  }, [setOpenModal]);
+
+  const newElementButton = useMemo(() => {
+    if (!NewElementForm) {
+      return null;
+    }
+    return (
+      <>
+        <Button onClick={handleOpenModal}>
+          <AddIcon style={{ fontSize: "2.5rem" }} />
+        </Button>
+        {openModal && (
+          <Modal component="div" open={openModal} onClose={handleCloseModal}>
+            <Box sx={FormBoxStyle}>
+              <NewElementForm onClose={handleCloseModal} />
+            </Box>
+          </Modal>
+        )}
+      </>
+    );
+  }, [NewElementForm, openModal, setOpenModal]);
 
   return (
     <Page>
@@ -56,7 +95,18 @@ export const List = <T extends Record<string, any>>({
             {header}
           </Typography>
         )}
-        <div></div>
+        {newElementButton && (
+          <Box
+            style={{
+              display: "flex",
+              position: "absolute",
+              right: "0",
+              marginTop: "-5px",
+            }}
+          >
+            {newElementButton}
+          </Box>
+        )}
         <ListMainContent>
           {paginatedElements.map((data, index) => (
             <Grid item xs={12} key={index}>
@@ -78,22 +128,6 @@ export const List = <T extends Record<string, any>>({
             justifyContent: "center",
           }}
         />
-        {NewElementForm && (
-          <>
-            <button onClick={handleOpenModal}>
-              <AddIcon />
-            </button>
-            {openModal && (
-              <Modal
-                component="div"
-                open={openModal}
-                onClose={handleCloseModal}
-              >
-                <NewElementForm onClose={handleCloseModal} />
-              </Modal>
-            )}
-          </>
-        )}
       </ListMainColumn>
     </Page>
   );
