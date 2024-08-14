@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { useUserDetailsState } from "../data/userDetailsState";
 
-const UserDetailsPage: React.FC = () => {
+export const UserDetailsPage: React.FC = () => {
   const { setUserDetails, userDetails } = useUserDetailsState();
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,5 +127,3 @@ const UserDetailsPage: React.FC = () => {
     </Container>
   );
 };
-
-export default UserDetailsPage;
