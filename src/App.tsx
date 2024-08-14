@@ -4,7 +4,7 @@ import { TopBar } from "./common/components/topBar";
 import { mainTheme } from "./common/theme/theme";
 import PaymentMethods from "./flows/addPaymentDetails/page/paymentMethodsPage";
 import { BecomeTeacherPage } from "./flows/becomeTeacher/page/becomeTeacherPage";
-import { CallsHistoryPage } from "./flows/callsHistory/page/callsHistory";
+import { CallsHistoryPage } from "./flows/callHistory/page/callsHistory";
 import { ChatPage } from "./flows/chat/chat";
 import { EarningsPage } from "./flows/earnings/page/earningsPage";
 import { EditAvailabilityPage } from "./flows/editAvailability/page/editAvailabilityPage";
