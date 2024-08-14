@@ -8,7 +8,7 @@ import {
 import { mockNextMeetings } from "../mock/mockNextMeetings";
 import { NextMeetingsElementExtension } from "../components/NextMeetingsElementExtension";
 
-export const NextMeetings: React.FC = () => {
+export const UpcomingMeetingsPage: React.FC = () => {
   const { setNextMeetings, nextMeetings } = useNextMeetingsState();
 
   useEffect(() => {
@@ -22,7 +22,11 @@ export const NextMeetings: React.FC = () => {
 
   return (
     <>
-      <List data={listData} ElementExtension={NextMeetingsElementExtension} />
+      <List
+        data={listData}
+        ElementExtension={NextMeetingsElementExtension}
+        header="Upcoming Meetings"
+      />
     </>
   );
 };

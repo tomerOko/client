@@ -10,14 +10,11 @@ import {
   useNotificationsState,
 } from "../data/notificationState";
 import { mockNotifications } from "../mock/mockNotifications";
+import { MainColumn, Page } from "../../../common/styledComponents";
 
 const containerStyle = {
   paddingTop: "32px",
   paddingBottom: "32px",
-};
-
-const headerStyle = {
-  marginBottom: "32px",
 };
 
 export const NotificationsPage: React.FC = () => {
@@ -33,11 +30,14 @@ export const NotificationsPage: React.FC = () => {
   }, [notifications, convertNotificationToListDetails]);
 
   return (
-    <Container style={containerStyle}>
-      <Typography variant="h4" style={headerStyle}>
-        Notifications
-      </Typography>
-      <List data={listData} ActionButtons={NotificationActionButtons} />
-    </Container>
+    <Page>
+      <MainColumn>
+        <List
+          data={listData}
+          ActionButtons={NotificationActionButtons}
+          header="Notifications"
+        />
+      </MainColumn>
+    </Page>
   );
 };

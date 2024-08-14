@@ -2,28 +2,28 @@ import { create } from "zustand";
 import { ListElementState } from "../../../common/components/list/data";
 
 interface Consultant {
-  ID: number;
+  ID: string;
   name: string;
   email: string;
   imageUrl: string;
 }
 
 interface Topic {
-  ID: number;
+  ID: string;
   name: string;
   description: string;
   hourlyRate: number;
 }
 
 interface Client {
-  ID: number;
+  ID: string;
   name: string;
   email: string;
 }
 
 export interface Meeting {
-  ID: number;
-  roomID: number;
+  ID: string;
+  roomID: string;
   consultant: Consultant;
   topic: Topic;
   additionalClients: Client[];

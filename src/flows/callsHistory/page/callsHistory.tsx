@@ -1,14 +1,23 @@
-import React, { useState } from 'react';
-import { Box, Typography, Avatar, List, ListItem, ListItemAvatar, ListItemText, Collapse, IconButton } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-
+import React, { useState } from "react";
+import {
+  Box,
+  Typography,
+  Avatar,
+  List,
+  ListItem,
+  ListItemAvatar,
+  ListItemText,
+  Collapse,
+  IconButton,
+} from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const calls = [
   {
     consultantName: "Mr. Smith",
     consultantProfilePicUrl: "https://www.google.com",
-    consultantId: 1,
+    consultantID: "1",
     consultingTopic: "Java",
     consultingDate: "2021-01-01",
     consultingTime: "10:00",
@@ -21,7 +30,7 @@ const calls = [
   {
     consultantName: "Ms. Johnson",
     consultantProfilePicUrl: "https://www.google.com",
-    consultantId: 2,
+    consultantID: "2",
     consultingTopic: "Career coaching",
     consultingDate: "2021-01-15",
     consultingTime: "14:00",
@@ -34,7 +43,7 @@ const calls = [
   {
     consultantName: "Dr. Brown",
     consultantProfilePicUrl: "https://www.google.com",
-    consultantId: 3,
+    consultantID: "3",
     consultingTopic: "Nutrition consultation",
     consultingDate: "2021-01-20",
     consultingTime: "09:00",
@@ -47,7 +56,7 @@ const calls = [
   {
     consultantName: "Mr. Davis",
     consultantProfilePicUrl: "https://www.google.com",
-    consultantId: 4,
+    consultantID: "4",
     consultingTopic: "Business strategy",
     consultingDate: "2021-02-01",
     consultingTime: "11:00",
@@ -67,7 +76,7 @@ export const CallsHistoryPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ maxWidth: 800, mx: 'auto', mt: 4 }}>
+    <Box sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
       <Typography variant="h4" gutterBottom>
         Your calls
       </Typography>
@@ -76,14 +85,25 @@ export const CallsHistoryPage: React.FC = () => {
       </Typography>
       <List>
         {calls.map((call, index) => (
-          <React.Fragment key={call.consultantId}>
-            <ListItem alignItems="flex-start" button onClick={() => handleExpandClick(index)}>
+          <React.Fragment key={call.consultantID}>
+            <ListItem
+              alignItems="flex-start"
+              button
+              onClick={() => handleExpandClick(index)}
+            >
               <ListItemAvatar>
-                <Avatar alt={call.consultantName} src={call.consultantProfilePicUrl} />
+                <Avatar
+                  alt={call.consultantName}
+                  src={call.consultantProfilePicUrl}
+                />
               </ListItemAvatar>
               <ListItemText
                 primary={call.consultingTopic}
-                secondary={`Duration: ${Math.floor(call.consultingDuration / 60)}h ${call.consultingDuration % 60}m, Cost: $${call.consultingPrice}`}
+                secondary={`Duration: ${Math.floor(
+                  call.consultingDuration / 60
+                )}h ${call.consultingDuration % 60}m, Cost: $${
+                  call.consultingPrice
+                }`}
               />
               <IconButton onClick={() => handleExpandClick(index)}>
                 {expanded === index ? <ExpandLessIcon /> : <ExpandMoreIcon />}
@@ -91,11 +111,21 @@ export const CallsHistoryPage: React.FC = () => {
             </ListItem>
             <Collapse in={expanded === index} timeout="auto" unmountOnExit>
               <Box sx={{ pl: 4 }}>
-                <Typography variant="body2">Consultant: {call.consultantName}</Typography>
-                <Typography variant="body2">Date: {call.consultingDate}</Typography>
-                <Typography variant="body2">Time: {call.consultingTime}</Typography>
-                <Typography variant="body2">Duration: {call.consultingDuration} minutes</Typography>
-                <Typography variant="body2">Price: ${call.consultingPrice}</Typography>
+                <Typography variant="body2">
+                  Consultant: {call.consultantName}
+                </Typography>
+                <Typography variant="body2">
+                  Date: {call.consultingDate}
+                </Typography>
+                <Typography variant="body2">
+                  Time: {call.consultingTime}
+                </Typography>
+                <Typography variant="body2">
+                  Duration: {call.consultingDuration} minutes
+                </Typography>
+                <Typography variant="body2">
+                  Price: ${call.consultingPrice}
+                </Typography>
                 <Typography variant="body2">Rating: {call.rating}</Typography>
                 <Typography variant="body2">Review: {call.review}</Typography>
               </Box>
@@ -106,4 +136,3 @@ export const CallsHistoryPage: React.FC = () => {
     </Box>
   );
 };
-

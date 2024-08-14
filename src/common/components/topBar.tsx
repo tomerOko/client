@@ -35,8 +35,8 @@ const getPageTitle = (pathname: string) => {
       return "Logout";
     case "/reviewing":
       return "Review & Rating";
-    case "/next-meetings":
-      return "Next Meetings";
+    case "/upcoming-meetings":
+      return "Upcoming Meetings";
     case "/become-teacher":
       return "Become Teacher";
     default:
@@ -85,10 +85,10 @@ export const TopBar: React.FC = () => {
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           {/* {getPageTitle(location.pathname)} */}
         </Typography>
-        <IconButton color="inherit" component={Link} to="/search">
+        <IconButton color="inherit" component={Link} to="/home">
           <HomeIcon />
         </IconButton>
-        <IconButton color="inherit" component={Link} to="/next-meetings">
+        <IconButton color="inherit" component={Link} to="/upcoming-meetings">
           <CalendarMonthIcon />
         </IconButton>
         <IconButton color="inherit" component={Link} to="/chat">
@@ -122,8 +122,8 @@ export const TopBar: React.FC = () => {
           onClose={handle2Close}
           style={{ marginTop: 40 }}
         >
-          <MenuItem component={Link} to="/manage-topics" onClick={handle2Close}>
-            Topics
+          <MenuItem component={Link} to="/my-topics" onClick={handle2Close}>
+            My Topics
           </MenuItem>
           <MenuItem
             component={Link}

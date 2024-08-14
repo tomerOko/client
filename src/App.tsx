@@ -17,9 +17,10 @@ import { ReviewingPage } from "./flows/reviewing/page/reviewing";
 import { SearchPage } from "./flows/search/page/searchPage";
 import { SignupPage } from "./flows/signup/page/signupPage";
 import UserDetailsPage from "./flows/userDetails/page/userDetails";
-import { NextMeetings } from "./flows/nextMeetings/page/nextMeetingsPage";
+import { UpcomingMeetingsPage } from "./flows/UpcomingMeetingsPage/page/upcomingMeetingsPage";
 import { HomePage } from "./flows/home/homePage";
 import { TopicPage } from "./flows/topic/page/topicPage";
+import { ManageTopicsPage2 } from "./flows/manageTopics2/page/manageTopicsPage2";
 
 const App = () => {
   return (
@@ -40,8 +41,12 @@ const App = () => {
             <Route path="/calls-history" element={<CallsHistoryPage />} />
             <Route path="/mock-call" element={<MockVideoCallPage />} />
             <Route path="/chat" element={<ChatPage />} />
-            <Route path="/next-meetings" element={<NextMeetings />} />
-            <Route path="/manage-topics" element={<ManageTopicsPage />} />
+            <Route
+              path="/upcoming-meetings"
+              element={<UpcomingMeetingsPage />}
+            />
+            <Route path="/my-topics" element={<ManageTopicsPage />} />
+            <Route path="/my-topics2" element={<ManageTopicsPage2 />} />
             <Route
               path="/manage-bank-accounts"
               element={<ManageBankAccountsPage />}
