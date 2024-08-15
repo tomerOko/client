@@ -56,6 +56,8 @@ export const MyTopicForm: React.FC<TopicFormProps> = ({
               {...field}
               label="Extended Description"
               variant="outlined"
+              multiline
+              rows={4}
             />
           )}
         />

@@ -7,10 +7,13 @@ import {
 } from "../data/paymentMethodState";
 import PaymentMethodForm from "../components/paymentMethodForm";
 import { Box, Button, Modal } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+
 import { paymentMethodsMock } from "../mock/myTopicsMock";
 
-const EditFormModalButton: React.FC<{ data: PaymentMethod }> = () => {
+const EditFormModalButton: React.FC<{ data: PaymentMethod }> = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const { data } = props;
 
   const handleEditClick = () => {
     setShowModal(true);
@@ -22,7 +25,9 @@ const EditFormModalButton: React.FC<{ data: PaymentMethod }> = () => {
 
   return (
     <>
-      <Button onClick={handleEditClick}>Edit</Button>
+      <Button onClick={handleEditClick}>
+        <EditIcon />
+      </Button>{" "}
       {showModal && (
         <Modal open={showModal} onClose={handleCloseModal} component="div">
           <Box
@@ -37,7 +42,10 @@ const EditFormModalButton: React.FC<{ data: PaymentMethod }> = () => {
               p: 4,
             }}
           >
-            <PaymentMethodForm onClose={handleCloseModal} />
+            <PaymentMethodForm
+              onClose={handleCloseModal}
+              initialValues={data}
+            />
           </Box>
         </Modal>
       )}
@@ -60,7 +68,7 @@ export const PaymentMethodsPage: React.FC = () => {
   return (
     <List
       data={listData}
-      header="My Topics"
+      header="Payment Methods"
       NewElementForm={PaymentMethodForm}
       ActionButtons={EditFormModalButton}
     />

@@ -16,10 +16,12 @@ export interface ListProps<DataForSubButton extends Record<string, any>> {
   NewElementForm?: React.FC<{
     onClose: () => void;
   }>;
+  hideExpandButton?: boolean;
 }
 
 export interface ListElementPops<DataForSubButton extends Record<string, any>> {
   data: ListElementState<DataForSubButton>;
   ActionButtons?: React.FC<{ data: DataForSubButton }>;
+  hideExpandButton?: boolean;
   ElementExtension?: React.FC<{ data: DataForSubButton }>;
 }

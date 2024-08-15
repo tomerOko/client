@@ -16,10 +16,10 @@ export const HomePage: React.FC = () => {
   return (
     <Container maxWidth="lg">
       {/* Hero Section */}
-      <Grid container spacing={4} style={{ marginTop: "20px" }}>
+      <Grid container spacing={4} style={{ marginTop: "4vh" }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h2" component="h1" gutterBottom>
-            Welcome Back to Your Professional Network
+            Welcome Back to Consultify!
           </Typography>
           <Typography variant="h5" color="textSecondary" paragraph>
             Empower Your Projects with Expert Consultants

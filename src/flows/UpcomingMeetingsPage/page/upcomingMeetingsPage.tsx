@@ -26,6 +26,7 @@ export const UpcomingMeetingsPage: React.FC = () => {
         data={listData}
         ElementExtension={NextMeetingsElementExtension}
         header="Upcoming Meetings"
+        hideExpandButton={false}
       />
     </>
   );

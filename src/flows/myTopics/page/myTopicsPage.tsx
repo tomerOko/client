@@ -8,9 +8,11 @@ import {
 import { myTopicsMock } from "../mock/myTopicsMock";
 import MyTopicForm from "../components/myTopicForm";
 import { Box, Button, Modal } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
-const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
+const EditFormModalButton: React.FC<{ data: MyTopic }> = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const { data } = props;
 
   const handleEditClick = () => {
     setShowModal(true);
@@ -22,7 +24,9 @@ const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
 
   return (
     <>
-      <Button onClick={handleEditClick}>Edit</Button>
+      <Button onClick={handleEditClick}>
+        <EditIcon />
+      </Button>{" "}
       {showModal && (
         <Modal open={showModal} onClose={handleCloseModal} component="div">
           <Box
@@ -37,7 +41,7 @@ const EditFormModalButton: React.FC<{ data: MyTopic }> = () => {
               p: 4,
             }}
           >
-            <MyTopicForm onClose={handleCloseModal} />
+            <MyTopicForm onClose={handleCloseModal} initialValues={data} />
           </Box>
         </Modal>
       )}
@@ -63,6 +67,7 @@ export const MyTopicsPage: React.FC = () => {
       header="My Topics"
       NewElementForm={MyTopicForm}
       ActionButtons={EditFormModalButton}
+      hideExpandButton={false}
     />
   );
 };

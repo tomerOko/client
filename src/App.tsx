@@ -17,8 +17,8 @@ import { UpcomingMeetingsPage } from "./flows/UpcomingMeetingsPage/page/upcoming
 import { HomePage } from "./flows/home/homePage";
 import { TopicPage } from "./flows/topic/page/topicPage";
 import { MyTopicsPage } from "./flows/myTopics/page/myTopicsPage";
-import { BankAccountsPage } from "./flows/aabankAccounts/page/bankAccountsPage";
-import { PaymentMethodsPage } from "./flows/aapaymentMethods/page/paymentMethodPage";
+import { BankAccountsPage } from "./flows/bankAccounts/page/bankAccountsPage";
+import { PaymentMethodsPage } from "./flows/paymentMethods/page/paymentMethodPage";
 import { ConsoltantDetailsPage } from "./flows/consoltantDetails/page/consoltantDetailsPage";
 
 const App = () => {

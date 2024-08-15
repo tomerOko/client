@@ -21,6 +21,7 @@ export const ElementCard = <T extends Record<string, any>>({
   ElementExtension,
   data,
   ActionButtons,
+  hideExpandButton = true,
 }: ListElementPops<T>): React.ReactElement => {
   const { imageUrl, header, secondHeader, description } = data;
 
@@ -49,17 +50,18 @@ export const ElementCard = <T extends Record<string, any>>({
               )}
             </div>
           </ShownDetails>
-          {!!ActionButtons ? (
-            <ActionButtons data={data.additionalData} />
-          ) : (
-            <button onClick={handleExpandClick} style={{ color: "#1a80e6" }}>
-              {expanded ? (
-                <DropUpIcon fontSize="large" />
-              ) : (
-                <DropDownIcon fontSize="large" />
-              )}
-            </button>
-          )}
+          <div>
+            {ActionButtons && <ActionButtons data={data.additionalData} />}
+            {!hideExpandButton && (
+              <button onClick={handleExpandClick} style={{ color: "#1a80e6" }}>
+                {expanded ? (
+                  <DropUpIcon fontSize="large" />
+                ) : (
+                  <DropDownIcon fontSize="large" />
+                )}
+              </button>
+            )}
+          </div>
         </ShownContent>
 
         {expanded && (

@@ -22,7 +22,7 @@ export const NextMeetingsElementExtension: FC<{ data: Meeting }> = ({
         Hourly rate: {data.topic.hourlyRate}
       </Typography>
 
-      <div style={{ marginTop: "16px" }}>
+      <div style={{ marginTop: "16px", display: "flex", gap: "8px" }}>
         <Button variant="contained" startIcon={<ChatIcon />}>
           Chat
         </Button>
@@ -33,14 +33,9 @@ export const NextMeetingsElementExtension: FC<{ data: Meeting }> = ({
             navigate("/mock-call");
           }}
         >
-          Go to meeting
+          Go To Meeting
         </Button>
-        <Button
-          variant="outlined"
-          style={{ marginLeft: "8px" }}
-          startIcon={<CancelIcon />}
-          color="error"
-        >
+        <Button variant="outlined" startIcon={<CancelIcon />} color="error">
           Cancel
         </Button>
       </div>

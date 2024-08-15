@@ -6,12 +6,15 @@ import {
   useBankAccountsState,
 } from "../data/bankAccountsState";
 
+import EditIcon from "@mui/icons-material/Edit";
+
 import { Box, Button, Modal } from "@mui/material";
 import { BankAccountForm } from "../components/bankAccountForm";
 import { bankAccountsMock } from "../mock/bankAccountsMock";
 
-const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
+const EditFormModalButton: React.FC<{ data: BankAccount }> = (props) => {
   const [showModal, setShowModal] = useState(false);
+  const { data } = props;
 
   const handleEditClick = () => {
     setShowModal(true);
@@ -23,7 +26,9 @@ const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
 
   return (
     <>
-      <Button onClick={handleEditClick}>Edit</Button>
+      <Button onClick={handleEditClick}>
+        <EditIcon />
+      </Button>
       {showModal && (
         <Modal open={showModal} onClose={handleCloseModal} component="div">
           <Box
@@ -38,7 +43,7 @@ const EditFormModalButton: React.FC<{ data: BankAccount }> = () => {
               p: 4,
             }}
           >
-            <BankAccountForm onClose={handleCloseModal} />
+            <BankAccountForm onClose={handleCloseModal} initialValues={data} />
           </Box>
         </Modal>
       )}

@@ -17,7 +17,7 @@ export const EditAvailabilityPage: React.FC = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom marginTop={"6vh"}>
         Set Your Availability
       </Typography>
       <div id="switch">

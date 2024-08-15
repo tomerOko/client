@@ -44,6 +44,7 @@ export const List = <T extends Record<string, any>>({
   ActionButtons,
   header,
   NewElementForm,
+  hideExpandButton,
 }: ListProps<T>): React.ReactElement => {
   const [page, setPage] = useState(1);
   const elementsPerPage = 5;
@@ -114,6 +115,7 @@ export const List = <T extends Record<string, any>>({
                 data={data}
                 ElementExtension={ElementExtension}
                 ActionButtons={ActionButtons}
+                hideExpandButton={hideExpandButton}
               />
             </Grid>
           ))}
