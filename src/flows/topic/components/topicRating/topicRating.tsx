@@ -9,6 +9,31 @@ import {
   Button,
 } from "@mui/material";
 import { useCurrentTopicState } from "../../data/currentTopicState";
+import { TopicRatingStyles } from "./topicRatingStyles";
+import styled from "styled-components";
+
+const {
+  Header,
+  AverageRating,
+  RatingSummary,
+  RatingAverageContainer,
+  RatingDistributionContainer,
+} = TopicRatingStyles;
+
+const GreenProgressBar = styled(LinearProgress)({
+  height: "8px!important",
+  borderRadius: 5,
+  backgroundColor: "#E8DECF!important", // gray background color
+  width: "340px",
+  marginX: 1,
+  marginLeft: "20px",
+  marginRight: "20px",
+  marginTop: "10px",
+  "& .MuiLinearProgress-bar": {
+    borderRadius: 5,
+    backgroundColor: "#009963!important", // green color
+  },
+});
 
 const RatingsComponent: React.FC = () => {
   const { ratings } = useCurrentTopicState();
@@ -30,34 +55,37 @@ const RatingsComponent: React.FC = () => {
 
   return (
     <Box>
-      <Typography variant="h5">Ratings</Typography>
-      <Box display="flex" alignItems="center">
-        <Typography variant="h2" component="div" marginRight={1}>
-          {averageRating.toFixed(1)}
-        </Typography>
-        <Box>
-          <Typography variant="body2">
+      <Header>Ratings</Header>
+
+      <RatingSummary>
+        <RatingAverageContainer>
+          <AverageRating>{averageRating.toFixed(1)}</AverageRating>
+          <div>
             {"★".repeat(Math.round(averageRating))}
             {"☆".repeat(5 - Math.round(averageRating))}
-          </Typography>
-          <Typography variant="body2">{totalReviews} reviews</Typography>
-        </Box>
-      </Box>
-      <Box>
-        {ratingDistribution.map((dist, index) => (
-          <Box key={index} display="flex" alignItems="center">
-            <Typography variant="body2">{dist.stars}</Typography>
-            <LinearProgress
-              variant="determinate"
-              value={dist.percentage}
-              sx={{ width: "80%", marginX: 1 }}
-            />
-            <Typography variant="body2">
-              {dist.percentage.toFixed(1)}%
-            </Typography>
-          </Box>
-        ))}
-      </Box>
+          </div>
+          <div>{totalReviews} reviews</div>
+        </RatingAverageContainer>
+        <RatingDistributionContainer>
+          {ratingDistribution.map((dist, index) => (
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                alignContent: "start",
+              }}
+            >
+              <div style={{ width: "20px" }}>{dist.stars}</div>
+
+              <GreenProgressBar variant="determinate" value={dist.percentage} />
+
+              <div>{dist.percentage.toFixed(0)}%</div>
+            </div>
+          ))}
+        </RatingDistributionContainer>
+      </RatingSummary>
+
       <Box mt={3}>
         <Button variant="outlined" onClick={() => setShowReviews(!showReviews)}>
           {showReviews ? "Hide Reviews" : "Show Reviews"}

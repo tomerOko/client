@@ -16,7 +16,7 @@ import { useSearchState } from "../../search/data/serchState";
 import { mockTopicAvalabilities, mockTopicRatings } from "../mock/mockTopic";
 import { TopicPageComponents } from "../components/styledComponents";
 import { SpaceBar } from "@mui/icons-material";
-import RatingsComponent from "../components/x/b";
+import RatingsComponent from "../components/topicRating/topicRating";
 
 const {
   MainColumn,
@@ -139,49 +139,6 @@ export const TopicPage: React.FC = () => {
         </MetaDataContainer>
         <RatingContainer>
           <RatingsComponent />
-
-          {/* <>
-            <div>
-              <Typography variant="h6">
-                Average Rating: {ratings.averageRating}
-              </Typography>
-              <Slider
-                value={ratings.averageRating}
-                min={1}
-                max={5}
-                step={0.1}
-                disabled
-              />
-            </div>
-            <div>
-              {ratingOptions.map((option) => (
-                <div key={option.rating}>
-                  <Typography variant="body1">{option.rating}</Typography>
-                  <Slider
-                    value={option.count}
-                    min={0}
-                    max={ratings.data.length}
-                    step={1}
-                    disabled
-                  />
-                </div>
-              ))}
-            </div>
-            <Button onClick={handleExpand}>
-              {expanded ? "Collapse Ratings" : "Expand Ratings"}
-            </Button>
-            {expanded && (
-              <div>
-                <List>
-                  {ratings.data.map((rating, index) => (
-                    <ListItem key={index}>
-                      <ListItemText primary={`Rating: ${rating}`} />
-                    </ListItem>
-                  ))}
-                </List>
-              </div>
-            )}
-          </> */}
         </RatingContainer>
         <AvailabilityContainer>
           <Calendar />

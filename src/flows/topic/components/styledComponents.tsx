@@ -21,18 +21,18 @@ const MainColumn = styled.div`
 
 const MetaDataContainer = styled.div`
   width: 928px;
-  margin-top: 4vh;
+  margin-top: 6vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
-  gap: 16px;
+  gap: 20px;
   flex: none;
   order: 0;
 `;
 
 const TopicHeader = styled.div`
-  font-family: sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -58,20 +58,21 @@ const RatingContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 928px;
+  margin-top: 25px;
 
-  height: 400px;
-  border: 1px solid black;
+  height: 500px;
 `;
 
 const AvailabilityContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 400px;
+  width: 928px;
   border: 1px solid black;
 `;
 
 const TeacherName = styled.div`
-  font-family: sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 22px;
@@ -84,7 +85,7 @@ const TeacherName = styled.div`
 `;
 
 const DescriptionText = styled.div`
-  font-family: sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;

@@ -42,7 +42,7 @@ export const ActionButtonBase = styled.button`
   height: 50px;
   border: none;
   border-radius: 12px;
-  font-family: "Roboto", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 17px;

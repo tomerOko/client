@@ -28,7 +28,7 @@ const BottomBackgroundContainer = styled(BackgroundImageContainerBase)`
 `;
 
 const SignupText = styled.div`
-  font-family: "Public Sans Variable", sans-serif;
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-weight: 800;
   font-style: normal;
   font-size: 40px;

@@ -54,7 +54,7 @@ export const convertMeetingToListDetails = (
     const result = {
       description: topic.description,
       header: topic.name,
-      secondHeader: `${consultant.name}: ${date}`,
+      secondHeader: `${consultant.name}: ${new Date(date).toLocaleString()}`,
       imageUrl: consultant.imageUrl,
       additionalData: meeting,
     };
