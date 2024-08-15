@@ -5,20 +5,22 @@ export interface TopicAvailabilityBlock {
   dateOfEnd: number;
 }
 
-export interface TopicRatings {
+export interface TopicReview {
+  rating: number;
+  comment: string;
+  date: number;
+  user: {
+    ID: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    profilePictureUrl: string;
+  };
+}
+
+export interface TopicReviews {
   averageRating: number;
-  data: {
-    rating: number;
-    comment: string;
-    date: number;
-    user: {
-      ID: string;
-      email: string;
-      firstName: string;
-      lastName: string;
-      profilePictureUrl: string;
-    };
-  }[];
+  data: TopicReview[];
 }
 
 export interface TopicMetaData {
@@ -40,8 +42,8 @@ export interface TopicMetaData {
 export interface CurrentTopicState {
   availability: TopicAvailabilityBlock[];
   setAvailability: (availability: TopicAvailabilityBlock[]) => void;
-  ratings: TopicRatings;
-  setRatings: (ratings: TopicRatings) => void;
+  ratings: TopicReviews;
+  setRatings: (ratings: TopicReviews) => void;
   metaData: TopicMetaData;
   setMetaData: (metaData: TopicMetaData) => void;
 }
@@ -54,7 +56,7 @@ export const useCurrentTopicState = create<CurrentTopicState>((set) => ({
     averageRating: 0,
     data: [],
   },
-  setRatings: (ratings: TopicRatings) => set({ ratings }),
+  setRatings: (ratings: TopicReviews) => set({ ratings }),
   metaData: {
     ID: "",
     name: "",

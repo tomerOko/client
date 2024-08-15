@@ -1,6 +1,6 @@
 import {
   TopicAvailabilityBlock,
-  TopicRatings,
+  TopicReviews,
 } from "../data/currentTopicState";
 
 export const mockTopicAvalabilities: TopicAvailabilityBlock[] = [
@@ -14,7 +14,7 @@ export const mockTopicAvalabilities: TopicAvailabilityBlock[] = [
   },
 ];
 
-export const mockTopicRatings: TopicRatings = {
+export const mockTopicRatings: TopicReviews = {
   averageRating: 4.5,
   data: [
     {
@@ -26,7 +26,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Matthew",
         ID: "y14",
         lastName: "Johnson",
-        profilePictureUrl: "https://randomuser.me/api/portraits/men/140.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/men/30.jpg",
       },
     },
     {
@@ -38,7 +38,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Emily",
         ID: "x27",
         lastName: "Smith",
-        profilePictureUrl: "https://randomuser.me/api/portraits/women/141.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/women/31.jpg",
       },
     },
     {
@@ -50,7 +50,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Michael",
         ID: "z39",
         lastName: "Brown",
-        profilePictureUrl: "https://randomuser.me/api/portraits/men/142.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/men/32.jpg",
       },
     },
     {
@@ -62,7 +62,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Sophia",
         ID: "w52",
         lastName: "Davis",
-        profilePictureUrl: "https://randomuser.me/api/portraits/women/143.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/women/33.jpg",
       },
     },
     {
@@ -74,7 +74,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Daniel",
         ID: "v65",
         lastName: "Wilson",
-        profilePictureUrl: "https://randomuser.me/api/portraits/men/144.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/men/34.jpg",
       },
     },
     {
@@ -86,7 +86,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Olivia",
         ID: "u78",
         lastName: "Taylor",
-        profilePictureUrl: "https://randomuser.me/api/portraits/women/145.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/women/35.jpg",
       },
     },
     {
@@ -98,7 +98,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "James",
         ID: "t81",
         lastName: "Anderson",
-        profilePictureUrl: "https://randomuser.me/api/portraits/men/146.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/men/36.jpg",
       },
     },
     {
@@ -110,7 +110,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Ava",
         ID: "s94",
         lastName: "Thomas",
-        profilePictureUrl: "https://randomuser.me/api/portraits/women/147.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/women/37.jpg",
       },
     },
     {
@@ -122,7 +122,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "William",
         ID: "r07",
         lastName: "Roberts",
-        profilePictureUrl: "https://randomuser.me/api/portraits/men/148.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/men/38.jpg",
       },
     },
     {
@@ -134,7 +134,7 @@ export const mockTopicRatings: TopicRatings = {
         firstName: "Mia",
         ID: "q10",
         lastName: "Harris",
-        profilePictureUrl: "https://randomuser.me/api/portraits/women/149.jpg",
+        profilePictureUrl: "https://randomuser.me/api/portraits/women/39.jpg",
       },
     },
     {

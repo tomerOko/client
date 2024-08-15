@@ -16,7 +16,7 @@ import { useSearchState } from "../../search/data/serchState";
 import { mockTopicAvalabilities, mockTopicRatings } from "../mock/mockTopic";
 import { TopicPageComponents } from "../components/styledComponents";
 import { SpaceBar } from "@mui/icons-material";
-import RatingsComponent from "../components/topicRating/topicRating";
+import { RatingsComponent } from "../components/topicRating/topicRating";
 
 const {
   MainColumn,
@@ -48,14 +48,8 @@ const initialRatingOptions: RatingOption[] = [
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
-  const {
-    setMetaData,
-    availability,
-    metaData,
-    ratings,
-    setAvailability,
-    setRatings,
-  } = useCurrentTopicState();
+  const { setMetaData, metaData, setAvailability, setRatings } =
+    useCurrentTopicState();
   const { chosenTopic } = useSearchState();
 
   /* LOAD FROM CLICKED CARD STATE */
@@ -140,9 +134,9 @@ export const TopicPage: React.FC = () => {
         <RatingContainer>
           <RatingsComponent />
         </RatingContainer>
-        <AvailabilityContainer>
+        {/* <AvailabilityContainer>
           <Calendar />
-        </AvailabilityContainer>
+        </AvailabilityContainer> */}
       </MainColumn>
     </Lander>
   );

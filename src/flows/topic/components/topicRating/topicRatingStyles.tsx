@@ -56,7 +56,7 @@ const GreenProgressBar = styled(LinearProgress)({
   marginTop: "10px",
   "& .MuiLinearProgress-bar": {
     borderRadius: 5,
-    backgroundColor: "#009963!important", // green color
+    backgroundColor: "#009963", // green color
   },
 });
 

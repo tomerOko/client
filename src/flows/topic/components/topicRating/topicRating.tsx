@@ -1,18 +1,14 @@
+import DropDownIcon from "@mui/icons-material/ArrowDropDownCircle";
+import DropUpIcon from "@mui/icons-material/ArrowDropUpOutlined";
+import { Box, Button } from "@mui/material";
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Avatar,
-  Grid,
-  LinearProgress,
-  IconButton,
-  Button,
-} from "@mui/material";
-import { useCurrentTopicState } from "../../data/currentTopicState";
-import { TopicRatingStyles } from "./topicRatingStyles";
-import styled from "styled-components";
-import star from "../../assets/star.png";
 import emptyStar from "../../assets/emptyStar.png";
+import star from "../../assets/star.png";
+import {
+  TopicReview,
+  useCurrentTopicState,
+} from "../../data/currentTopicState";
+import { TopicRatingStyles } from "./topicRatingStyles";
 
 const {
   Header,
@@ -23,7 +19,7 @@ const {
   GreenProgressBar,
 } = TopicRatingStyles;
 
-const RatingsComponent: React.FC = () => {
+export const RatingsComponent: React.FC = () => {
   const { ratings } = useCurrentTopicState();
   const [showReviews, setShowReviews] = useState(false);
 
@@ -84,55 +80,92 @@ const RatingsComponent: React.FC = () => {
             </div>
           ))}
         </RatingDistributionContainer>
+        <div style={{ display: "flex", marginLeft: "30px" }}>
+          <button onClick={() => setShowReviews(!showReviews)}>
+            {showReviews ? (
+              <DropUpIcon
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  color: "#009963",
+                  border: "1px solid #009963",
+                  borderRadius: "50%",
+                }}
+              />
+            ) : (
+              <DropDownIcon
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  color: "#009963",
+                }}
+              />
+            )}
+          </button>
+        </div>
       </RatingSummary>
-
-      <Box mt={3}>
-        <Button variant="outlined" onClick={() => setShowReviews(!showReviews)}>
-          {showReviews ? "Hide Reviews" : "Show Reviews"}
-        </Button>
-        {showReviews && (
-          <Box mt={2}>
-            {reviews.map((review, index) => (
-              <Box key={index} mb={2}>
-                <Grid container spacing={2}>
-                  <Grid item>
-                    <Avatar src={review.user.profilePictureUrl} />
-                  </Grid>
-                  <Grid item xs>
-                    <Typography variant="subtitle1">
-                      {review.user.firstName} {review.user.lastName}
-                    </Typography>
-                    <Typography variant="caption" color="textSecondary">
-                      {new Date(review.date).toLocaleDateString()}
-                    </Typography>
-                    <Box display="flex" alignItems="center">
-                      <Typography variant="body2">
-                        {"★".repeat(review.rating)}
-                        {"☆".repeat(5 - review.rating)}
-                      </Typography>
-                    </Box>
-                    <Typography variant="body2">{review.comment}</Typography>
-                    {/* 
-                    import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-                    import ThumbDownIcon from "@mui/icons-material/ThumbDown";
-                    
-                    <Box display="flex" alignItems="center">
-                      <IconButton size="small">
-                        <ThumbUpIcon fontSize="small" /> {review.likes}
-                      </IconButton>
-                      <IconButton size="small">
-                        <ThumbDownIcon fontSize="small" /> {review.dislikes}
-                      </IconButton>
-                    </Box> */}
-                  </Grid>
-                </Grid>
-              </Box>
-            ))}
-          </Box>
-        )}
-      </Box>
+      {showReviews && (
+        <div
+          style={{
+            display: "grid",
+            gap: "10px",
+            padding: "20px",
+            border: "1px solid #009963",
+            borderRadius: "10px",
+            //3 in a row
+            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+          }}
+        >
+          {reviews.map((review, index) => (
+            <ReviewCard key={index} review={review} />
+          ))}
+        </div>
+      )}
     </Box>
   );
 };
 
-export default RatingsComponent;
+const ReviewCard: React.FC<{ review: TopicReview }> = ({ review }) => {
+  const { comment, date, rating, user } = review;
+  const { firstName, lastName, profilePictureUrl } = user;
+  return (
+    <Box
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: "10px",
+        borderBottom: "1px solid #009963",
+        paddingBottom: "10px",
+      }}
+    >
+      <img
+        src={profilePictureUrl}
+        alt="profile"
+        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+      />
+      <div>
+        <div>
+          {firstName} {lastName}
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignContent: "start",
+          }}
+        >
+          {[1, 2, 3, 4, 5].map((starRating) => (
+            <img
+              key={starRating}
+              src={starRating <= rating ? star : emptyStar}
+              alt="star"
+              style={{ width: "20px" }}
+            />
+          ))}
+        </div>
+        <div>{comment}</div>
+        <div>{new Date(date).toLocaleDateString()}</div>
+      </div>
+    </Box>
+  );
+};
