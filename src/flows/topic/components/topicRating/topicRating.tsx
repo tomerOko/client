@@ -11,6 +11,8 @@ import {
 import { useCurrentTopicState } from "../../data/currentTopicState";
 import { TopicRatingStyles } from "./topicRatingStyles";
 import styled from "styled-components";
+import star from "../../assets/star.png";
+import emptyStar from "../../assets/emptyStar.png";
 
 const {
   Header,
@@ -18,22 +20,8 @@ const {
   RatingSummary,
   RatingAverageContainer,
   RatingDistributionContainer,
+  GreenProgressBar,
 } = TopicRatingStyles;
-
-const GreenProgressBar = styled(LinearProgress)({
-  height: "8px!important",
-  borderRadius: 5,
-  backgroundColor: "#E8DECF!important", // gray background color
-  width: "340px",
-  marginX: 1,
-  marginLeft: "20px",
-  marginRight: "20px",
-  marginTop: "10px",
-  "& .MuiLinearProgress-bar": {
-    borderRadius: 5,
-    backgroundColor: "#009963!important", // green color
-  },
-});
 
 const RatingsComponent: React.FC = () => {
   const { ratings } = useCurrentTopicState();
@@ -60,11 +48,23 @@ const RatingsComponent: React.FC = () => {
       <RatingSummary>
         <RatingAverageContainer>
           <AverageRating>{averageRating.toFixed(1)}</AverageRating>
-          <div>
-            {"★".repeat(Math.round(averageRating))}
-            {"☆".repeat(5 - Math.round(averageRating))}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignContent: "start",
+            }}
+          >
+            {[1, 2, 3, 4, 5].map((starRating) => (
+              <img
+                key={starRating}
+                src={starRating <= averageRating ? star : emptyStar}
+                alt="star"
+                style={{ width: "20px" }}
+              />
+            ))}
           </div>
-          <div>{totalReviews} reviews</div>
+          <div>({totalReviews} reviews)</div>
         </RatingAverageContainer>
         <RatingDistributionContainer>
           {ratingDistribution.map((dist, index) => (
