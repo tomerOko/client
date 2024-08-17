@@ -42,7 +42,7 @@ const languageOptions = Object.values(allLanguages);
 // Define form data type based on the Zod schema
 type FormData = z.infer<typeof schema>;
 
-const useFetchBecomeTeacher = fetchHookFactory("BECOME_TEACHER");
+const useFetchbecomeConsultant = fetchHookFactory("BECOME_TEACHER");
 
 export const ConsoltantDetailsForm: React.FC = () => {
   const {
@@ -53,11 +53,11 @@ export const ConsoltantDetailsForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const { fetch: fetchBecomeTeacher } = useFetchBecomeTeacher();
+  const { fetch: fetchbecomeConsultant } = useFetchbecomeConsultant();
   const { ID, email, firstName, lastName } = useAuthStore()?.data?.user || {};
 
   const onSubmit = async (data: FormData) => {
-    await fetchBecomeTeacher({
+    await fetchbecomeConsultant({
       aboutMe: data.aboutMe,
       age: Number(data.age),
       country: data.country,

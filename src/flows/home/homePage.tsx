@@ -12,10 +12,58 @@ import {
   IconButton,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { Facebook, Twitter, LinkedIn, Instagram } from "@mui/icons-material";
+import {
+  Facebook,
+  Twitter,
+  LinkedIn,
+  Instagram,
+  ArrowForward,
+} from "@mui/icons-material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+
+const CustomNextArrow = (props: any) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "rgba(0,0,0,0.5)",
+        borderRadius: "50%",
+        padding: "20px",
+        position: "absolute",
+        right: "-50px",
+      }}
+      onClick={onClick}
+    />
+  );
+};
+
+const CustomPrevArrow = (props: any) => {
+  const { className, style, onClick } = props;
+  return (
+    <div
+      className={className}
+      style={{
+        ...style,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "rgba(0,0,0,0.5)",
+        borderRadius: "50%",
+        padding: "20px",
+        position: "absolute",
+        left: "-50px",
+      }}
+      onClick={onClick}
+    />
+  );
+};
 
 export const HomePage: React.FC = () => {
   const navigate = useNavigate();
@@ -44,6 +92,8 @@ export const HomePage: React.FC = () => {
         },
       },
     ],
+    nextArrow: <CustomNextArrow />,
+    prevArrow: <CustomPrevArrow />,
   };
 
   const consultants = [
@@ -124,6 +174,7 @@ export const HomePage: React.FC = () => {
                 color="primary"
                 size="large"
                 sx={{ px: 4, py: 1.5, fontSize: "1.1rem" }}
+                onClick={() => navigate("/become-consultant")}
               >
                 Become a Consultant
               </Button>
@@ -164,7 +215,7 @@ export const HomePage: React.FC = () => {
 
         {/* Featured Consultants Carousel */}
         <SectionTitle title="Top-Rated Consultants" />
-        <Box sx={{ mb: 6 }}>
+        <Box sx={{ mb: 6, position: "relative", mx: 6 }}>
           <Slider {...carouselSettings}>
             {consultants.map((consultant, index) => (
               <Box key={index} sx={{ p: 1 }}>
@@ -181,51 +232,69 @@ export const HomePage: React.FC = () => {
 
         {/* How It Works */}
         <SectionTitle title="How It Works" />
-        <Grid container spacing={4} sx={{ mb: 6 }}>
+        <Grid container spacing={4} sx={{ mb: 6, position: "relative" }}>
           {[
             {
               title: "Search",
               description: "Find the perfect consultant for your needs",
               image:
-                "https://cdn.pixabay.com/photo/2017/09/21/13/32/magnifying-glass-2771735_1280.jpg",
+                "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
             {
               title: "Connect",
               description: "Schedule a session at your convenience",
               image:
-                "https://cdn.pixabay.com/photo/2015/07/02/10/40/writing-828911_1280.jpg",
+                "https://plus.unsplash.com/premium_photo-1664474827168-201cf7d0420b?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
             {
               title: "Learn",
               description: "Gain valuable insights and knowledge",
               image:
-                "https://cdn.pixabay.com/photo/2015/11/19/21/10/knowledge-1052010_1280.jpg",
+                "https://images.unsplash.com/photo-1616587894289-86480e533129?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
           ].map((step, index) => (
-            <Grid item xs={12} sm={4} key={index}>
-              <Card
-                sx={{
-                  height: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                }}
-              >
-                <CardMedia
-                  component="img"
-                  height="200"
-                  image={step.image}
-                  alt={step.title}
-                />
-                <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
-                  <Typography variant="h5" component="h3" gutterBottom>
-                    {step.title}
-                  </Typography>
-                  <Typography variant="body1" color="textSecondary">
-                    {step.description}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+            <React.Fragment key={index}>
+              <Grid item xs={12} sm={4}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="200"
+                    image={step.image}
+                    alt={step.title}
+                  />
+                  <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
+                    <Typography variant="h5" component="h3" gutterBottom>
+                      {step.title}
+                    </Typography>
+                    <Typography variant="body1" color="textSecondary">
+                      {step.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              {index < 2 && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: `${33.33 * (index + 1)}%`,
+                    transform: "translate(-20%, -50%)",
+                    zIndex: 1,
+                    bgcolor: "rgba(25, 118, 210, 0.8)",
+                    borderRadius: "50%",
+                    padding: "10px",
+                  }}
+                >
+                  <ArrowForward sx={{ fontSize: 40, color: "white" }} />
+                </Box>
+              )}
+            </React.Fragment>
           ))}
         </Grid>
 
@@ -234,7 +303,7 @@ export const HomePage: React.FC = () => {
         <Grid container spacing={4} sx={{ mb: 6 }}>
           {[
             "https://cdn.pixabay.com/photo/2015/01/09/11/08/startup-594090_1280.jpg",
-            "https://cdn.pixabay.com/photo/2017/10/12/20/15/business-2845780_1280.jpg",
+            "https://plus.unsplash.com/premium_photo-1677171749355-4ad563d86165?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             "https://cdn.pixabay.com/photo/2018/03/27/21/43/startup-3267505_1280.jpg",
           ].map((imageUrl, index) => (
             <Grid item xs={12} sm={6} md={4} key={index}>
@@ -248,24 +317,20 @@ export const HomePage: React.FC = () => {
           ))}
         </Grid>
 
-        {/* Success Stories */}
-        <SectionTitle title="Success Stories from Our Community" />
-        <Grid container spacing={4} sx={{ mb: 6 }}>
-          {[
-            "https://cdn.pixabay.com/photo/2017/08/06/12/06/people-2591874_1280.jpg",
-            "https://cdn.pixabay.com/photo/2015/01/09/11/08/startup-594090_1280.jpg",
-            "https://cdn.pixabay.com/photo/2017/07/31/11/21/people-2557396_1280.jpg",
-          ].map((imageUrl, index) => (
-            <Grid item xs={12} sm={6} md={4} key={index}>
-              <TestimonialCard
-                name={`Sarah Thompson ${index + 1}`}
-                role="Entrepreneur"
-                quote="This platform helped me find the perfect consultant for my project, leading to a 200% increase in productivity!"
-                imageUrl={imageUrl}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        {/* New section for separation */}
+        <Box sx={{ my: 8, textAlign: "center" }}>
+          <Typography variant="h4" component="h2" gutterBottom>
+            Join Our Thriving Community
+          </Typography>
+          <Typography variant="body1" color="textSecondary" sx={{ mb: 4 }}>
+            Discover how our platform has transformed careers and businesses.
+            Read inspiring stories from consultants and clients who have found
+            success through our community.
+          </Typography>
+          <Button variant="contained" color="primary" size="large">
+            Explore Success Stories
+          </Button>
+        </Box>
       </Container>
 
       {/* Footer */}
@@ -343,9 +408,6 @@ export const HomePage: React.FC = () => {
     </Box>
   );
 };
-
-// ... (rest of the component definitions remain the same)
-
 const SectionTitle: React.FC<{ title: string }> = ({ title }) => (
   <Typography
     variant="h4"

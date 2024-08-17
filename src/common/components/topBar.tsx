@@ -37,7 +37,7 @@ const getPageTitle = (pathname: string) => {
       return "Review & Rating";
     case "/upcoming-meetings":
       return "Upcoming Meetings";
-    case "/become-teacher":
+    case "/become-consultant":
       return "Become Teacher";
     default:
       return "";
@@ -140,7 +140,7 @@ export const TopBar: React.FC = () => {
           </MenuItem>
           <MenuItem
             component={Link}
-            to="/become-teacher"
+            to="/become-consultant"
             onClick={handle2Close}
           >
             Become Teacher
