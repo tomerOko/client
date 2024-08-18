@@ -10,11 +10,7 @@ import {
   useNotificationsState,
 } from "../data/notificationState";
 import { mockNotifications } from "../mock/mockNotifications";
-
-const containerStyle = {
-  paddingTop: "32px",
-  paddingBottom: "32px",
-};
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 export const NotificationsPage: React.FC = () => {
   const { notifications, setNotifications } = useNotificationsState();
@@ -30,6 +26,7 @@ export const NotificationsPage: React.FC = () => {
 
   return (
     <Page>
+      <NiceBackground />
       <MainColumn>
         <List
           data={listData}

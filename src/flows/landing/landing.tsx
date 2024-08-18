@@ -48,7 +48,7 @@ export const LandingPage: React.FC = () => {
           </TopBackgroundContainer>
           <BottomBackgroundContainer id="bottom-background-container">
             <LandingText id="landing-text-2">
-              Discover the Perfect Consultant <br /> for Any Topic
+              Discover the Perfect Consultant <br /> for Anything You Need
             </LandingText>
           </BottomBackgroundContainer>
         </ContentContainer>

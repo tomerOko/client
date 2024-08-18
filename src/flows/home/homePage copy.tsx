@@ -18,10 +18,13 @@ import {
   LinkedIn,
   Instagram,
   ArrowForward,
+  ArrowBack,
 } from "@mui/icons-material";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { url } from "inspector";
+import { images } from "../../common/components/niceBackgruond/component/assets";
 
 const CustomNextArrow = (props: any) => {
   const { className, style, onClick } = props;
@@ -138,31 +141,68 @@ export const HomePage: React.FC = () => {
     <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh" }}>
       <Container maxWidth="lg">
         {/* Hero Section */}
-        <Grid container spacing={4} sx={{ pt: 8, pb: 6 }}>
-          <Grid item xs={12} md={6}>
+        <Box
+          sx={{
+            height: "30vh",
+            minHeight: "200px", // Ensures a minimum height on smaller screens
+            maxHeight: "300px", // Prevents the section from getting too tall
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            backgroundImage: `url(${images.n1})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: "16px",
+            mb: 4,
+            position: "relative",
+            overflow: "hidden", // Ensures content doesn't overflow
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0,0,0,0.5)",
+            }}
+          />
+          <Box sx={{ position: "relative", zIndex: 1, p: 2 }}>
             <Typography
-              variant="h2"
+              variant="h3"
               component="h1"
               gutterBottom
               fontWeight="bold"
-              color="primary"
+              color="white"
+              sx={{
+                mb: 1,
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" }, // Responsive font size
+              }}
             >
               Share Knowledge, Grow Together
             </Typography>
-            <Typography variant="h5" color="textSecondary" paragraph>
-              Connect with expert consultants or share your expertise. Learn,
-              teach, and succeed together.
+            <Typography
+              variant="h6"
+              color="white"
+              sx={{
+                mb: 2,
+                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.25rem" }, // Responsive font size
+              }}
+            >
+              Connect with experts. Learn, teach, and succeed.
             </Typography>
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 sx={{
-                  mr: 2,
-                  px: 4,
-                  py: 1.5,
-                  fontSize: "1.1rem",
+                  px: { xs: 2, sm: 3 },
+                  py: 1,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
                   fontWeight: "bold",
                 }}
                 onClick={() => navigate("/search")}
@@ -173,88 +213,48 @@ export const HomePage: React.FC = () => {
                 variant="outlined"
                 color="primary"
                 size="large"
-                sx={{ px: 4, py: 1.5, fontSize: "1.1rem" }}
+                sx={{
+                  px: { xs: 2, sm: 3 },
+                  py: 1,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,1)",
+                  },
+                }}
                 onClick={() => navigate("/become-consultant")}
               >
                 Become a Consultant
               </Button>
             </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                position: "relative",
-                height: 400,
-                borderRadius: 4,
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_1280.jpg"
-                alt="Knowledge Sharing"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  bgcolor: "rgba(0,0,0,0.6)",
-                  color: "white",
-                  p: 2,
-                }}
-              >
-                <Typography variant="h6">
-                  Empower Your Learning Journey
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
 
         {/* How It Works */}
         <SectionTitle title="How It Works" />
-        <Grid container spacing={4} sx={{ mb: 6, position: "relative" }}>
+        <Grid container spacing={2} sx={{ mb: 2, position: "relative" }}>
           {[
             {
               title: "Search",
-              description:
-                "Search the knowledge you need, like Legal Advice, or even a problem with your car",
+              description: "Search for the knowledge you need",
               image:
                 "https://images.unsplash.com/photo-1520333789090-1afc82db536a?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
             {
               title: "Choose",
-              description:
-                "Find the perfect consultant for your needs, you can read shortly about the consultant and see the rating",
+              description: "Select the perfect consultant",
               image:
                 "https://plus.unsplash.com/premium_photo-1664474827168-201cf7d0420b?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
             {
               title: "Schedule",
-              description:
-                "Book a meeting with your chosen consultant at a time that works for both of you",
+              description: "Book a convenient meeting time",
               image:
                 "https://images.unsplash.com/photo-1506784983877-45594efa4cbe?q=80&w=1468&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
-            {
-              title: "Learn",
-              description:
-                "Get the knowledge you need—and the insights you didn't expect in an online meeting",
-              image:
-                "https://images.unsplash.com/photo-1616587894289-86480e533129?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            },
-            {
-              title: "Pay",
-              description:
-                "Only pay for the time you talked, measured in minutes. For example, a 15-minute chat with a $20/hour consultant costs just $5",
-              image:
-                "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-            },
           ].map((step, index) => (
             <React.Fragment key={index}>
-              <Grid item xs={12} sm={6} md={2.4}>
+              <Grid item xs={12} sm={6} md={3.5}>
                 <Card
                   sx={{
                     height: "100%",
@@ -264,7 +264,7 @@ export const HomePage: React.FC = () => {
                 >
                   <CardMedia
                     component="img"
-                    height="160"
+                    height="140"
                     image={step.image}
                     alt={step.title}
                   />
@@ -278,13 +278,77 @@ export const HomePage: React.FC = () => {
                   </CardContent>
                 </Card>
               </Grid>
-              {index < 4 && (
+              {index < 2 && (
                 <Box
                   sx={{
                     position: "absolute",
                     top: "50%",
-                    left: `${20 * (index + 1)}%`,
-                    transform: "translate(-20%, -50%)",
+                    left: `${28 * (index + 1)}%`,
+                    transform: "translate(-50%, -50%)",
+                    zIndex: 1,
+                    bgcolor: "rgba(25, 118, 210, 0.8)",
+                    borderRadius: "50%",
+                    padding: "8px",
+                  }}
+                >
+                  <ArrowForward sx={{ fontSize: 30, color: "white" }} />
+                </Box>
+              )}
+            </React.Fragment>
+          ))}
+        </Grid>
+        <Grid
+          container
+          spacing={2}
+          sx={{ mb: 2, mt: 2, position: "relative" }}
+          direction="row-reverse"
+        >
+          {[
+            {
+              title: "Learn",
+              description: "Gain insights in your online meeting",
+              image:
+                "https://images.unsplash.com/photo-1616587894289-86480e533129?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            },
+            {
+              title: "Pay",
+              description: "Only pay for the minutes you talk",
+              image:
+                "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=1926&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            },
+          ].map((step, index) => (
+            <React.Fragment key={index}>
+              <Grid item xs={12} sm={6} md={3.5}>
+                <Card
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={step.image}
+                    alt={step.title}
+                  />
+                  <CardContent sx={{ flexGrow: 1, textAlign: "center" }}>
+                    <Typography variant="h6" component="h3" gutterBottom>
+                      {step.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {step.description}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Grid>
+              {index < 1 && (
+                <Box
+                  sx={{
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
                     zIndex: 1,
                     bgcolor: "rgba(25, 118, 210, 0.8)",
                     borderRadius: "50%",
@@ -425,6 +489,7 @@ export const HomePage: React.FC = () => {
     </Box>
   );
 };
+
 const SectionTitle: React.FC<{ title: string }> = ({ title }) => (
   <Typography
     variant="h4"
