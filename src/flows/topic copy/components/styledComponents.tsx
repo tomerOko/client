@@ -66,9 +66,9 @@ const RatingContainer = styled.div`
 const AvailabilityContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 400px;
   width: 928px;
-  /* border: 1px solid black; */
-  margin-bottom: 50px;
+  border: 1px solid black;
 `;
 
 const TeacherName = styled.div`

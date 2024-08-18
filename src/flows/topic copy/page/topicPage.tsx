@@ -17,7 +17,6 @@ import { mockTopicAvalabilities, mockTopicRatings } from "../mock/mockTopic";
 import { TopicPageComponents } from "../components/styledComponents";
 import { SpaceBar } from "@mui/icons-material";
 import { RatingsComponent } from "../components/topicRating/topicRating";
-import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 const {
   MainColumn,
@@ -98,50 +97,47 @@ export const TopicPage: React.FC = () => {
   };
 
   return (
-    <>
-      <NiceBackground />
-      <Lander>
-        <MainColumn>
-          <MetaDataContainer>
-            <TeacherImage src={metaData.teacher.profilePictureUrl} />
-            <div>
-              <TeacherName>
-                {metaData.teacher.firstName} {metaData.teacher.lastName}
-              </TeacherName>
-              <DescriptionText>
-                <u>about me</u>: <></>
-                {metaData.teacher.description}
-              </DescriptionText>
-            </div>
-            <div>
-              <TopicHeader>Topic: {metaData.name}</TopicHeader>
-              <DescriptionText>{metaData.extendedDescription}</DescriptionText>
-            </div>
-            <div>
-              <HardDetailsContainer>
-                <HourlyRate>
-                  <DescriptionText>Hourly Rate:</DescriptionText>
-                  <DescriptionText style={{ color: "black" }}>
-                    ${metaData.hourlyRate}
-                  </DescriptionText>
-                </HourlyRate>
-                <MinimumMinutes>
-                  <DescriptionText>Minimum Minutes:</DescriptionText>
-                  <DescriptionText style={{ color: "black" }}>
-                    {metaData.minimalMinutes}
-                  </DescriptionText>
-                </MinimumMinutes>
-              </HardDetailsContainer>
-            </div>
-          </MetaDataContainer>
-          <RatingContainer>
-            <RatingsComponent />
-          </RatingContainer>
-          <AvailabilityContainer>
-            <Calendar />
-          </AvailabilityContainer>
-        </MainColumn>
-      </Lander>
-    </>
+    <Lander>
+      <MainColumn>
+        <MetaDataContainer>
+          <TeacherImage src={metaData.teacher.profilePictureUrl} />
+          <div>
+            <TeacherName>
+              {metaData.teacher.firstName} {metaData.teacher.lastName}
+            </TeacherName>
+            <DescriptionText>
+              <u>about me</u>: <></>
+              {metaData.teacher.description}
+            </DescriptionText>
+          </div>
+          <div>
+            <TopicHeader>Topic: {metaData.name}</TopicHeader>
+            <DescriptionText>{metaData.extendedDescription}</DescriptionText>
+          </div>
+          <div>
+            <HardDetailsContainer>
+              <HourlyRate>
+                <DescriptionText>Hourly Rate:</DescriptionText>
+                <DescriptionText style={{ color: "black" }}>
+                  ${metaData.hourlyRate}
+                </DescriptionText>
+              </HourlyRate>
+              <MinimumMinutes>
+                <DescriptionText>Minimum Minutes:</DescriptionText>
+                <DescriptionText style={{ color: "black" }}>
+                  {metaData.minimalMinutes}
+                </DescriptionText>
+              </MinimumMinutes>
+            </HardDetailsContainer>
+          </div>
+        </MetaDataContainer>
+        <RatingContainer>
+          <RatingsComponent />
+        </RatingContainer>
+        {/* <AvailabilityContainer>
+          <Calendar />
+        </AvailabilityContainer> */}
+      </MainColumn>
+    </Lander>
   );
 };
