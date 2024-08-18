@@ -1,274 +1,505 @@
-import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import SendIcon from "@mui/icons-material/Send";
-import {
-  Avatar,
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  TextField,
-  Typography,
-} from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { io } from "socket.io-client";
+import React, { useState, useRef, useEffect } from "react";
+import { create } from "zustand";
+import styled from "@emotion/styled";
+import { format } from "date-fns";
+import { mockChats } from "./mockChats";
+import { Search } from "lucide-react";
+
+// Types
+type MessageType = "text" | "meeting_suggestion";
 
 interface Message {
+  id: string;
   sender: string;
   content: string;
-  timestamp: string;
-  type: string; // "text" or "meeting_invite"
+  type: MessageType;
+  timestamp: Date;
   meetingDetails?: {
-    date: string;
+    date: Date;
     time: string;
   };
 }
 
-const mockConversations: Conversation[] = [
-  {
-    ID: "1",
-    name: "John Doe",
-    messages: [
-      {
-        sender: "John Doe",
-        content: "Hello, how can I help you today?",
-        timestamp: "2021-10-01T10:00:00.000Z",
-        type: "text",
-      },
-      {
-        sender: "Jane Doe",
-        content: "I need help with my project.",
-        timestamp: "2021-10-01T10:05:00.000Z",
-        type: "text",
-      },
-      {
-        sender: "John Doe",
-        content: "Sure, I can help you with that.",
-        timestamp: "2021-10-01T10:10:00.000Z",
-        type: "text",
-      },
-      {
-        sender: "John Doe",
-        content: "Meeting Invitation",
-        timestamp: "2021-10-01T10:15:00.000Z",
-        type: "meeting_invite",
-        meetingDetails: {
-          date: "2021-10-05",
-          time: "14:00",
-        },
-      },
-    ],
-  },
-  {
-    ID: "2",
-    name: "Jane Smith",
-    messages: [
-      {
-        sender: "Jane Smith",
-        content: "Hi, do you have a minute?",
-        timestamp: "2021-10-01T11:00:00.000Z",
-        type: "text",
-      },
-      {
-        sender: "John Doe",
-        content: "Of course, what do you need?",
-        timestamp: "2021-10-01T11:05:00.000Z",
-        type: "text",
-      },
-    ],
-  },
-];
-
-interface Conversation {
-  ID: string;
-  name: string;
+export interface Chat {
+  id: string;
+  participants: string[];
   messages: Message[];
 }
 
-const SingleChat: React.FC<{ conversation: Conversation }> = ({
-  conversation,
-}) => {
-  const [messages, setMessages] = useState<Message[]>(conversation.messages);
-  const [newMessage, setNewMessage] = useState("");
-  const [open, setOpen] = useState(false);
-  const [meetingDate, setMeetingDate] = useState("");
-  const [meetingTime, setMeetingTime] = useState("");
+interface ChatStore {
+  chats: Chat[];
+  activeChat: string | null;
+  setActiveChat: (chatId: string) => void;
+  sendMessage: (
+    chatId: string,
+    message: Omit<Message, "id" | "timestamp">
+  ) => void;
+  approveMeeting: (chatId: string, messageId: string) => void;
+  rejectMeeting: (chatId: string, messageId: string) => void;
+}
 
-  const socket = io("http://localhost:3000");
+// Zustand store
+const useStore = create<ChatStore>((set) => ({
+  chats: mockChats,
+  activeChat: null,
+  setActiveChat: (chatId) => set({ activeChat: chatId }),
+  sendMessage: (chatId, message) =>
+    set((state) => ({
+      chats: state.chats.map((chat) =>
+        chat.id === chatId
+          ? {
+              ...chat,
+              messages: [
+                ...chat.messages,
+                {
+                  ...message,
+                  id: Date.now().toString(),
+                  timestamp: new Date(),
+                },
+              ],
+            }
+          : chat
+      ),
+    })),
+  approveMeeting: (chatId, messageId) =>
+    set((state) => ({
+      chats: state.chats.map((chat) =>
+        chat.id === chatId
+          ? {
+              ...chat,
+              messages: chat.messages.map((msg) =>
+                msg.id === messageId
+                  ? { ...msg, content: msg.content + " (Approved)" }
+                  : msg
+              ),
+            }
+          : chat
+      ),
+    })),
+  rejectMeeting: (chatId, messageId) =>
+    set((state) => ({
+      chats: state.chats.map((chat) =>
+        chat.id === chatId
+          ? {
+              ...chat,
+              messages: chat.messages.map((msg) =>
+                msg.id === messageId
+                  ? { ...msg, content: msg.content + " (Rejected)" }
+                  : msg
+              ),
+            }
+          : chat
+      ),
+    })),
+}));
 
-  useEffect(() => {
-    socket.on("newMessage", (message: Message) => {
-      if (message.sender === conversation.name) {
-        setMessages((prevMessages) => [...prevMessages, message]);
-      }
-    });
+const ChatContainer = styled.div`
+  display: flex;
+  height: 94vh;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+`;
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [socket, conversation.name]);
+const Sidebar = styled.div`
+  width: 300px;
+  background-color: #ffffff;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+`;
 
-  const handleSendMessage = () => {
-    const message: Message = {
-      sender: "currentUser",
-      content: newMessage,
-      timestamp: new Date().toISOString(),
-      type: "text",
-    };
+const ChatList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  flex: 1;
+  overflow-y: auto;
+`;
 
-    socket.emit("sendMessage", message);
-    setMessages([...messages, message]);
-    setNewMessage("");
-  };
+const ChatItem = styled.li<{ active: boolean }>`
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: ${(props) => (props.active ? "#e6f2ff" : "white")};
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-  const handleSendMeetingInvite = () => {
-    const message: Message = {
-      sender: "currentUser",
-      content: "Meeting Invitation",
-      timestamp: new Date().toISOString(),
-      type: "meeting_invite",
-      meetingDetails: {
-        date: meetingDate,
-        time: meetingTime,
-      },
-    };
+  &:hover {
+    background-color: ${(props) => (props.active ? "#e6f2ff" : "#f5f5f5")};
+  }
+`;
 
-    socket.emit("sendMessage", message);
-    setMessages([...messages, message]);
-    setOpen(false);
-  };
+const Avatar = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+`;
 
-  const handleApproveMeeting = (index: number) => {
-    // Handle meeting approval logic
-  };
+const ChatWindow = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #ffffff;
+  border-left: 1px solid #e0e0e0;
+`;
 
-  const handleRejectMeeting = (index: number) => {
-    // Handle meeting rejection logic
-  };
+const SearchInput = styled.input`
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+`;
+
+const SearchButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #e0e0e0;
+  }
+`;
+
+const Modal = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ModalContent = styled.div`
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 600px;
+  max-height: 80%;
+  overflow-y: auto;
+`;
+
+const SearchResult = styled.div`
+  padding: 10px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+`;
+
+const MessageList = styled.div`
+  flex: 1;
+  overflow-y: auto;
+  margin-bottom: 20px;
+`;
+
+const MessageBubble = styled.div<{ isSender: boolean }>`
+  max-width: 70%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 18px;
+  background-color: ${(props) => (props.isSender ? "#dcf8c6" : "#f0f0f0")};
+  align-self: ${(props) => (props.isSender ? "flex-end" : "flex-start")};
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+`;
+
+const MeetingSuggestion = styled(MessageBubble)`
+  background-color: #e6f2ff;
+  border: 1px solid #b3d9ff;
+  display: flex;
+  flex-direction: column;
+`;
+
+const MeetingActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+`;
+
+const InputArea = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const InputRow = styled.div`
+  display: flex;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.input`
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+`;
+
+const Button = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+const SendButton = styled(Button)`
+  margin-left: 10px;
+`;
+
+const ScheduleButton = styled(Button)`
+  background-color: #2196f3;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: #1e87db;
+  }
+`;
+
+const ApproveButton = styled(Button)`
+  background-color: #4caf50;
+  margin-right: 10px;
+`;
+
+const RejectButton = styled(Button)`
+  background-color: #f44336;
+`;
+
+const SearchInChatModal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  searchResults: { chatId: string; messageId: string; content: string }[];
+  onResultClick: (chatId: string, messageId: string) => void;
+}> = ({ isOpen, onClose, searchResults, onResultClick }) => {
+  if (!isOpen) return null;
 
   return (
-    <Box sx={{ maxWidth: 800, mx: "auto", mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        {conversation.name}
-      </Typography>
-      <List>
-        {messages.map((message, index) => (
-          <ListItem key={index} alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt={message.sender} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={message.content}
-              secondary={message.timestamp}
-            />
-            {message.type === "meeting_invite" && message.meetingDetails && (
-              <Box>
-                <Typography variant="body2">
-                  Date: {message.meetingDetails.date}
-                </Typography>
-                <Typography variant="body2">
-                  Time: {message.meetingDetails.time}
-                </Typography>
-                <Button onClick={() => handleApproveMeeting(index)}>
-                  Approve
-                </Button>
-                <Button onClick={() => handleRejectMeeting(index)}>
-                  Reject
-                </Button>
-              </Box>
-            )}
-          </ListItem>
+    <Modal onClick={onClose}>
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        <h2>Search Results</h2>
+        {searchResults.map((result) => (
+          <SearchResult
+            key={`${result.chatId}-${result.messageId}`}
+            onClick={() => onResultClick(result.chatId, result.messageId)}
+          >
+            {result.content}
+          </SearchResult>
         ))}
-      </List>
-      <Box display="flex" alignItems="center">
-        <TextField
-          fullWidth
-          variant="outlined"
-          placeholder="Type a message"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <IconButton color="primary" onClick={handleSendMessage}>
-          <SendIcon />
-        </IconButton>
-        <IconButton color="primary" onClick={() => setOpen(true)}>
-          <CalendarTodayIcon />
-        </IconButton>
-      </Box>
-      <Dialog open={open} onClose={() => setOpen(false)}>
-        <DialogTitle>Send Meeting Invitation</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please enter the date and time for the meeting.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Date"
-            type="date"
-            fullWidth
-            variant="standard"
-            value={meetingDate}
-            onChange={(e) => setMeetingDate(e.target.value)}
-          />
-          <TextField
-            margin="dense"
-            label="Time"
-            type="time"
-            fullWidth
-            variant="standard"
-            value={meetingTime}
-            onChange={(e) => setMeetingTime(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSendMeetingInvite}>Send</Button>
-        </DialogActions>
-      </Dialog>
-    </Box>
+      </ModalContent>
+    </Modal>
   );
 };
 
 export const ChatPage: React.FC = () => {
-  const [selectedConversation, setSelectedConversation] =
-    useState<Conversation | null>(null);
+  const {
+    chats,
+    activeChat,
+    setActiveChat,
+    sendMessage,
+    approveMeeting,
+    rejectMeeting,
+  } = useStore();
+  const [inputValue, setInputValue] = useState("");
+  const [showMeetingForm, setShowMeetingForm] = useState(false);
+  const [meetingDate, setMeetingDate] = useState("");
+  const [meetingTime, setMeetingTime] = useState("");
+  const messageListRef = useRef<HTMLDivElement>(null);
+  const [chatSearchQuery, setChatSearchQuery] = useState("");
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  const [searchResults, setSearchResults] = useState<
+    { chatId: string; messageId: string; content: string }[]
+  >([]);
 
-  const handleConversationClick = (conversation: Conversation) => {
-    setSelectedConversation(conversation);
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [chats, activeChat]);
+
+  const handleSendMessage = () => {
+    if (inputValue.trim() && activeChat) {
+      sendMessage(activeChat, {
+        sender: "You",
+        content: inputValue,
+        type: "text",
+      });
+      setInputValue("");
+    }
   };
 
+  const handleSendMeetingSuggestion = () => {
+    if (meetingDate && meetingTime && activeChat) {
+      sendMessage(activeChat, {
+        sender: "You",
+        content: `Meeting suggestion: ${meetingDate} at ${meetingTime}`,
+        type: "meeting_suggestion",
+        meetingDetails: {
+          date: new Date(meetingDate),
+          time: meetingTime,
+        },
+      });
+      setShowMeetingForm(false);
+      setMeetingDate("");
+      setMeetingTime("");
+    }
+  };
+
+  const handleSearchInChats = () => {
+    const results = chats.flatMap((chat) =>
+      chat.messages
+        .filter((message) =>
+          message.content.toLowerCase().includes(chatSearchQuery.toLowerCase())
+        )
+        .map((message) => ({
+          chatId: chat.id,
+          messageId: message.id,
+          content: message.content,
+        }))
+    );
+    setSearchResults(results);
+    setIsSearchModalOpen(true);
+  };
+
+  const handleSearchResultClick = (chatId: string, messageId: string) => {
+    setActiveChat(chatId);
+    setIsSearchModalOpen(false);
+    // TODO: Implement logic to scroll to the specific message
+  };
+
+  const filteredChats = chats.filter((chat) =>
+    chat.participants.some((participant) =>
+      participant.toLowerCase().includes(chatSearchQuery.toLowerCase())
+    )
+  );
+
   return (
-    <Box sx={{ display: "flex", height: "94vh", marginTop: "6vh" }}>
-      <Box sx={{ width: "20%", borderRight: "1px solid #ccc" }}>
-        <List>
-          {mockConversations.map((conversation) => (
-            <ListItem
-              key={conversation.ID}
-              button
-              onClick={() => handleConversationClick(conversation)}
+    <ChatContainer>
+      <Sidebar>
+        <SearchInput
+          placeholder="Search chats..."
+          value={chatSearchQuery}
+          onChange={(e) => setChatSearchQuery(e.target.value)}
+        />
+        <SearchButton onClick={handleSearchInChats}>
+          <Search size={20} />
+        </SearchButton>
+        <ChatList>
+          {filteredChats.map((chat) => (
+            <ChatItem
+              key={chat.id}
+              active={chat.id === activeChat}
+              onClick={() => setActiveChat(chat.id)}
             >
-              <ListItemText primary={conversation.name} />
-            </ListItem>
+              <Avatar
+                src={`https://i.pravatar.cc/150?u=${chat.id}`}
+                alt={chat.participants[0]}
+              />
+              {chat.participants.join(", ")}
+            </ChatItem>
           ))}
-        </List>
-      </Box>
-      <Box sx={{ flex: 1 }}>
-        {selectedConversation ? (
-          <SingleChat conversation={selectedConversation} />
-        ) : (
-          <Typography variant="h6" sx={{ textAlign: "center", mt: 4 }}>
-            Select a conversation to start chatting
-          </Typography>
-        )}
-      </Box>
-    </Box>
+        </ChatList>
+      </Sidebar>
+      <ChatWindow>
+        <MessageList ref={messageListRef}>
+          {activeChat &&
+            chats
+              .find((chat) => chat.id === activeChat)
+              ?.messages.map((message) =>
+                message.type === "meeting_suggestion" ? (
+                  <MeetingSuggestion
+                    key={message.id}
+                    isSender={message.sender === "You"}
+                  >
+                    <div>{message.content}</div>
+                    <MeetingActions>
+                      <ApproveButton
+                        onClick={() => approveMeeting(activeChat, message.id)}
+                      >
+                        Approve
+                      </ApproveButton>
+                      <RejectButton
+                        onClick={() => rejectMeeting(activeChat, message.id)}
+                      >
+                        Reject
+                      </RejectButton>
+                    </MeetingActions>
+                  </MeetingSuggestion>
+                ) : (
+                  <MessageBubble
+                    key={message.id}
+                    isSender={message.sender === "You"}
+                  >
+                    <div>{message.content}</div>
+                    <div>{format(message.timestamp, "HH:mm")}</div>
+                  </MessageBubble>
+                )
+              )}
+        </MessageList>
+        <InputArea>
+          <InputRow>
+            <Input
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              placeholder="Type a message..."
+            />
+            <SendButton onClick={handleSendMessage}>Send</SendButton>
+            <ScheduleButton
+              onClick={() => setShowMeetingForm(!showMeetingForm)}
+            >
+              {showMeetingForm ? "Cancel" : "Schedule Meeting"}
+            </ScheduleButton>
+          </InputRow>
+          {showMeetingForm && (
+            <InputRow>
+              <Input
+                type="date"
+                value={meetingDate}
+                onChange={(e) => setMeetingDate(e.target.value)}
+              />
+              <Input
+                type="time"
+                value={meetingTime}
+                onChange={(e) => setMeetingTime(e.target.value)}
+              />
+              <SendButton onClick={handleSendMeetingSuggestion}>
+                Send Meeting Suggestion
+              </SendButton>
+            </InputRow>
+          )}
+        </InputArea>
+      </ChatWindow>
+      <SearchInChatModal
+        isOpen={isSearchModalOpen}
+        onClose={() => setIsSearchModalOpen(false)}
+        searchResults={searchResults}
+        onResultClick={handleSearchResultClick}
+      />
+    </ChatContainer>
   );
 };
