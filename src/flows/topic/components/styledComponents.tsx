@@ -59,8 +59,6 @@ const RatingContainer = styled.div`
   flex-direction: column;
   width: 928px;
   margin-top: 25px;
-
-  height: 500px;
 `;
 
 const AvailabilityContainer = styled.div`
