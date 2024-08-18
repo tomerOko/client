@@ -7,6 +7,7 @@ import {
 } from "../data/nextMeetingsState";
 import { mockNextMeetings } from "../mock/mockNextMeetings";
 import { NextMeetingsElementExtension } from "../components/NextMeetingsElementExtension";
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 export const UpcomingMeetingsPage: React.FC = () => {
   const { setNextMeetings, nextMeetings } = useNextMeetingsState();
@@ -22,6 +23,7 @@ export const UpcomingMeetingsPage: React.FC = () => {
 
   return (
     <>
+      <NiceBackground />
       <List
         data={listData}
         ElementExtension={NextMeetingsElementExtension}

@@ -6,6 +6,7 @@ import {
   useCallHistoryState,
 } from "../data/callsHistoryState";
 import { myTopicsMock } from "../mock/callsHistoryMock";
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 export const CallsHistoryPage: React.FC = () => {
   const { callHistory, setCallHistory } = useCallHistoryState();
@@ -20,10 +21,13 @@ export const CallsHistoryPage: React.FC = () => {
   }, [callHistory, convertCallHistoryToListDetails]);
 
   return (
-    <List
-      data={listData}
-      header="Calls History"
-      ActionButtons={PastCallActionButtons}
-    />
+    <>
+      <NiceBackground />
+      <List
+        data={listData}
+        header="Calls History"
+        ActionButtons={PastCallActionButtons}
+      />
+    </>
   );
 };

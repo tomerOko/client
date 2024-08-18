@@ -11,6 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Box, Button, Modal } from "@mui/material";
 import { BankAccountForm } from "../components/bankAccountForm";
 import { bankAccountsMock } from "../mock/bankAccountsMock";
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 const EditFormModalButton: React.FC<{ data: BankAccount }> = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -64,11 +65,14 @@ export const BankAccountsPage: React.FC = () => {
   }, [bankAccounts, convertBankAccountsToListDetails]);
 
   return (
-    <List
-      data={listData}
-      header="Bank Accounts"
-      NewElementForm={BankAccountForm}
-      ActionButtons={EditFormModalButton}
-    />
+    <>
+      <NiceBackground />
+      <List
+        data={listData}
+        header="Bank Accounts"
+        NewElementForm={BankAccountForm}
+        ActionButtons={EditFormModalButton}
+      />
+    </>
   );
 };

@@ -10,6 +10,7 @@ import { Box, Button, Modal } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { paymentMethodsMock } from "../mock/myTopicsMock";
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 const EditFormModalButton: React.FC<{ data: PaymentMethod }> = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -66,11 +67,14 @@ export const PaymentMethodsPage: React.FC = () => {
   }, [paymentMethod, convertPaymentMethodToListDetails]);
 
   return (
-    <List
-      data={listData}
-      header="Payment Methods"
-      NewElementForm={PaymentMethodForm}
-      ActionButtons={EditFormModalButton}
-    />
+    <>
+      <NiceBackground />
+      <List
+        data={listData}
+        header="Payment Methods"
+        NewElementForm={PaymentMethodForm}
+        ActionButtons={EditFormModalButton}
+      />{" "}
+    </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import styled from "styled-components";
 import { images } from "./assets";
 
@@ -11,33 +11,45 @@ const BackgroundContainer = styled.div`
   z-index: -1;
   overflow: hidden;
   pointer-events: none;
+  opacity: 0.6;
 `;
 
-const Shape = styled.div<{ size: number; top: number; left: number }>`
+const SideImage = styled.div<{ left?: boolean }>`
   position: absolute;
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
-  top: ${(props) => props.top}px;
-  left: ${(props) => props.left}px;
+  top: 0;
+  ${(props) => (props.left ? "left: 0;" : "right: 0;")}
+  width: calc((100% - 1200px) / 2 + 40px); // Slight overlap
+  height: 100%;
   overflow: hidden;
-`;
-
-const Circle = styled(Shape)`
-  border-radius: 50%;
-`;
-
-const Square = styled(Shape)`
-  border-radius: 10px;
-`;
-
-const Triangle = styled(Shape)`
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
 `;
 
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
+`;
+
+const CutoutOverlay = styled.div<{ left?: boolean }>`
+  position: absolute;
+  top: 0;
+  ${(props) => (props.left ? "right: 0;" : "left: 0;")}
+  width: 80px;
+  height: 100%;
+  background-color: #ffffff; // Assuming white background for content
+  clip-path: ${(props) =>
+    props.left
+      ? "polygon(100% 0, 0% 100%, 100% 100%)"
+      : "polygon(0 0, 100% 100%, 0 100%)"};
+`;
+
+const ContentArea = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 100%;
+  background-color: #ffffff; // Assuming white background for content
 `;
 
 type ImageKey = keyof typeof images;
@@ -48,79 +60,21 @@ const getRandomImage = (): string => {
   return images[randomKey];
 };
 
-interface ShapeData {
-  top: number;
-  left: number;
-  size: number;
-}
-
-const getRandomPosition = (
-  size: number,
-  existingShapes: ShapeData[]
-): { top: number; left: number } | null => {
-  const maxWidth = window.innerWidth - size;
-  const maxHeight = window.innerHeight - size;
-  const middleStart = (window.innerWidth - 1000) / 2;
-  const middleEnd = middleStart + 1000;
-
-  let top: number, left: number;
-  let attempts = 0;
-  const maxAttempts = 100;
-
-  do {
-    top = Math.random() * maxHeight;
-    left = Math.random() * maxWidth;
-    attempts++;
-
-    if (attempts > maxAttempts) {
-      console.warn(
-        "Could not find non-overlapping position after 100 attempts"
-      );
-      return null;
-    }
-  } while (
-    (left > middleStart - size && left < middleEnd) ||
-    existingShapes.some(
-      (shape) =>
-        !(
-          left + size < shape.left ||
-          left > shape.left + shape.size ||
-          top + size < shape.top ||
-          top > shape.top + shape.size
-        )
-    )
-  );
-
-  return { top, left };
-};
-
 export const NiceBackground: React.FC = () => {
-  const shapes = useMemo(() => {
-    const shapeTypes = [Circle, Square, Triangle];
-    const numShapes = Math.floor(Math.random() * 3) + 2; // 2 to 4 shapes
-    const generatedShapes: ShapeData[] = [];
+  const leftImage = getRandomImage();
+  const rightImage = getRandomImage();
 
-    return Array.from({ length: numShapes }, (_, i) => {
-      const ShapeComponent = shapeTypes[i % 3];
-      const size = Math.floor(Math.random() * (500 - 300) + 300);
-      const position = getRandomPosition(size, generatedShapes);
-
-      if (position) {
-        generatedShapes.push({ ...position, size });
-        return (
-          <ShapeComponent
-            key={i}
-            size={size}
-            top={position.top}
-            left={position.left}
-          >
-            <StyledImage src={getRandomImage()} alt={`Background ${i + 1}`} />
-          </ShapeComponent>
-        );
-      }
-      return null;
-    }).filter(Boolean);
-  }, []);
-
-  return <BackgroundContainer>{shapes}</BackgroundContainer>;
+  return (
+    <BackgroundContainer>
+      <SideImage left>
+        <StyledImage src={leftImage} alt="Left background" />
+        <CutoutOverlay left />
+      </SideImage>
+      <ContentArea />
+      <SideImage>
+        <StyledImage src={rightImage} alt="Right background" />
+        <CutoutOverlay />
+      </SideImage>
+    </BackgroundContainer>
+  );
 };

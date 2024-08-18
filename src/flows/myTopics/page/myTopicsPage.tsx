@@ -9,6 +9,7 @@ import { myTopicsMock } from "../mock/myTopicsMock";
 import MyTopicForm from "../components/myTopicForm";
 import { Box, Button, Modal } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { NiceBackground } from "../../../common/components/niceBackgruond/component/niceBackground";
 
 const EditFormModalButton: React.FC<{ data: MyTopic }> = (props) => {
   const [showModal, setShowModal] = useState(false);
@@ -62,12 +63,15 @@ export const MyTopicsPage: React.FC = () => {
   }, [myTopics, convertMyTopicsToListDetails]);
 
   return (
-    <List
-      data={listData}
-      header="My Topics"
-      NewElementForm={MyTopicForm}
-      ActionButtons={EditFormModalButton}
-      hideExpandButton={false}
-    />
+    <>
+      <NiceBackground />
+      <List
+        data={listData}
+        header="My Topics"
+        NewElementForm={MyTopicForm}
+        ActionButtons={EditFormModalButton}
+        hideExpandButton={false}
+      />
+    </>
   );
 };
