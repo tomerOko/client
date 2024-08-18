@@ -22,6 +22,7 @@ import {
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { images } from "../../common/components/niceBackgruond/component/assets";
 
 const CustomNextArrow = (props: any) => {
   const { className, style, onClick } = props;
@@ -135,34 +136,71 @@ export const HomePage: React.FC = () => {
   ];
 
   return (
-    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh" }}>
+    <Box sx={{ bgcolor: "#f5f5f5", minHeight: "100vh", paddingTop: "10vh" }}>
       <Container maxWidth="lg">
         {/* Hero Section */}
-        <Grid container spacing={4} sx={{ pt: 8, pb: 6 }}>
-          <Grid item xs={12} md={6}>
+        <Box
+          sx={{
+            height: "35vh",
+            minHeight: "250px", // Ensures a minimum height on smaller screens
+            maxHeight: "300px", // Prevents the section from getting too tall
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            backgroundImage: `url(${images.n4})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            borderRadius: "16px",
+            mb: 10,
+            position: "relative",
+            overflow: "hidden", // Ensures content doesn't overflow
+          }}
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0,0,0,0.2)",
+            }}
+          />
+          <Box sx={{ position: "relative", zIndex: 1, p: 2 }}>
             <Typography
-              variant="h2"
+              variant="h3"
               component="h1"
               gutterBottom
               fontWeight="bold"
-              color="primary"
+              color="white"
+              sx={{
+                mb: 1,
+                fontSize: { xs: "1.5rem", sm: "2rem", md: "2.5rem" }, // Responsive font size
+              }}
             >
               Share Knowledge, Grow Together
             </Typography>
-            <Typography variant="h5" color="textSecondary" paragraph>
-              Connect with expert consultants or share your expertise. Learn,
-              teach, and succeed together.
+            <Typography
+              variant="h6"
+              color="white"
+              sx={{
+                mb: 2,
+                fontSize: { xs: "0.9rem", sm: "1rem", md: "1.25rem" }, // Responsive font size
+              }}
+            >
+              Connect with experts. Learn, teach, and succeed.
             </Typography>
-            <Box sx={{ mt: 4 }}>
+            <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
               <Button
                 variant="contained"
                 color="primary"
                 size="large"
                 sx={{
-                  mr: 2,
-                  px: 4,
-                  py: 1.5,
-                  fontSize: "1.1rem",
+                  px: { xs: 2, sm: 3 },
+                  py: 1,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
                   fontWeight: "bold",
                 }}
                 onClick={() => navigate("/search")}
@@ -173,49 +211,26 @@ export const HomePage: React.FC = () => {
                 variant="outlined"
                 color="primary"
                 size="large"
-                sx={{ px: 4, py: 1.5, fontSize: "1.1rem" }}
+                sx={{
+                  px: { xs: 2, sm: 3 },
+                  py: 1,
+                  fontSize: { xs: "0.8rem", sm: "0.9rem", md: "1rem" },
+                  backgroundColor: "rgba(255,255,255,0.9)",
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,1)",
+                  },
+                }}
                 onClick={() => navigate("/become-consultant")}
               >
                 Become a Consultant
               </Button>
             </Box>
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <Box
-              sx={{
-                position: "relative",
-                height: 400,
-                borderRadius: 4,
-                overflow: "hidden",
-              }}
-            >
-              <img
-                src="https://cdn.pixabay.com/photo/2015/07/17/22/43/student-849825_1280.jpg"
-                alt="Knowledge Sharing"
-                style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
-              <Box
-                sx={{
-                  position: "absolute",
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  bgcolor: "rgba(0,0,0,0.6)",
-                  color: "white",
-                  p: 2,
-                }}
-              >
-                <Typography variant="h6">
-                  Empower Your Learning Journey
-                </Typography>
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
+          </Box>
+        </Box>
 
         {/* How It Works */}
         <SectionTitle title="How It Works" />
-        <Grid container spacing={4} sx={{ mb: 6, position: "relative" }}>
+        <Grid container spacing={4} sx={{ mb: 10, position: "relative" }}>
           {[
             {
               title: "Search",
@@ -248,9 +263,9 @@ export const HomePage: React.FC = () => {
             {
               title: "Pay",
               description:
-                "Only pay for the time you talked, measured in minutes. For example, a 15-minute chat with a $20/hour consultant costs just $5",
+                "Only pay for the time you talked, measured in minutes.",
               image:
-                "https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                "https://plus.unsplash.com/premium_photo-1680792152180-b0cdaa416932?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
             },
           ].map((step, index) => (
             <React.Fragment key={index}>
@@ -298,26 +313,9 @@ export const HomePage: React.FC = () => {
           ))}
         </Grid>
 
-        {/* Featured Consultants Carousel */}
-        <SectionTitle title="Top-Rated Consultants" />
-        <Box sx={{ mb: 6, position: "relative", mx: 6 }}>
-          <Slider {...carouselSettings}>
-            {consultants.map((consultant, index) => (
-              <Box key={index} sx={{ p: 1 }}>
-                <ConsultantCard
-                  name={consultant.name}
-                  specialty={consultant.specialty}
-                  rating={consultant.rating}
-                  imageUrl={consultant.imageUrl}
-                />
-              </Box>
-            ))}
-          </Slider>
-        </Box>
-
         {/* Latest Projects */}
         <SectionTitle title="Explore New Opportunities" />
-        <Grid container spacing={4} sx={{ mb: 6 }}>
+        <Grid container spacing={4} sx={{ mb: 10 }}>
           {[
             "https://cdn.pixabay.com/photo/2015/01/09/11/08/startup-594090_1280.jpg",
             "https://plus.unsplash.com/premium_photo-1677171749355-4ad563d86165?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -333,6 +331,23 @@ export const HomePage: React.FC = () => {
             </Grid>
           ))}
         </Grid>
+
+        {/* Featured Consultants Carousel */}
+        <SectionTitle title="Top-Rated Consultants" />
+        <Box sx={{ mb: 10, position: "relative", mx: 6 }}>
+          <Slider {...carouselSettings}>
+            {consultants.map((consultant, index) => (
+              <Box key={index} sx={{ p: 1 }}>
+                <ConsultantCard
+                  name={consultant.name}
+                  specialty={consultant.specialty}
+                  rating={consultant.rating}
+                  imageUrl={consultant.imageUrl}
+                />
+              </Box>
+            ))}
+          </Slider>
+        </Box>
 
         {/* New section for separation */}
         <Box sx={{ my: 8, textAlign: "center" }}>
@@ -425,6 +440,7 @@ export const HomePage: React.FC = () => {
     </Box>
   );
 };
+
 const SectionTitle: React.FC<{ title: string }> = ({ title }) => (
   <Typography
     variant="h4"
