@@ -30,6 +30,7 @@ const HeaderContent = styled(Box)`
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-grow: 1;
 `;
 
 const HeaderImage = styled.img`
@@ -42,10 +43,17 @@ const HeaderImage = styled.img`
 const HeaderText = styled(Box)`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+`;
+
+const HeaderActions = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 8px;
 `;
 
 const ExpandButton = styled(IconButton)`
-  color: #1a80e6;
+  color: #1a73e8;
 `;
 
 const ActionButtonsWrapper = styled(Box)`
@@ -68,6 +76,12 @@ export const ElementCard = <T extends Record<string, any>>({
     setExpanded(!expanded);
   };
 
+  const renderExpandButton = () => (
+    <ExpandButton onClick={handleExpandClick} size="large">
+      {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+    </ExpandButton>
+  );
+
   return (
     <StyledCard>
       <CardContent>
@@ -85,11 +99,9 @@ export const ElementCard = <T extends Record<string, any>>({
               )}
             </HeaderText>
           </HeaderContent>
-          {!hideExpandButton && (
-            <ExpandButton onClick={handleExpandClick} size="large">
-              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </ExpandButton>
-          )}
+          <HeaderActions>
+            {!ActionButtons && !hideExpandButton && renderExpandButton()}
+          </HeaderActions>
         </CardHeader>
 
         <Collapse in={expanded} timeout="auto" unmountOnExit>
@@ -103,9 +115,12 @@ export const ElementCard = <T extends Record<string, any>>({
           </Box>
         </Collapse>
 
-        <ActionButtonsWrapper>
-          {ActionButtons && <ActionButtons data={data.additionalData} />}
-        </ActionButtonsWrapper>
+        {ActionButtons && (
+          <ActionButtonsWrapper>
+            <ActionButtons data={data.additionalData} />
+            {!hideExpandButton && renderExpandButton()}
+          </ActionButtonsWrapper>
+        )}
       </CardContent>
     </StyledCard>
   );

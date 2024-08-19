@@ -18,7 +18,7 @@ import {
   useEarningsState,
 } from "../data/earningsState";
 import { mockEarnings } from "../mock/mockEarnings";
-import List from "../../../common/components/list";
+import { List } from "../../../common/components/list";
 
 export const EarningsPage: React.FC = () => {
   const { register, handleSubmit, watch, reset } = useForm<{

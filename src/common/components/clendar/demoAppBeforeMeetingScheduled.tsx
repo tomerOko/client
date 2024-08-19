@@ -18,11 +18,6 @@ import {
   CardContent,
   Switch,
   Typography,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  TextField,
 } from "@mui/material";
 import { Chat as ChatIcon, Call as CallIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
@@ -40,9 +35,6 @@ export const Calendar: FC<CalendarProps> = ({
   const [currentEvents, setCurrentEvents] = useState<EventApi[]>([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
-  const [openMeetingDialog, setOpenMeetingDialog] = useState(false);
-  const [selectedEvent, setSelectedEvent] = useState<EventApi | null>(null);
-  const [meetingNotes, setMeetingNotes] = useState("");
   const navigate = useNavigate();
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
@@ -65,39 +57,16 @@ export const Calendar: FC<CalendarProps> = ({
   };
 
   const handleEventClick = (clickInfo: EventClickArg) => {
-    setSelectedEvent(clickInfo.event);
-    setOpenMeetingDialog(true);
-  };
-
-  const handleCloseMeetingDialog = () => {
-    setOpenMeetingDialog(false);
-    setSelectedEvent(null);
-    setMeetingNotes("");
-  };
-
-  const handleConfirmMeeting = () => {
-    if (selectedEvent) {
-      // Here you would typically send this data to your backend
-      console.log("Meeting confirmed:", {
-        eventTitle: selectedEvent.title,
-        eventStart: selectedEvent.start,
-        meetingNotes: meetingNotes,
-      });
-
-      const date = selectedEvent.start?.toLocaleDateString();
-      const hulfHourBefore = new Date(
-        selectedEvent.start!.getTime() - 30 * 60000
-      );
-      const hulfHourAfter = new Date(
-        selectedEvent.start!.getTime() + 30 * 60000
-      );
-
-      setAlertMessage(
-        `Meeting confirmed! the consultant  will reach out to you at ${date} between ${hulfHourBefore.toLocaleTimeString()} and ${hulfHourAfter.toLocaleTimeString()}`
-      );
-      setShowAlert(true);
-      handleCloseMeetingDialog();
-    }
+    setAlertMessage(
+      `Event: ${clickInfo.event.title} at ${formatDate(clickInfo.event.start!, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      })}`
+    );
+    setShowAlert(true);
   };
 
   const handleEvents = (events: EventApi[]) => {
@@ -204,34 +173,6 @@ export const Calendar: FC<CalendarProps> = ({
           </Card>
         </div>
       </div>
-      <Dialog open={openMeetingDialog} onClose={handleCloseMeetingDialog}>
-        <DialogTitle>Confirm Meeting with Teacher</DialogTitle>
-        <DialogContent>
-          <Typography variant="body1" gutterBottom>
-            {selectedEvent && `Event: ${selectedEvent.title}`}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
-            {selectedEvent &&
-              `Time: ${formatDate(selectedEvent.start!, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}`}
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseMeetingDialog}>Cancel</Button>
-          <Button
-            onClick={handleConfirmMeeting}
-            variant="contained"
-            color="primary"
-          >
-            Confirm Meeting
-          </Button>
-        </DialogActions>
-      </Dialog>
     </div>
   );
 };

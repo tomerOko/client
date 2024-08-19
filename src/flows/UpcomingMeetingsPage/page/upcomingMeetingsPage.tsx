@@ -1,6 +1,6 @@
 // src/pages/NextMeetings.tsx
 import React, { useEffect, useMemo } from "react";
-import List from "../../../common/components/list";
+import { List } from "../../../common/components/list";
 import {
   convertMeetingToListDetails,
   useNextMeetingsState,

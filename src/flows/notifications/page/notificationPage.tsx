@@ -2,7 +2,7 @@
 
 import React, { useEffect, useMemo } from "react";
 
-import List from "../../../common/components/list";
+import { List } from "../../../common/components/list";
 import { MainColumn, Page } from "../../../common/styledComponents";
 import { NotificationActionButtons } from "../components/notificationActionButtons";
 import {

@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import List from "../../../common/components/list";
+import { List } from "../../../common/components/list";
 import { PastCallActionButtons } from "../components/notificationActionButtons";
 import {
   convertCallHistoryToListDetails,
