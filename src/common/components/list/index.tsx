@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import AddIcon from "@mui/icons-material/AddCircle";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Box,
   Button,
@@ -7,36 +7,58 @@ import {
   Modal,
   Pagination,
   Typography,
+  Container,
+  Paper,
 } from "@mui/material";
 import React, { useCallback, useMemo, useState } from "react";
-import { MainColumn, Page } from "../../styledComponents";
 import { ElementCard } from "./components/elementCard";
 import { ListProps } from "./data";
 
-const ListMainColumn = styled(MainColumn)`
-  max-width: 900px;
-  padding-top: 7vh;
-  max-height: 94vh;
-  gap: 40px;
-  position: relative;
+const ListContainer = styled(Container)`
+  padding-top: 5vh;
+  padding-bottom: 5vh;
 `;
 
-const ListMainContent = styled.div`
+const ListHeader = styled(Box)`
   display: flex;
-  flex-direction: column;
-  gap: 30px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 `;
 
-const FormBoxStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  p: 4,
-};
+const ListContent = styled(Paper)`
+  padding: 2rem;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+`;
+
+const PaginationWrapper = styled(Box)`
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+`;
+
+const AddButton = styled(Button)`
+  background-color: #1a73e8;
+  color: white;
+  &:hover {
+    background-color: #1557b0;
+  }
+`;
+
+const ModalContent = styled(Box)`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 600px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  padding: 2rem;
+`;
 
 export const List = <T extends Record<string, any>>({
   ElementExtension,
@@ -74,41 +96,34 @@ export const List = <T extends Record<string, any>>({
     }
     return (
       <>
-        <Button onClick={handleOpenModal}>
-          <AddIcon style={{ fontSize: "2.5rem" }} />
-        </Button>
-        {openModal && (
-          <Modal component="div" open={openModal} onClose={handleCloseModal}>
-            <Box sx={FormBoxStyle}>
-              <NewElementForm onClose={handleCloseModal} />
-            </Box>
-          </Modal>
-        )}
+        <AddButton
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleOpenModal}
+        >
+          Add New
+        </AddButton>
+        <Modal open={openModal} onClose={handleCloseModal}>
+          <ModalContent>
+            <NewElementForm onClose={handleCloseModal} />
+          </ModalContent>
+        </Modal>
       </>
     );
-  }, [NewElementForm, openModal, setOpenModal]);
+  }, [NewElementForm, openModal, handleOpenModal, handleCloseModal]);
 
   return (
-    <Page>
-      <ListMainColumn>
+    <ListContainer maxWidth="md">
+      <ListHeader>
         {header && (
-          <Typography variant="h4" id="notificationHeader">
+          <Typography variant="h4" component="h1" fontWeight="bold">
             {header}
           </Typography>
         )}
-        {newElementButton && (
-          <Box
-            style={{
-              display: "flex",
-              position: "absolute",
-              right: "0",
-              marginTop: "-5px",
-            }}
-          >
-            {newElementButton}
-          </Box>
-        )}
-        <ListMainContent>
+        {newElementButton}
+      </ListHeader>
+      <ListContent elevation={0}>
+        <Grid container spacing={3}>
           {paginatedElements.map((data, index) => (
             <Grid item xs={12} key={index}>
               <ElementCard
@@ -119,20 +134,17 @@ export const List = <T extends Record<string, any>>({
               />
             </Grid>
           ))}
-        </ListMainContent>
-        <Pagination
-          count={Math.ceil(data.length / elementsPerPage)}
-          page={page}
-          onChange={handleChange}
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        />
-      </ListMainColumn>
-    </Page>
+        </Grid>
+        <PaginationWrapper>
+          <Pagination
+            count={Math.ceil(data.length / elementsPerPage)}
+            page={page}
+            onChange={handleChange}
+            color="primary"
+            size="large"
+          />
+        </PaginationWrapper>
+      </ListContent>
+    </ListContainer>
   );
 };
-
-export default List;
