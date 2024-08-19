@@ -1,154 +1,217 @@
-// src/components/UserForm.tsx
-import React, { useEffect } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { ReactNode } from "react";
+import styled from "styled-components";
 import {
   TextField,
   Button,
-  MenuItem,
-  Checkbox,
-  FormControlLabel,
-  Autocomplete,
   Slider,
+  Typography,
+  Autocomplete,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
 } from "@mui/material";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import {
-  languages as allLanguages,
-  genders,
-  countries,
-  teacherValidationProps,
-} from "events-tomeroko3";
-import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
-import { useAuthStore } from "../../../common/data/authStore";
-import { all } from "axios";
+import { languages, genders, countries } from "events-tomeroko3";
 
-// Define Zod schema
-const { country, gender, languages } = teacherValidationProps;
+const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  max-height: calc(100vh - 260px);
+  height: calc(100vh - 260px);
+`;
+
+const FilterSection = styled.div`
+  margin-bottom: 1.5rem;
+`;
+
+const StyledButton = styled(Button)`
+  width: 100%;
+  margin-top: auto;
+`;
+
+const FormContainer = styled.form`
+  height: calc(100vh - 280px);
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  overflow-y: auto;
+`;
+
 const schema = z.object({
   priceRange: z.tuple([z.number(), z.number()]),
-  age: z.string().optional(),
-  country: country.optional(),
-  gender: gender.optional(),
-  languages: languages.optional(),
+  languages: z.array(z.string()).optional(),
+  country: z.string().optional(),
+  gender: z.string().optional(),
+  availability: z.array(z.string()).optional(),
 });
-const languageOptions = Object.values(allLanguages);
 
-// Define form data type based on the Zod schema
 type FormData = z.infer<typeof schema>;
 
+const availabilityOptions = [
+  "Available now",
+  "Available today",
+  "Short response time",
+] as const;
+
 export const FilterSideBar: React.FC = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
+  const { control, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      priceRange: [0, 100],
+      languages: [],
+      country: "",
+      gender: "",
+      availability: [],
+    },
   });
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = (data: FormData) => {
     console.log(data);
+    // Here you would typically update the search results based on the filters
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <Controller
-        name="priceRange"
-        control={control}
-        defaultValue={[0, 100]}
-        render={({ field }) => (
-          <div style={{ paddingLeft: "10px" }}>
-            <label>Price Range</label>
-            <Slider
-              style={{ marginTop: 16 }}
-              {...field}
-              value={field.value}
-              onChange={(_, value) => field.onChange(value)}
-              valueLabelDisplay="auto"
-              min={0}
-              max={100}
-              marks={[
-                { value: 0, label: "$0" },
-                { value: 100, label: "$100" },
-              ]}
-            />
-          </div>
-        )}
-      />
-      <Controller
-        name="gender"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            select
-            label="Gender"
-            variant="outlined"
-            error={!!errors.gender}
-            helperText={errors.gender?.message}
-            fullWidth
-            margin="normal"
-          >
-            {Object.values(genders).map((gender) => (
-              <MenuItem key={gender} value={gender}>
-                {gender}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      />
-      <Controller
-        name="languages"
-        control={control}
-        defaultValue={[]}
-        render={({ field }) => (
-          <Autocomplete
-            multiple
-            options={languageOptions}
-            getOptionLabel={(option) => option}
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox style={{ marginRight: 8 }} checked={selected} />
-                {option}
-              </li>
-            )}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                variant="outlined"
-                label="Languages"
-                placeholder="Select languages"
+    <FormContainer onSubmit={handleSubmit(onSubmit)}>
+      <FilterContainer>
+        <FilterSection>
+          <Typography variant="h6" gutterBottom>
+            Price Range
+          </Typography>
+          <Controller
+            name="priceRange"
+            control={control}
+            render={({ field }) => (
+              <Slider
+                {...field}
+                valueLabelDisplay="auto"
+                min={0}
+                max={100}
+                marks={[
+                  { value: 0, label: "$0" },
+                  { value: 100, label: "$100" },
+                ]}
               />
             )}
-            value={field.value}
-            onChange={(_, data) => field.onChange(data)}
           />
-        )}
-      />
-      <Controller
-        name="country"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            select
-            label="Country"
-            variant="outlined"
-            error={!!errors.country}
-            helperText={errors.country?.message}
-            fullWidth
-            margin="normal"
-          >
-            {Object.values(countries).map((country) => (
-              <MenuItem key={country} value={country}>
-                {country}
-              </MenuItem>
-            ))}
-          </TextField>
-        )}
-      />
-      <Button type="submit" variant="contained" color="primary">
+        </FilterSection>
+
+        <FilterSection>
+          <Typography variant="h6" gutterBottom>
+            Languages
+          </Typography>
+          <Controller
+            name="languages"
+            control={control}
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                multiple
+                options={Object.values(languages)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Select languages"
+                  />
+                )}
+                onChange={(_, data) => field.onChange(data)}
+              />
+            )}
+          />
+        </FilterSection>
+
+        <FilterSection>
+          <Typography variant="h6" gutterBottom>
+            Country
+          </Typography>
+          <Controller
+            name="country"
+            control={control}
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                options={Object.values(countries)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Select country"
+                  />
+                )}
+                onChange={(_, data) => field.onChange(data)}
+              />
+            )}
+          />
+        </FilterSection>
+
+        <FilterSection>
+          <Typography variant="h6" gutterBottom>
+            Gender
+          </Typography>
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field }) => (
+              <Autocomplete
+                {...field}
+                options={Object.values(genders)}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    placeholder="Select gender"
+                  />
+                )}
+                onChange={(_, data) => field.onChange(data)}
+              />
+            )}
+          />
+        </FilterSection>
+
+        <FilterSection>
+          <Typography variant="h6" gutterBottom>
+            Availability
+          </Typography>
+          <Controller
+            name="availability"
+            control={control}
+            render={({ field }) => (
+              <FormGroup>
+                {availabilityOptions.map((option) => (
+                  <FormControlLabel
+                    key={option}
+                    control={
+                      <Checkbox
+                        checked={field.value?.includes(option) || false}
+                        onChange={(e) => {
+                          const updatedValue = e.target.checked
+                            ? [...(field.value || []), option]
+                            : (field.value || []).filter(
+                                (item) => item !== option
+                              );
+                          field.onChange(updatedValue);
+                        }}
+                      />
+                    }
+                    label={option}
+                  />
+                ))}
+              </FormGroup>
+            )}
+          />
+        </FilterSection>
+      </FilterContainer>
+
+      <StyledButton type="submit" variant="contained" color="primary">
         Apply Filters
-      </Button>
-    </form>
+      </StyledButton>
+    </FormContainer>
   );
 };

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Lander = styled.div`
-  height: 100vh;
+  height: calc(100vh - 64px);
   width: 100vw;
   max-width: 100%;
   max-height: 100%;

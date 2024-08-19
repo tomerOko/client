@@ -103,6 +103,30 @@ export const INITIAL_EVENTS = [
     start: threeDaysFromNow + "T18:30:00",
     end: threeDaysFromNow + "T19:00:00",
   },
+  {
+    id: createEventId(),
+    title: "Morning Block 1",
+    start: threeDaysFromNow + "T09:00:00",
+    end: threeDaysFromNow + "T09:30:00",
+  },
+  {
+    id: createEventId(),
+    title: "Morning Block 2",
+    start: threeDaysFromNow + "T09:30:00",
+    end: threeDaysFromNow + "T10:00:00",
+  },
+  {
+    id: createEventId(),
+    title: "Morning Block 3",
+    start: threeDaysFromNow + "T10:00:00",
+    end: threeDaysFromNow + "T10:30:00",
+  },
+  {
+    id: createEventId(),
+    title: "Morning Block 1",
+    start: threeDaysFromNow + "T10:30:00",
+    end: threeDaysFromNow + "T11:00:00",
+  },
 ];
 
 export function createEventId() {

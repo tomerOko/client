@@ -116,9 +116,10 @@ export const Calendar: FC<CalendarProps> = ({
     <div
       style={{
         backgroundColor: "#f3f4f6",
-        minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
+        borderRadius: "0.5rem",
+        padding: "1rem",
       }}
     >
       <div style={{ padding: "1rem", flexGrow: 1 }}>
@@ -205,21 +206,25 @@ export const Calendar: FC<CalendarProps> = ({
         </div>
       </div>
       <Dialog open={openMeetingDialog} onClose={handleCloseMeetingDialog}>
-        <DialogTitle>Confirm Meeting with Teacher</DialogTitle>
+        <DialogTitle>Confirm Meeting:</DialogTitle>
+
         <DialogContent>
           <Typography variant="body1" gutterBottom>
-            {selectedEvent && `Event: ${selectedEvent.title}`}
-          </Typography>
-          <Typography variant="body2" gutterBottom>
             {selectedEvent &&
-              `Time: ${formatDate(selectedEvent.start!, {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-              })}`}
+              `Consultant will call at: ${selectedEvent.start?.toLocaleDateString()} between ${selectedEvent.start?.toLocaleTimeString()} and ${new Date(
+                selectedEvent.start!.getTime() + 30 * 60000
+              ).toLocaleTimeString()}`}
           </Typography>
+          <TextField
+            label="Meeting Notes"
+            multiline
+            rows={4}
+            fullWidth
+            value={meetingNotes}
+            onChange={(e) => setMeetingNotes(e.target.value)}
+            variant="outlined"
+            style={{ marginBottom: "1rem" }}
+          />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseMeetingDialog}>Cancel</Button>
@@ -248,7 +253,7 @@ const renderEventContent = (eventInfo: EventContentArg) => {
         borderRadius: "0.25rem",
       }}
     >
-      <span
+      {/* <span
         style={{
           fontSize: "0.875rem",
           fontWeight: "500",
@@ -259,7 +264,7 @@ const renderEventContent = (eventInfo: EventContentArg) => {
       </span>
       <span style={{ fontSize: "0.875rem", marginLeft: "0.25rem" }}>
         {eventInfo.event.title}
-      </span>
+      </span> */}
     </div>
   );
 };

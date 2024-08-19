@@ -1,4 +1,3 @@
-// ConsultantGrid.tsx
 import { Grid, Pagination } from "@mui/material";
 import React from "react";
 import { useSearchState } from "../data/serchState";
@@ -9,6 +8,7 @@ const SearchResultsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-height: 100%;
   gap: 20px;
 `;
 

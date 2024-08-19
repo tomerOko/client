@@ -138,7 +138,7 @@ export const TopBar: React.FC = () => {
     <AppBar
       position="static"
       elevation={0}
-      sx={{ backgroundColor: theme.palette.primary.main }}
+      sx={{ backgroundColor: theme.palette.primary.main, maxHeight: 64 }}
     >
       <Toolbar sx={{ justifyContent: "space-between" }}>
         <Box sx={{ display: "flex", alignItems: "center" }}>
