@@ -1,97 +1,11 @@
-import React, { useState, useRef, useEffect } from "react";
-import { create } from "zustand";
 import styled from "@emotion/styled";
 import { format } from "date-fns";
-import { mockChats } from "./mockChats";
 import { Search } from "lucide-react";
+import React, { useEffect, useRef, useState } from "react";
+import { SearchResult, useChatStore } from "./chatStore";
+import { SearchInChatModal } from "./searchInChatModal";
 
 // Types
-type MessageType = "text" | "meeting_suggestion";
-
-interface Message {
-  id: string;
-  sender: string;
-  content: string;
-  type: MessageType;
-  timestamp: Date;
-  meetingDetails?: {
-    date: Date;
-    time: string;
-  };
-}
-
-export interface Chat {
-  id: string;
-  participants: string[];
-  messages: Message[];
-}
-
-interface ChatStore {
-  chats: Chat[];
-  activeChat: string | null;
-  setActiveChat: (chatId: string) => void;
-  sendMessage: (
-    chatId: string,
-    message: Omit<Message, "id" | "timestamp">
-  ) => void;
-  approveMeeting: (chatId: string, messageId: string) => void;
-  rejectMeeting: (chatId: string, messageId: string) => void;
-}
-
-// Zustand store
-const useStore = create<ChatStore>((set) => ({
-  chats: mockChats,
-  activeChat: null,
-  setActiveChat: (chatId) => set({ activeChat: chatId }),
-  sendMessage: (chatId, message) =>
-    set((state) => ({
-      chats: state.chats.map((chat) =>
-        chat.id === chatId
-          ? {
-              ...chat,
-              messages: [
-                ...chat.messages,
-                {
-                  ...message,
-                  id: Date.now().toString(),
-                  timestamp: new Date(),
-                },
-              ],
-            }
-          : chat
-      ),
-    })),
-  approveMeeting: (chatId, messageId) =>
-    set((state) => ({
-      chats: state.chats.map((chat) =>
-        chat.id === chatId
-          ? {
-              ...chat,
-              messages: chat.messages.map((msg) =>
-                msg.id === messageId
-                  ? { ...msg, content: msg.content + " (Approved)" }
-                  : msg
-              ),
-            }
-          : chat
-      ),
-    })),
-  rejectMeeting: (chatId, messageId) =>
-    set((state) => ({
-      chats: state.chats.map((chat) =>
-        chat.id === chatId
-          ? {
-              ...chat,
-              messages: chat.messages.map((msg) =>
-                msg.id === messageId
-                  ? { ...msg, content: msg.content + " (Rejected)" }
-                  : msg
-              ),
-            }
-          : chat
-      ),
-    })),
-}));
 
 const ChatContainer = styled.div`
   display: flex;
@@ -174,42 +88,12 @@ const SearchButton = styled.button`
   }
 `;
 
-const Modal = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-  max-height: 80%;
-  overflow-y: auto;
-`;
-
-const SearchResult = styled.div`
-  padding: 10px;
-  border-bottom: 1px solid #e0e0e0;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f5f5f5;
-  }
-`;
-
 const MessageList = styled.div`
   flex: 1;
   overflow-y: auto;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const MessageBubble = styled.div<{ isSender: boolean }>`
@@ -222,8 +106,19 @@ const MessageBubble = styled.div<{ isSender: boolean }>`
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 `;
 
-const MeetingSuggestion = styled(MessageBubble)`
-  background-color: #e6f2ff;
+const MeetingSuggestion = styled(MessageBubble)<{
+  status?: "approved" | "rejected";
+}>`
+  background-color: ${(props) => {
+    switch (props.status) {
+      case "approved":
+        return "#dcf8c6";
+      case "rejected":
+        return "#f8c6c6";
+      default:
+        return "#f0f0f0";
+    }
+  }};
   border: 1px solid #b3d9ff;
   display: flex;
   flex-direction: column;
@@ -290,40 +185,14 @@ const RejectButton = styled(Button)`
   background-color: #f44336;
 `;
 
-const SearchInChatModal: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  searchResults: { chatId: string; messageId: string; content: string }[];
-  onResultClick: (chatId: string, messageId: string) => void;
-}> = ({ isOpen, onClose, searchResults, onResultClick }) => {
-  if (!isOpen) return null;
-
-  return (
-    <Modal onClick={onClose}>
-      <ModalContent onClick={(e) => e.stopPropagation()}>
-        <h2>Search Results</h2>
-        {searchResults.map((result) => (
-          <SearchResult
-            key={`${result.chatId}-${result.messageId}`}
-            onClick={() => onResultClick(result.chatId, result.messageId)}
-          >
-            {result.content}
-          </SearchResult>
-        ))}
-      </ModalContent>
-    </Modal>
-  );
-};
-
 export const ChatPage: React.FC = () => {
   const {
     chats,
-    activeChat,
+    activeChat: selectedChatID,
     setActiveChat,
     sendMessage,
-    approveMeeting,
-    rejectMeeting,
-  } = useStore();
+    responseToMeetingInvitation,
+  } = useChatStore();
   const [inputValue, setInputValue] = useState("");
   const [showMeetingForm, setShowMeetingForm] = useState(false);
   const [meetingDate, setMeetingDate] = useState("");
@@ -331,19 +200,17 @@ export const ChatPage: React.FC = () => {
   const messageListRef = useRef<HTMLDivElement>(null);
   const [chatSearchQuery, setChatSearchQuery] = useState("");
   const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
-  const [searchResults, setSearchResults] = useState<
-    { chatId: string; messageId: string; content: string }[]
-  >([]);
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
 
   useEffect(() => {
     if (messageListRef.current) {
       messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
     }
-  }, [chats, activeChat]);
+  }, [chats, selectedChatID]);
 
   const handleSendMessage = () => {
-    if (inputValue.trim() && activeChat) {
-      sendMessage(activeChat, {
+    if (inputValue.trim() && selectedChatID) {
+      sendMessage(selectedChatID, {
         sender: "You",
         content: inputValue,
         type: "text",
@@ -353,8 +220,8 @@ export const ChatPage: React.FC = () => {
   };
 
   const handleSendMeetingSuggestion = () => {
-    if (meetingDate && meetingTime && activeChat) {
-      sendMessage(activeChat, {
+    if (meetingDate && meetingTime && selectedChatID) {
+      sendMessage(selectedChatID, {
         sender: "You",
         content: `Meeting suggestion: ${meetingDate} at ${meetingTime}`,
         type: "meeting_suggestion",
@@ -379,6 +246,9 @@ export const ChatPage: React.FC = () => {
           chatId: chat.id,
           messageId: message.id,
           content: message.content,
+          sender: message.sender,
+          recipient:
+            chat.participants.find((p) => p !== message.sender) || "Unknown",
         }))
     );
     setSearchResults(results);
@@ -405,45 +275,62 @@ export const ChatPage: React.FC = () => {
           value={chatSearchQuery}
           onChange={(e) => setChatSearchQuery(e.target.value)}
         />
-        <SearchButton onClick={handleSearchInChats}>
-          <Search size={20} />
-        </SearchButton>
+
         <ChatList>
           {filteredChats.map((chat) => (
             <ChatItem
               key={chat.id}
-              active={chat.id === activeChat}
+              active={chat.id === selectedChatID}
               onClick={() => setActiveChat(chat.id)}
             >
               <Avatar
                 src={`https://i.pravatar.cc/150?u=${chat.id}`}
                 alt={chat.participants[0]}
               />
-              {chat.participants.join(", ")}
+              {chat.participants.filter((name) => name !== "You").join(", ")}
             </ChatItem>
           ))}
+          {chatSearchQuery?.length > 0 && (
+            <SearchButton onClick={handleSearchInChats}>
+              <Search size={20} />
+              Search Messages
+            </SearchButton>
+          )}
         </ChatList>
       </Sidebar>
       <ChatWindow>
         <MessageList ref={messageListRef}>
-          {activeChat &&
+          {selectedChatID &&
             chats
-              .find((chat) => chat.id === activeChat)
+              .find((chat) => chat.id === selectedChatID)
               ?.messages.map((message) =>
                 message.type === "meeting_suggestion" ? (
                   <MeetingSuggestion
                     key={message.id}
                     isSender={message.sender === "You"}
+                    status={message.meetingDetails?.status}
                   >
                     <div>{message.content}</div>
                     <MeetingActions>
                       <ApproveButton
-                        onClick={() => approveMeeting(activeChat, message.id)}
+                        onClick={() =>
+                          responseToMeetingInvitation(
+                            selectedChatID,
+                            message.id,
+                            "approved"
+                          )
+                        }
                       >
                         Approve
                       </ApproveButton>
                       <RejectButton
-                        onClick={() => rejectMeeting(activeChat, message.id)}
+                        onClick={() =>
+                          responseToMeetingInvitation(
+                            selectedChatID,
+                            message.id,
+                            "rejected"
+                          )
+                        }
                       >
                         Reject
                       </RejectButton>
@@ -499,6 +386,7 @@ export const ChatPage: React.FC = () => {
         onClose={() => setIsSearchModalOpen(false)}
         searchResults={searchResults}
         onResultClick={handleSearchResultClick}
+        searchQuery={chatSearchQuery}
       />
     </ChatContainer>
   );

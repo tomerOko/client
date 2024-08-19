@@ -1,13 +1,13 @@
-import { Chat } from "./chat";
+import { Chat } from "./chatStore";
 
 export const mockChats: Chat[] = [
   {
     id: "1",
-    participants: ["Alice", "Bob"],
+    participants: ["You", "Bob"],
     messages: [
       {
         id: "1",
-        sender: "Alice",
+        sender: "You",
         content: "Hi Bob, how are you?",
         type: "text",
         timestamp: new Date("2023-08-18T10:00:00"),
@@ -21,7 +21,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "Alice",
+        sender: "You",
         content:
           "Im doing great, thanks! Do you have time for a quick meeting today?",
         type: "text",
@@ -36,7 +36,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "Alice",
+        sender: "You",
         content: "How about 3 PM?",
         type: "text",
         timestamp: new Date("2023-08-18T10:20:00"),
@@ -60,7 +60,7 @@ export const mockChats: Chat[] = [
   },
   {
     id: "2",
-    participants: ["Alice", "Charlie"],
+    participants: ["You", "Charlie"],
     messages: [
       {
         id: "1",
@@ -71,7 +71,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "2",
-        sender: "Alice",
+        sender: "You",
         content: "Of course, Charlie. Whats it regarding?",
         type: "text",
         timestamp: new Date("2023-08-18T11:05:00"),
@@ -85,7 +85,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "4",
-        sender: "Alice",
+        sender: "You",
         content: "Sounds important. How about tomorrow at 2 PM?",
         type: "text",
         timestamp: new Date("2023-08-18T11:15:00"),
@@ -107,123 +107,10 @@ export const mockChats: Chat[] = [
       },
     ],
   },
-  {
-    id: "3",
-    participants: ["Bob", "David"],
-    messages: [
-      {
-        id: "1",
-        sender: "David",
-        content: "Hey Bob, got a minute?",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:00:00"),
-      },
-      {
-        id: "2",
-        sender: "Bob",
-        content: "Sure, David. Whats up?",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:05:00"),
-      },
-      {
-        id: "3",
-        sender: "David",
-        content: "I need your input on the latest design mockups.",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:10:00"),
-      },
-      {
-        id: "4",
-        sender: "Bob",
-        content: "No problem. Want to set up a quick call?",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:15:00"),
-      },
-      {
-        id: "5",
-        sender: "David",
-        content: "Thatd be great. How about in an hour?",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:20:00"),
-      },
-      {
-        id: "6",
-        sender: "Bob",
-        content: "Works for me. Ill send an invite.",
-        type: "text",
-        timestamp: new Date("2023-08-18T09:25:00"),
-      },
-      {
-        id: "7",
-        sender: "Bob",
-        content: "Meeting suggestion: 2023-08-18 at 10:30",
-        type: "meeting_suggestion",
-        timestamp: new Date("2023-08-18T09:30:00"),
-        meetingDetails: { date: new Date("2023-08-18"), time: "10:30" },
-      },
-    ],
-  },
-  {
-    id: "4",
-    participants: ["Charlie", "Eva"],
-    messages: [
-      {
-        id: "1",
-        sender: "Eva",
-        content: "Hi Charlie, hows the report coming along?",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:00:00"),
-      },
-      {
-        id: "2",
-        sender: "Charlie",
-        content:
-          "Hi Eva, its almost done. I just need to finalize a few details.",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:05:00"),
-      },
-      {
-        id: "3",
-        sender: "Eva",
-        content: "Great! When do you think you can have it ready for review?",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:10:00"),
-      },
-      {
-        id: "4",
-        sender: "Charlie",
-        content:
-          "I should have it done by tomorrow afternoon. How about we meet to go over it?",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:15:00"),
-      },
-      {
-        id: "5",
-        sender: "Eva",
-        content: "Sounds good. Lets schedule something for tomorrow at 4 PM.",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:20:00"),
-      },
-      {
-        id: "6",
-        sender: "Charlie",
-        content: "Perfect, Ill send an invite.",
-        type: "text",
-        timestamp: new Date("2023-08-18T14:25:00"),
-      },
-      {
-        id: "7",
-        sender: "Charlie",
-        content: "Meeting suggestion: 2023-08-19 at 16:00",
-        type: "meeting_suggestion",
-        timestamp: new Date("2023-08-18T14:30:00"),
-        meetingDetails: { date: new Date("2023-08-19"), time: "16:00" },
-      },
-    ],
-  },
+
   {
     id: "5",
-    participants: ["David", "Frank"],
+    participants: ["You", "Frank"],
     messages: [
       {
         id: "1",
@@ -234,7 +121,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "2",
-        sender: "David",
+        sender: "You",
         content:
           "Hi Frank, Im just compiling them now. Should be ready in about an hour.",
         type: "text",
@@ -250,7 +137,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "4",
-        sender: "David",
+        sender: "You",
         content: "Absolutely. How about we meet at 5:30 PM?",
         type: "text",
         timestamp: new Date("2023-08-18T16:15:00"),
@@ -264,14 +151,14 @@ export const mockChats: Chat[] = [
       },
       {
         id: "6",
-        sender: "David",
+        sender: "You",
         content: "Will do. Talk to you soon.",
         type: "text",
         timestamp: new Date("2023-08-18T16:25:00"),
       },
       {
         id: "7",
-        sender: "David",
+        sender: "You",
         content: "Meeting suggestion: 2023-08-18 at 17:30",
         type: "meeting_suggestion",
         timestamp: new Date("2023-08-18T17:00:00"),
@@ -281,7 +168,7 @@ export const mockChats: Chat[] = [
   },
   {
     id: "6",
-    participants: ["Eva", "George"],
+    participants: ["You", "George"],
     messages: [
       {
         id: "1",
@@ -293,7 +180,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "2",
-        sender: "Eva",
+        sender: "You",
         content: "Not yet, George. Is it in our shared folder?",
         type: "text",
         timestamp: new Date("2023-08-18T13:05:00"),
@@ -308,7 +195,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "4",
-        sender: "Eva",
+        sender: "You",
         content:
           "Ill take a look right away. Should we schedule a meeting to discuss our response?",
         type: "text",
@@ -323,14 +210,14 @@ export const mockChats: Chat[] = [
       },
       {
         id: "6",
-        sender: "Eva",
+        sender: "You",
         content: "That works for me. Ill set up the meeting.",
         type: "text",
         timestamp: new Date("2023-08-18T13:25:00"),
       },
       {
         id: "7",
-        sender: "Eva",
+        sender: "You",
         content: "Meeting suggestion: 2023-08-19 at 10:00",
         type: "meeting_suggestion",
         timestamp: new Date("2023-08-18T13:30:00"),
@@ -340,11 +227,11 @@ export const mockChats: Chat[] = [
   },
   {
     id: "7",
-    participants: ["Alex", "Sarah"],
+    participants: ["You", "Sarah"],
     messages: [
       {
         id: "1",
-        sender: "Alex",
+        sender: "You",
         content: "Sarah, how's the progress on the Q3 report?",
         type: "text",
         timestamp: new Date("2023-09-01T09:00:00"),
@@ -358,7 +245,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "Alex",
+        sender: "You",
         content: "Great! Any challenges you're facing?",
         type: "text",
         timestamp: new Date("2023-09-01T09:10:00"),
@@ -372,7 +259,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "Alex",
+        sender: "You",
         content:
           "I'll follow up with them. Can we review it together once it's done?",
         type: "text",
@@ -387,7 +274,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "7",
-        sender: "Alex",
+        sender: "You",
         content: "Perfect. I'll block that time.",
         type: "text",
         timestamp: new Date("2023-09-01T09:30:00"),
@@ -404,11 +291,11 @@ export const mockChats: Chat[] = [
   },
   {
     id: "8",
-    participants: ["Mike", "Jessica"],
+    participants: ["You", "Jessica"],
     messages: [
       {
         id: "1",
-        sender: "Mike",
+        sender: "You",
         content:
           "Jessica, do you have a moment to discuss the new product launch?",
         type: "text",
@@ -423,7 +310,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "Mike",
+        sender: "You",
         content:
           "I'm concerned about the marketing budget. It seems a bit low for such a big launch.",
         type: "text",
@@ -438,7 +325,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "Mike",
+        sender: "You",
         content:
           "I did, but I think we might need to allocate more for digital advertising.",
         type: "text",
@@ -454,7 +341,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "7",
-        sender: "Mike",
+        sender: "You",
         content:
           "Sure, I'll have that to you by end of day. When can we meet to discuss?",
         type: "text",
@@ -469,14 +356,14 @@ export const mockChats: Chat[] = [
       },
       {
         id: "9",
-        sender: "Mike",
+        sender: "You",
         content: "Sounds good. I'll set up the meeting.",
         type: "text",
         timestamp: new Date("2023-09-10T11:40:00"),
       },
       {
         id: "10",
-        sender: "Mike",
+        sender: "You",
         content: "Meeting suggestion: 2023-09-14 at 11:00",
         type: "meeting_suggestion",
         timestamp: new Date("2023-09-10T11:45:00"),
@@ -486,11 +373,11 @@ export const mockChats: Chat[] = [
   },
   {
     id: "9",
-    participants: ["David", "Emily"],
+    participants: ["You", "Emily"],
     messages: [
       {
         id: "1",
-        sender: "David",
+        sender: "You",
         content:
           "Emily, have you finished the user testing for the new app interface?",
         type: "text",
@@ -505,7 +392,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "David",
+        sender: "You",
         content: "Great! What were the initial findings?",
         type: "text",
         timestamp: new Date("2023-09-20T14:10:00"),
@@ -520,7 +407,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "David",
+        sender: "You",
         content: "I see. Can you elaborate on the navigation issues?",
         type: "text",
         timestamp: new Date("2023-09-20T14:20:00"),
@@ -535,7 +422,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "7",
-        sender: "David",
+        sender: "You",
         content:
           "Okay, that's crucial information. When can you have a detailed report ready?",
         type: "text",
@@ -551,7 +438,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "9",
-        sender: "David",
+        sender: "You",
         content: "Definitely. How about Friday at 2 PM?",
         type: "text",
         timestamp: new Date("2023-09-20T14:40:00"),
@@ -575,11 +462,11 @@ export const mockChats: Chat[] = [
   },
   {
     id: "10",
-    participants: ["Lisa", "Tom"],
+    participants: ["You", "Tom"],
     messages: [
       {
         id: "1",
-        sender: "Lisa",
+        sender: "You",
         content:
           "Tom, do you have the latest sales figures for the East Coast region?",
         type: "text",
@@ -594,7 +481,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "Lisa",
+        sender: "You",
         content:
           "Yes, please. And could you highlight any significant changes from last quarter?",
         type: "text",
@@ -610,7 +497,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "Lisa",
+        sender: "You",
         content: "That's great news! Any idea what's driving the increase?",
         type: "text",
         timestamp: new Date("2023-09-25T10:20:00"),
@@ -625,7 +512,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "7",
-        sender: "Lisa",
+        sender: "You",
         content: "Excellent. When can I expect the report?",
         type: "text",
         timestamp: new Date("2023-09-25T10:30:00"),
@@ -640,7 +527,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "9",
-        sender: "Lisa",
+        sender: "You",
         content: "That would be helpful. How about 10 AM?",
         type: "text",
         timestamp: new Date("2023-09-25T10:40:00"),
@@ -664,11 +551,11 @@ export const mockChats: Chat[] = [
   },
   {
     id: "11",
-    participants: ["Ryan", "Olivia"],
+    participants: ["You", "Olivia"],
     messages: [
       {
         id: "1",
-        sender: "Ryan",
+        sender: "You",
         content:
           "Olivia, have you had a chance to review the new supplier contracts?",
         type: "text",
@@ -684,7 +571,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "3",
-        sender: "Ryan",
+        sender: "You",
         content: "Okay, what are your main concerns?",
         type: "text",
         timestamp: new Date("2023-10-02T09:10:00"),
@@ -699,7 +586,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "5",
-        sender: "Ryan",
+        sender: "You",
         content: "I see. Do you think we have room to negotiate?",
         type: "text",
         timestamp: new Date("2023-10-02T09:20:00"),
@@ -714,7 +601,7 @@ export const mockChats: Chat[] = [
       },
       {
         id: "7",
-        sender: "Ryan",
+        sender: "You",
         content: "How about this afternoon? Say 2 PM?",
         type: "text",
         timestamp: new Date("2023-10-02T09:30:00"),
@@ -728,14 +615,14 @@ export const mockChats: Chat[] = [
       },
       {
         id: "9",
-        sender: "Ryan",
+        sender: "You",
         content: "Great, I'll book the conference room.",
         type: "text",
         timestamp: new Date("2023-10-02T09:40:00"),
       },
       {
         id: "10",
-        sender: "Ryan",
+        sender: "You",
         content: "Meeting suggestion: 2023-10-02 at 14:00",
         type: "meeting_suggestion",
         timestamp: new Date("2023-10-02T09:45:00"),

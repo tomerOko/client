@@ -32,14 +32,22 @@ import {
   AccountBalanceWallet as BankAccountIcon,
   School as BecomeTeacherIcon,
 } from "@mui/icons-material";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../data/authStore";
+
+interface MenuItem {
+  icon: React.ReactElement;
+  text: string;
+  link?: string;
+  onClick?: () => void;
+}
 
 export const TopBar: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const location = useLocation();
   const { clear } = useAuthStore();
+  const navigate = useNavigate();
 
   const [settingsAnchorEl, setSettingsAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -64,7 +72,7 @@ export const TopBar: React.FC = () => {
     return null;
   }
 
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     { icon: <PersonIcon />, text: "User Details", link: "/user-details" },
     { icon: <HistoryIcon />, text: "Calls History", link: "/calls-history" },
     {
@@ -79,11 +87,12 @@ export const TopBar: React.FC = () => {
         handleClose();
         clear();
         alert("Logged out");
+        navigate("/");
       },
     },
   ];
 
-  const teacherMenuItems = [
+  const teacherMenuItems: MenuItem[] = [
     { icon: <TopicIcon />, text: "My Topics", link: "/my-topics" },
     {
       icon: <AvailabilityIcon />,
@@ -103,6 +112,28 @@ export const TopBar: React.FC = () => {
     },
   ];
 
+  const isSelected = (path: string) => location.pathname === path;
+
+  const isMenuSelected = (items: MenuItem[]) => {
+    return items.some(
+      (item) => item.link && location.pathname.startsWith(item.link)
+    );
+  };
+
+  const getIconStyle = (isSelected: boolean) => ({
+    bgcolor: isSelected ? "white" : "transparent",
+    color: isSelected ? theme.palette.primary.main : "white",
+  });
+
+  const getButtonStyle = (path: string) => ({
+    bgcolor: isSelected(path) ? "white" : "transparent",
+    color: isSelected(path) ? theme.palette.primary.main : "white",
+    "&:hover": {
+      bgcolor: isSelected(path) ? "white" : "rgba(255, 255, 255, 0.08)",
+    },
+    marginRight: 1, // Add a little space between buttons
+  });
+
   return (
     <AppBar
       position="static"
@@ -114,25 +145,27 @@ export const TopBar: React.FC = () => {
           <Typography
             variant="h6"
             color="white"
-            sx={{ mr: 2, fontWeight: "bold" }}
+            sx={{ mr: 2, fontWeight: "bold", cursor: "pointer" }}
+            component={Link}
+            to="/home"
           >
             Consultify
           </Typography>
           {!isMobile && (
             <>
               <Button
-                color="inherit"
                 component={Link}
                 to="/home"
                 startIcon={<HomeIcon />}
+                sx={getButtonStyle("/home")}
               >
                 Home
               </Button>
               <Button
-                color="inherit"
                 component={Link}
                 to="/upcoming-meetings"
                 startIcon={<CalendarMonthIcon />}
+                sx={getButtonStyle("/upcoming-meetings")}
               >
                 Meetings
               </Button>
@@ -140,28 +173,47 @@ export const TopBar: React.FC = () => {
           )}
         </Box>
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <IconButton color="inherit" component={Link} to="/chat">
-            <Badge badgeContent={7} color="error">
-              <ChatIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" component={Link} to="/notifications">
-            <Badge badgeContent={4} color="error">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit" onClick={handleTeacherClick}>
-            <LocalLibraryIcon />
-          </IconButton>
-          <IconButton onClick={handleSettingsClick}>
-            <Avatar
+          <IconButton component={Link} to="/chat">
+            <Badge
+              badgeContent={7}
+              color="error"
               sx={{
-                width: 32,
-                height: 32,
-                bgcolor: "white",
-                color: theme.palette.primary.main,
+                "& .MuiBadge-badge": {
+                  zIndex: 1,
+                  right: -3,
+                  top: 3,
+                },
               }}
             >
+              <Avatar sx={getIconStyle(isSelected("/chat"))}>
+                <ChatIcon />
+              </Avatar>
+            </Badge>
+          </IconButton>
+          <IconButton component={Link} to="/notifications">
+            <Badge
+              badgeContent={4}
+              color="error"
+              sx={{
+                "& .MuiBadge-badge": {
+                  zIndex: 1,
+                  right: -3,
+                  top: 3,
+                },
+              }}
+            >
+              <Avatar sx={getIconStyle(isSelected("/notifications"))}>
+                <NotificationsIcon />
+              </Avatar>
+            </Badge>
+          </IconButton>
+          <IconButton onClick={handleTeacherClick}>
+            <Avatar sx={getIconStyle(isMenuSelected(teacherMenuItems))}>
+              <LocalLibraryIcon />
+            </Avatar>
+          </IconButton>
+          <IconButton onClick={handleSettingsClick}>
+            <Avatar sx={getIconStyle(isMenuSelected(menuItems))}>
               <SettingsIcon />
             </Avatar>
           </IconButton>
@@ -196,8 +248,8 @@ export const TopBar: React.FC = () => {
         {teacherMenuItems.map((item, index) => (
           <MenuItem
             key={index}
-            onClick={handleClose}
-            component={Link}
+            onClick={item.onClick || handleClose}
+            component={item.link ? Link : "li"}
             to={item.link}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>

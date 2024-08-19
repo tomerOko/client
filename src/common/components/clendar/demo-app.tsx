@@ -20,6 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Chat as ChatIcon, Call as CallIcon } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 
 interface CalendarProps {
   showTopBar?: boolean;
@@ -34,6 +35,7 @@ export const Calendar: FC<CalendarProps> = ({
   const [currentEvents, setCurrentEvents] = useState<EventApi[]>([]);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleDateSelect = (selectInfo: DateSelectArg) => {
     let title = prompt("Please enter a new title for your event");
@@ -72,11 +74,11 @@ export const Calendar: FC<CalendarProps> = ({
   };
 
   const handleGoToChat = () => {
-    alert("Navigating to chat...");
+    navigate("/chat");
   };
 
   const handleCallNow = () => {
-    alert("Initiating call...");
+    navigate("/mock-call");
   };
 
   return (
