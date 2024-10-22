@@ -6,7 +6,7 @@ import { useAuthStore } from "../../../common/data/authStore";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { FormButton } from "../../../common/styledComponents";
 
-const useFetchSignin = fetchHookFactory("LOGIN");
+const useFetchSignin = fetchHookFactory("PASSWORD_LOGIN");
 
 export const SigninForm: FC = () => {
   const {
@@ -22,8 +22,7 @@ export const SigninForm: FC = () => {
   const onSubmit = async (data: any) => {
     const result = await fetchLogin({
       email: data.email,
-      loginMethod: "PASSWORD",
-      methodSecret: data.password,
+      password: data.password,
     });
 
     if (!result) {

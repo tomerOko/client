@@ -8,9 +8,9 @@ import {
 } from "@mui/material";
 import {
   languages as allLanguages,
+  consultantValidationProps,
   countries,
   genders,
-  teacherValidationProps,
 } from "events-tomeroko3";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ const {
   languages,
   lastName,
   profilePictureUrl,
-} = teacherValidationProps;
+} = consultantValidationProps;
 const schema = z.object({
   aboutMe,
   age: z.string(),
@@ -41,7 +41,7 @@ const languageOptions = Object.values(allLanguages);
 // Define form data type based on the Zod schema
 type FormData = z.infer<typeof schema>;
 
-const useFetchbecomeConsultant = fetchHookFactory("BECOME_TEACHER");
+const useFetchbecomeConsultant = fetchHookFactory("BECOME_CONSULTANT");
 
 export const ConsoltantDetailsForm: React.FC = () => {
   const {
@@ -52,21 +52,16 @@ export const ConsoltantDetailsForm: React.FC = () => {
     resolver: zodResolver(schema),
   });
 
-  const { fetch: fetchbecomeConsultant } = useFetchbecomeConsultant();
-  const { ID, email, firstName, lastName } = useAuthStore()?.data?.user || {};
+  const { fetch: fetchBecomeConsultant } = useFetchbecomeConsultant();
 
   const onSubmit = async (data: FormData) => {
-    await fetchbecomeConsultant({
+    await fetchBecomeConsultant({
       aboutMe: data.aboutMe,
       age: Number(data.age),
       country: data.country,
       gender: data.gender,
       languages: data.languages,
       profilePictureUrl: data.profilePictureUrl,
-      userID: ID as string,
-      email: email as string,
-      firstName: firstName as string,
-      lastName: lastName as string,
     });
   };
 

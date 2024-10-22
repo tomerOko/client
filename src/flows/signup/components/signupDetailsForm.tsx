@@ -6,7 +6,7 @@ import { useSignupState } from "../data/signupState";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { FormButton } from "../../../common/styledComponents";
 
-const useFetchSignup = fetchHookFactory("SIGNUP");
+const useFetchSignup = fetchHookFactory("SIGNUP_EMAIL_PART2");
 
 export const SignupDetailsForm: FC = () => {
   const {
@@ -26,6 +26,7 @@ export const SignupDetailsForm: FC = () => {
         firstName: data.firstName,
         lastName: data.lastName,
         password: data.password,
+        phone: "",
       });
     } catch (error) {
       console.log(error);

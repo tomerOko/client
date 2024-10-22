@@ -5,7 +5,7 @@ import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { useSignupState } from "../data/signupState";
 import { FormButton } from "../../../common/styledComponents";
 
-const useFetchPincode = fetchHookFactory("SEND_PINCODE");
+const useFetchPincode = fetchHookFactory("SIGNUP_EMAIL_PART1");
 
 export const SignupPincodeForm: FC = () => {
   const {

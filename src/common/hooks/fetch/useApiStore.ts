@@ -2,9 +2,10 @@ import { pathMap } from "events-tomeroko3";
 import { create } from "zustand";
 import z from "zod";
 
-type EndpointName = keyof typeof pathMap;
+type Endpoints = typeof pathMap;
+type EndpointName = keyof Endpoints;
 type EndpointResponse<T extends EndpointName> = z.infer<
-  (typeof pathMap)[T]["responseValidation"]
+  Endpoints[T]["responseValidation"]
 >;
 
 interface CacheEntry<T extends EndpointName> {
@@ -22,7 +23,7 @@ interface ApiState<T extends EndpointName> {
   getCache: (key: string) => EndpointResponse<T> | null;
 }
 
-export const apiStoreHookFactory = <T extends EndpointName>(key: T) => {
+export const apiStoreHookFactory = <T extends EndpointName>() => {
   const useApiStore = create<ApiState<T>>((set, get) => ({
     // create from "zustand"; returns an hook function
     loading: false,
