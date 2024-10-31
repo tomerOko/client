@@ -20,18 +20,19 @@ export const SigninForm: FC = () => {
   const { fetch: fetchLogin } = useFetchSignin();
 
   const onSubmit = async (data: any) => {
-    const result = await fetchLogin({
+    const { result, error } = await fetchLogin({
       email: data.email,
       password: data.password,
     });
 
-    if (!result) {
-      // Handle error
+    if (error) {
+      alert("Error: " + error);
       return;
     }
-    set({ token: result.token, user: result.user });
-
-    navigate("/search");
+    if (result) {
+      set({ token: result.token, user: result.user });
+      navigate("/search");
+    }
   };
 
   return (

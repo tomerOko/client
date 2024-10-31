@@ -20,6 +20,7 @@ import { MyTopicsPage } from "./flows/myTopics/page/myTopicsPage";
 import { BankAccountsPage } from "./flows/bankAccounts/page/bankAccountsPage";
 import { PaymentMethodsPage } from "./flows/paymentMethods/page/paymentMethodPage";
 import { ConsoltantDetailsPage } from "./flows/consoltantDetails/page/consoltantDetailsPage";
+import { ErrorModal } from "./common/errors/errorModal";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
       <ThemeProvider theme={mainTheme}>
         <Router>
           <TopBar />
+          <ErrorModal />
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/home" element={<HomePage />} />

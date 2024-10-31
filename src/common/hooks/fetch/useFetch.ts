@@ -1,89 +1,111 @@
-// apiService.ts
-import axios from "axios";
 import { pathMap } from "events-tomeroko3";
 import { z } from "zod";
-import { apiStoreHookFactory } from "./useApiStore";
+import { FetchError } from "../../errors/types";
 import { formatZodError } from "../../utils/formatZodError";
-import { useAuthStore } from "../../data/authStore";
-
-const baseURL = process.env.REACT_APP_API_URL || "http://localhost:4001";
-
-const apiClient = axios.create({
-  baseURL,
-  headers: { "Content-Type": "application/json" },
-});
-
-console.log("pathMap17", pathMap);
-
-// debugger;
-
-apiClient.interceptors.request.use(
-  (config) => {
-    const authState = useAuthStore.getState() || {};
-    const token = authState?.data?.token;
-    if (token) {
-      console.log("token", token);
-      config.headers.Authorization = token;
-    }
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
+import { apiClient } from "./apiClient";
+import { apiStoreHookFactory } from "./useApiStore";
 
 type Endpoints = typeof pathMap;
 
 type EndpointName = keyof Endpoints;
 
-type BodyType<T extends EndpointName> = z.infer<
+type RequestBodyType<T extends EndpointName> = z.infer<
   Endpoints[T]["requestValidation"]
 > extends { body: infer B }
   ? B
   : undefined;
 
+type ResponseBodyType<T extends EndpointName> =
+  | z.infer<Endpoints[T]["responseValidation"]>
+  | undefined;
+
+type FetchHook<T extends EndpointName> = (
+  payload: RequestBodyType<T>
+) => Promise<{ result: ResponseBodyType<T> | null; error: any }>;
+
 export const fetchHookFactory = <T extends EndpointName>(endpointName: T) => {
   const useCustomFetch = () => {
-    const endpoint = pathMap[endpointName];
-    const { setCache, getCache, setError, setLoading, loading, error } =
-      apiStoreHookFactory()();
-    const fetch: (
-      payload: BodyType<T>
-    ) => Promise<z.infer<Endpoints[T]["responseValidation"]> | null> = async (
-      payload
-    ) => {
-      setError(null);
+    const apiStore = apiStoreHookFactory()();
+    const { setLoading, loading } = apiStore;
+    const fetch: FetchHook<T> = async (payload) => {
+      setLoading(true);
       try {
-        debugger;
-        endpoint.requestValidation.parse({ body: payload }); // Validate request payload
-        const cacheKey = `${endpointName}_${JSON.stringify(payload)}`;
-        const cachedData = getCache(cacheKey);
-        if (cachedData) {
-          return cachedData;
-        }
-        const response = await apiClient[endpoint.method as "post"](
-          `${endpoint.service}${endpoint.path}`,
-          payload
+        const result = await reallyFetchIfThereNoCache<T>(
+          endpointName,
+          payload,
+          apiStore
         );
-        const validatedResponse = endpoint.responseValidation.parse(
-          response.data
-        );
-        setCache(cacheKey, validatedResponse);
         setLoading(false);
-        return validatedResponse;
+        return {
+          result,
+          error: null,
+        };
       } catch (error: any) {
-        debugger;
-        const isZodError = error.issues !== undefined;
-        if (isZodError) {
-          error = formatZodError(error);
+        if (isZodError(error)) {
+          const fetchError: FetchError = {
+            httpCode: 450, //todo: think of a better way to handle this
+            message: "REQUEST_VALIDATION_ERROR",
+            data: formatZodError(error),
+          };
+          return { result: null, error: fetchError };
+        } else {
+          const { status } = error.response;
+          const { code, data } = error.response.data.error;
+          debugger;
+          const fetchError: FetchError = {
+            httpCode: status,
+            message: code,
+            data: data,
+          };
+          return { result: null, error: fetchError };
         }
-        console.error("error at fething", endpointName, error);
-        setLoading(false);
-        setError(error);
-        return null;
       }
     };
 
-    return { fetch, loading, error };
+    return { fetch, loading };
   };
 
   return useCustomFetch;
+};
+const isZodError = (error: any) => error.issues !== undefined;
+
+const reallyFetchIfThereNoCache = async <T extends EndpointName>(
+  endpointName: T,
+  payload: any,
+  { setCache, getCache }: any
+) => {
+  const endpointConfig = pathMap[endpointName];
+
+  endpointConfig.requestValidation.parse({ body: payload });
+
+  //calculate cache key
+  const cacheKey = hashCacheKey(endpointName, payload);
+
+  //fetch from cache or from server.
+  const result = getCache(cacheKey)
+    ? getCache(cacheKey)
+    : await reallyFetchValidateAndSave(endpointName, payload, setCache);
+
+  return result;
+};
+
+const hashCacheKey = (endpointName: string, payload: any) => {
+  const cacheKey = `${endpointName}_${JSON.stringify(payload)}`;
+  return cacheKey;
+};
+
+const reallyFetchValidateAndSave = async <T extends EndpointName>(
+  endpointName: T,
+  payload: any,
+  setCache: any
+) => {
+  const endpoint = pathMap[endpointName];
+  const response = await apiClient[endpoint.method as "post"](
+    `${endpoint.service}${endpoint.path}`,
+    payload
+  );
+  const validatedResponse = endpoint.responseValidation.parse(response.data);
+  const cacheKey = hashCacheKey(endpointName, payload);
+  setCache(cacheKey, validatedResponse);
+  return validatedResponse;
 };

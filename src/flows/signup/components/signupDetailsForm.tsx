@@ -1,10 +1,11 @@
-import { Button, Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import { FC } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useSignupState } from "../data/signupState";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { FormButton } from "../../../common/styledComponents";
+import { useSignupState } from "../data/signupState";
+import { errorHandler } from "../../../common/errors/errorHandler";
 
 const useFetchSignup = fetchHookFactory("SIGNUP_EMAIL_PART2");
 
@@ -16,30 +17,34 @@ export const SignupDetailsForm: FC = () => {
   } = useForm();
   const { setSignupDetails, signupDetails } = useSignupState();
   const navigate = useNavigate();
-  const { fetch: fetchSignup, loading, error } = useFetchSignup();
+  const { fetch: fetchSignup, loading } = useFetchSignup();
 
   const onSubmit = async (data: any) => {
-    try {
-      const result = await fetchSignup({
-        email: signupDetails.email,
-        pincode: data.pincode,
-        firstName: data.firstName,
-        lastName: data.lastName,
-        password: data.password,
-        phone: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-
-    setSignupDetails({
-      ...signupDetails,
+    const { error, result } = await fetchSignup({
+      email: signupDetails.email,
+      pincode: data.pincode,
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
+      phone: "0542229728",
     });
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    navigate("/signin");
+    if (error) {
+      debugger;
+      switch (error.message) {
+        default:
+          errorHandler(error);
+      }
+      return;
+    }
+    if (result) {
+      setSignupDetails({
+        ...signupDetails,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        password: data.password,
+      });
+      navigate("/signin");
+    }
   };
 
   return (

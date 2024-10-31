@@ -15,22 +15,18 @@ interface CacheEntry<T extends EndpointName> {
 
 interface ApiState<T extends EndpointName> {
   loading: boolean;
-  error: any;
   cache: Record<string, CacheEntry<any>>;
   setLoading: (loading: boolean) => void;
-  setError: (error: any) => void;
   setCache: (key: string, data: EndpointResponse<T>) => void;
-  getCache: (key: string) => EndpointResponse<T> | null;
+  getCache: (key: string) => EndpointResponse<T> | undefined;
 }
 
 export const apiStoreHookFactory = <T extends EndpointName>() => {
   const useApiStore = create<ApiState<T>>((set, get) => ({
     // create from "zustand"; returns an hook function
     loading: false,
-    error: null,
     cache: {},
     setLoading: (loading) => set({ loading }),
-    setError: (error: any) => set({ error }),
     setCache: (key, data) =>
       set((state) => ({
         cache: {
@@ -43,7 +39,6 @@ export const apiStoreHookFactory = <T extends EndpointName>() => {
       if (cacheEntry && Date.now() - cacheEntry.timestamp < 60000) {
         return cacheEntry.data;
       }
-      return null;
     },
   }));
   return useApiStore;

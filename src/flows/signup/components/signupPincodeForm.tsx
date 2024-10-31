@@ -16,25 +16,26 @@ export const SignupPincodeForm: FC = () => {
 
   const { setSignupDetails, signupDetails } = useSignupState();
 
-  const { fetch: fetchPincode, loading, error } = useFetchPincode();
+  const { fetch: fetchPincode, loading } = useFetchPincode();
 
   const onSubmit = async (data: any) => {
     const { email } = data;
-    await fetchPincode({
+    const { error, result } = await fetchPincode({
       email,
     });
-    setSignupDetails({
-      isSent: true,
-      sentAt: Date.now(),
-      email,
-      firstName: signupDetails.firstName,
-      lastName: signupDetails.lastName,
-      password: signupDetails.password,
-    });
+    if (error) {
+      alert("Error: " + error);
+    } else {
+      setSignupDetails({
+        isSent: true,
+        sentAt: Date.now(),
+        email,
+        firstName: signupDetails.firstName,
+        lastName: signupDetails.lastName,
+        password: signupDetails.password,
+      });
+    }
   };
-
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error}</div>;
 
   return (
     <form
