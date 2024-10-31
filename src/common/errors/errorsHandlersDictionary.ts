@@ -12,6 +12,12 @@ export const errorHandlers: { [key: string]: ErrorHandlerEntry } = {
   WRONG_PINCODE: {
     message: "Wrong pincode",
   },
+  PINCODE_EXPIRED: {
+    message: "Pincode expired",
+  },
+  EMAIL_ALREADY_REGISTERED: {
+    message: "Email already registered",
+  },
   NETWORK_CONNECTION_LOST: {
     message: "Network connection lost. Please check your internet connection.",
     handler: (error) => {

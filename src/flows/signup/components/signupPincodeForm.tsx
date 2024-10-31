@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { fetchHookFactory } from "../../../common/hooks/fetch/useFetch";
 import { useSignupState } from "../data/signupState";
 import { FormButton } from "../../../common/styledComponents";
+import { errorHandler } from "../../../common/errors/errorHandler";
 
 const useFetchPincode = fetchHookFactory("SIGNUP_EMAIL_PART1");
 
@@ -24,7 +25,7 @@ export const SignupPincodeForm: FC = () => {
       email,
     });
     if (error) {
-      alert("Error: " + error);
+      errorHandler(error);
     } else {
       setSignupDetails({
         isSent: true,

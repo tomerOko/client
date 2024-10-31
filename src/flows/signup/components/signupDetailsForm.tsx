@@ -26,10 +26,9 @@ export const SignupDetailsForm: FC = () => {
       firstName: data.firstName,
       lastName: data.lastName,
       password: data.password,
-      phone: "0542229728",
+      phone: data.phone,
     });
     if (error) {
-      debugger;
       switch (error.message) {
         default:
           errorHandler(error);
@@ -99,6 +98,18 @@ export const SignupDetailsForm: FC = () => {
         helperText={errors.password ? "Password is required" : ""}
         margin="normal"
         placeholder="Password"
+        InputLabelProps={{
+          shrink: false,
+        }}
+      />
+      <TextField
+        {...register("phone", { required: true })}
+        id="phone"
+        fullWidth
+        error={!!errors.phone}
+        helperText={errors.phone ? "Phone is required" : ""}
+        margin="normal"
+        placeholder="Phone"
         InputLabelProps={{
           shrink: false,
         }}
